@@ -2,8 +2,10 @@
 
 export(dm8n)
 export(koh)
+export(t_rs)
 import(lubridate)
 import(magrittr)
+importFrom(dplyr,full_join)
 importFrom(rvest,html_nodes)
 importFrom(rvest,html_text)
 importFrom(stats,aggregate)
