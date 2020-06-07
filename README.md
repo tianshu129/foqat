@@ -18,6 +18,13 @@ Functions in foqat are listed below:
 dm8n: Calculate daily maximum-8-hour ozone.
 
 
+If you want to know detail about function, please type ?functionname in R. Below is an example:
+
+``` r
+library(foqat)
+?dm8n
+```
+
 ## Getting help
 
 Please contact: tianshu129@163.com
