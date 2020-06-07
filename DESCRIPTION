@@ -1,12 +1,16 @@
 Package: foqat
 Type: Package
-Title: Field observation quick analysis tools
-Version: 0.1.0
+Title: Field observation quick analysis tookit
+Version: 0.2.0
 Author: Tianshu Chen
 Maintainer: Tianshu Chen <tianshu129@163.com>
-Description: A quick analysis toolkits for field observation.
+Description: A quick analysis toolkits for atmospheric field observation.
 Depends: R (>= 3.5.0)
-Imports: lubridate
+Imports: 
+  lubridate, 
+  magrittr, 
+  xml2,
+  rvest
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

@@ -1,0 +1,32 @@
+#' Search kOH value from 'chemspider.com'. Predicted data is generated using the US Environmental Protection Agency’s EPISuite.
+#'
+#' @param spec chemical specise to be searched. chemical specise's name or CAS Number is acceptable.
+#' @return kOH value
+#' @export
+#' @import magrittr
+#' @importFrom xml2 read_html
+#' @importFrom rvest html_nodes html_text
+#' @importFrom utils download.file read.table
+#' @examples
+#' koh("Benzene")
+
+koh <- function(spec){
+  url <- paste0(c("http://www.chemspider.com/Search.aspx?q=", spec), collapse='')
+  p1 <- proc.time()
+  download.file(url, destfile = "scrapedpage.html", quiet=TRUE)
+  web <- read_html("scrapedpage.html")
+  result_test<-web%>%html_nodes("h3")%>%html_text()
+  if(result_test[1] == "Found 1 result"){
+    name <- as.character(web %>% html_nodes(xpath="//pre"))#web%>%html_nodes("//pre")%>%html_text()
+    namelist <- read.table(text=gsub("(?<=[a-z])\\s+", "\n", name, perl=TRUE), header=FALSE, col.names = c("name"), stringsAsFactors = FALSE)
+    poi_unit<-which(namelist$name %in% "cm3/molecule-sec")
+    poi_unit<-poi_unit[1]
+    value <- namelist$name[poi_unit-2]
+    order <- namelist$name[poi_unit-1]
+    print(paste(c(spec, ' ', value, order, ' (25 deg C) [AopWin v1.92]'),collapse = ""))
+  }else if(result_test[1] == "Found 0 result"){
+    print("Not result.")
+  }else{
+    print("More than 1 result, please use CAS Number.")
+  }
+}
