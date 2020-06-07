@@ -10,11 +10,11 @@ dm8n(ori_df, colindex = 1, starthour = 0, endhour = 16,
 \arguments{
 \item{ori_df}{dataframe. dataframe for ozone.}
 
-\item{colindex}{numeric. Column index for datatime. By default, it equal to 1.}
+\item{colindex}{numeric. Column index for datatime. By default, it equals to 1.}
 
-\item{starthour}{numeric. Start hour for daily calculation. By default, it equal to 0.}
+\item{starthour}{numeric. Start hour for daily calculation. By default, it equals to 0.}
 
-\item{endhour}{numeric.  End hour for daily calculation. By default, it equal to 16 which means averaging ozone between 16~23.}
+\item{endhour}{numeric.  End hour for daily calculation. By default, it equals to 16 which means averaging ozone between 16~23.}
 
 \item{na.rm}{logical. Should missing values (including NaN) be omitted from the calculations?}
 
