@@ -1,7 +1,7 @@
 Package: foqat
 Type: Package
 Title: Field observation quick analysis tookit
-Version: 0.2.0
+Version: 0.3.0
 Author: Tianshu Chen
 Maintainer: Tianshu Chen <tianshu129@163.com>
 Description: A quick analysis toolkits for atmospheric field observation.
@@ -10,8 +10,10 @@ Imports:
   lubridate, 
   magrittr, 
   xml2,
-  rvest
+  rvest,
+  dplyr,
+  stats
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
