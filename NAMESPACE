@@ -2,7 +2,7 @@
 
 export(dm8n)
 export(koh)
-export(t_rs)
+export(trs)
 import(lubridate)
 import(magrittr)
 importFrom(dplyr,full_join)
