@@ -13,7 +13,7 @@ install_github("GlossyBoat/foqat")
 ```
 
 ## Usage
-Functions in foqat listed below:
+Functions in foqat are listed below:
 
 dm8n: Calculate daily maximum-8-hour ozone.
 
