@@ -16,6 +16,7 @@ install_github("GlossyBoat/foqat")
 Functions in foqat are listed below:
 
 dm8n: Calculate daily maximum-8-hour ozone.
+
 koh: Search kOH value from 'chemspider.com'. Predicted data is generated using the US Environmental Protection Agency’s EPISuite.
 
 If you want to know detail about each function, please type ?functionname in R. Below is an example:
