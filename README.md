@@ -22,7 +22,7 @@ dm8n: Calculate daily maximum-8-hour ozone.
 
 Please contact: tianshu129@163.com
 
-## Author
+## Link
 
 知乎 [![zhihu-shield]][zhihu]
 --------------------------------
