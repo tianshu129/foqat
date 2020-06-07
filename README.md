@@ -8,8 +8,8 @@ FOQAT stands for "Filed observation quick analysis toolkit".
 
 ``` r
 # Install from GitHub:
-install.packages("devtools")
-install_github("GlossyBoat/foqat")
+# install.packages("devtools")
+devtools::install_github("GlossyBoat/foqat")
 ```
 
 ## Usage
