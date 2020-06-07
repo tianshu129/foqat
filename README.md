@@ -15,11 +15,9 @@ devtools::install_github("GlossyBoat/foqat")
 ## Usage
 Functions in foqat are listed below:
 
-**dm8n**: calculate daily maximum-8-hour ozone.
-
-**koh**: search kOH value from 'chemspider.com'. Predicted data is generated using the US Environmental Protection Agency’s EPISuite.
-
-**t_rs**: resample time series and return complete time series with new time resolution.'
+**dm8n**: calculate daily maximum-8-hour ozone.  
+**koh**: search kOH value from 'chemspider.com'. Predicted data is generated using the US Environmental Protection Agency’s EPISuite.  
+**t_rs**: resample time series and return complete time series with new time resolution.'  
 
 If you want to know detail about each function, please type ?functionname in R. Below is an example:
 
