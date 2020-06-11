@@ -2,12 +2,14 @@
 % Please edit documentation in R/tuv.R
 \name{tuv}
 \alias{tuv}
-\title{Calculate TUV in batch.}
+\title{Calculate TUV in batch.
+Please download TUV executable for Windows before you use this function.
+https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip}
 \usage{
 tuv(pathtuv, df, colt)
 }
 \arguments{
-\item{pathtuv}{path for TUV folder.}
+\item{pathtuv}{path for TUV folder such as "c:/tuv".}
 
 \item{df}{dataframe for variable.}
 
@@ -18,4 +20,6 @@ result_j dataframe for TUV result.
 }
 \description{
 Calculate TUV in batch.
+Please download TUV executable for Windows before you use this function.
+https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip
 }
