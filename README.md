@@ -20,7 +20,7 @@ Functions in foqat are listed below:
 **trs**: resample time series and return complete time series with new time resolution.   
 **tuv**: run offline batch calculation of [TROPOSPHERIC ULTRAVIOLET AND VISIBLE (TUV) RADIATION MODEL](https://www2.acom.ucar.edu/modeling/tropospheric-ultraviolet-and-visible-tuv-radiation-model).  
 Currently, this function only support output of photolysis rate coefficients (J-values). 
-columns of photolysis rate coefficients (s-1):  
+Columns of photolysis rate coefficients (s-1):  
 1 = O3 -> O2 + O(1D)  
 2 = H2O2 -> 2 OH  
 3 = NO2 -> NO + O(3P)  
