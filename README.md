@@ -1,6 +1,6 @@
 ## Overview
 
-FOQAT is an R package designed for qucik analysis of atmospheric field observation data.
+FOQAT is an R package designed for qucik analysis of atmospheric (especially for chemistry) field observation and air pollution data.
 
 FOQAT stands for "Filed observation quick analysis toolkit".
 
@@ -21,13 +21,13 @@ Functions in foqat are listed below:
 **tuv**: run offline batch calculation of [TROPOSPHERIC ULTRAVIOLET AND VISIBLE (TUV) RADIATION MODEL](https://www2.acom.ucar.edu/modeling/tropospheric-ultraviolet-and-visible-tuv-radiation-model).  
 Currently, this function only support output of photolysis rate coefficients (J-values). 
 Columns of photolysis rate coefficients (s-1):  
-1 = O3 -> O2 + O(1D)  
-2 = H2O2 -> 2 OH  
-3 = NO2 -> NO + O(3P)  
-4 = NO3 -> NO + O2  
-5 = NO3 -> NO2 + O(3P)  
-6 = CH2O -> H + HCO  
-7 = CH2O -> H2 + CO  
+1 = O<sub>3</sub> -> O<sub>2</sub> + O<sub>1D</sub>  
+2 = H<sub>2</sub>O<sub>2</sub> -> 2 OH  
+3 = NO<sub>2</sub> -> NO + O<sub>3P</sub>
+4 = NO<sub>3</sub> -> NO + O<sub>2</sub>  
+5 = NO<sub>3</sub> -> NO<sub>2</sub> + O<sub>3P</sub>  
+6 = CH<sub>2</sub>O -> H + HCO  
+7 = CH<sub>2</sub>O -> H<sub>2</sub> + CO  
 Please download [TUV executable for Windows](https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip) before you run this function.  
 
 If you want to know detail about each function, please type ?functionname in R. Below is an example:
