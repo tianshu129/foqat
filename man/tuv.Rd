@@ -4,21 +4,24 @@
 \alias{tuv}
 \title{Calculate TUV in batch}
 \usage{
-tuv(pathtuv, df, cold = 1)
+tuv(pathtuv, df, colid = 1)
 }
 \arguments{
 \item{pathtuv}{path for TUV folder, such as "c:/tuv5.3.1.exe".}
 
 \item{df}{dataframe for variable, such as 'date', 'o3col'. It must includes date column.}
 
-\item{cold}{column index of date. The default value is 1.}
+\item{colid}{column index of date. The default value is 1.}
 }
 \value{
-result_j dataframe of photolysis rate coefficients (J-values).
+dataframe of photolysis rate coefficients (J-values).
 }
 \description{
 run offline batch calculation of \href{https://www2.acom.ucar.edu/modeling/tropospheric-ultraviolet-and-visible-tuv-radiation-model}{TROPOSPHERIC ULTRAVIOLET AND VISIBLE (TUV) RADIATION MODEL}. \cr
-Currently, this function only support output of photolysis rate coefficients (J-values). \cr
+}
+\details{
+Currently, this function only supports output of photolysis rate coefficients (J-values). \cr
+
 Columns of photolysis rate coefficients (s-1): \cr
 1 = O3 -> O2 + O(1D) \cr
 2 = H2O2 -> 2 OH \cr
@@ -27,5 +30,6 @@ Columns of photolysis rate coefficients (s-1): \cr
 5 = NO3 -> NO2 + O(3P) \cr
 6 = CH2O -> H + HCO \cr
 7 = CH2O -> H2 + CO \cr
+
 Please download \href{https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip}{TUV executable for Windows} before you use this function. \cr
 }

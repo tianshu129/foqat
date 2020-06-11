@@ -2,7 +2,7 @@
 % Please edit documentation in R/trs.R
 \name{trs}
 \alias{trs}
-\title{Resampling time series and return complete time series with new time period.}
+\title{Resampe time series}
 \usage{
 trs(
   df,
@@ -19,13 +19,13 @@ trs(
 \arguments{
 \item{df}{dataframe contains time series.}
 
-\item{bkip}{break input of resampling.}
+\item{bkip}{break input of resampling, such as '1 hour'.}
 
-\item{coli}{colindex of datetime in dataframe.}
+\item{coli}{column index of datetime in dataframe.}
 
-\item{st}{start time of resampling.}
+\item{st}{start time of resampling. The default value is the fisrt value of datetime column.}
 
-\item{et}{end time of resampling.}
+\item{et}{end time of resampling. The default value is the last value of datetime column.}
 
 \item{na.rm}{logical value. Remove NA value or not?}
 
@@ -39,5 +39,8 @@ trs(
 dataframe with new resolution.
 }
 \description{
-Resampling time series and return complete time series with new time period.
+Resamples time series, and returns complete time series with new time resolution.
+}
+\details{
+If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
 }

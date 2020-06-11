@@ -1,4 +1,8 @@
-#' Calculate daily maximum-8-hour ozone.
+#' Calculate daily maximum-8-hour ozone
+#'
+#' Calculates daily maximum-8-hour ozone from ozone observation data.
+#'
+#' This function can calculate multiple columns of ozone observation data in 1 dataframe with 1 datetime columm (such as ozone concentration in different sites).
 #'
 #' @param ori_df dataframe. dataframe for ozone.
 #' @param colindex numeric. Column index for datatime. By default, it equals to 1.
@@ -22,7 +26,7 @@ dm8n<-function(ori_df, colindex=1, starthour=0, endhour=16, na.rm = TRUE, output
 	datelist_raw<-as.Date(ori_df[,1])
 	datelist<-datelist_raw[!duplicated(datelist_raw)]
 
-	
+
 	#sstup dataframe by 0-7 in first day
 	df=ori_df[as.Date(ori_df[,1])==datelist[1],]
 	st=starthour
