@@ -2,7 +2,7 @@
 % Please edit documentation in R/koh.R
 \name{koh}
 \alias{koh}
-\title{Search kOH value from 'chemspider.com'. Predicted data is generated using the US Environmental Protection Agency’s EPISuite.}
+\title{get kOH}
 \usage{
 koh(spec)
 }
@@ -13,7 +13,12 @@ koh(spec)
 kOH value
 }
 \description{
-Search kOH value from 'chemspider.com'. Predicted data is generated using the US Environmental Protection Agency’s EPISuite.
+Searches kOH value from 'chemspider.com'.
+}
+\details{
+Predicted data is generated using the US Environmental Protection Agency’s EPISuite.\cr
+Unit is cm3/molecule-sec.\cr
+Condition is 25 deg C.
 }
 \examples{
 koh("Benzene")

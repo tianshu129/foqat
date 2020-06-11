@@ -1,7 +1,9 @@
 #' Calculate TUV in batch
 #'
 #' run offline batch calculation of \href{https://www2.acom.ucar.edu/modeling/tropospheric-ultraviolet-and-visible-tuv-radiation-model}{TROPOSPHERIC ULTRAVIOLET AND VISIBLE (TUV) RADIATION MODEL}. \cr
-#' Currently, this function only support output of photolysis rate coefficients (J-values). \cr
+#'
+#' Currently, this function only supports output of photolysis rate coefficients (J-values). \cr
+#'
 #' Columns of photolysis rate coefficients (s-1): \cr
 #' 1 = O3 -> O2 + O(1D) \cr
 #' 2 = H2O2 -> 2 OH \cr
@@ -10,17 +12,18 @@
 #' 5 = NO3 -> NO2 + O(3P) \cr
 #' 6 = CH2O -> H + HCO \cr
 #' 7 = CH2O -> H2 + CO \cr
+#'
 #' Please download \href{https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip}{TUV executable for Windows} before you use this function. \cr
 #'
 #' @param pathtuv path for TUV folder, such as "c:/tuv5.3.1.exe".
 #' @param df dataframe for variable, such as 'date', 'o3col'. It must includes date column.
-#' @param cold column index of date. The default value is 1.
-#' @return result_j dataframe of photolysis rate coefficients (J-values).
+#' @param colid column index of date. The default value is 1.
+#' @return dataframe of photolysis rate coefficients (J-values).
 #' @export
 #' @importFrom stringr str_split_fixed
 #' @importFrom lubridate hour
 
-tuv <- function(pathtuv, df, cold = 1){
+tuv <- function(pathtuv, df, colid = 1){
 outfile="usrout.txt"
 #Store the original work path
 oldwd=getwd()
@@ -29,7 +32,7 @@ setwd(paste(c(pathtuv,"/tuv"),collapse =""))
 #In case df is not a dataframe.
 df<- data.frame(df,stringsAsFactors = FALSE)
 #set date to first column
-if(cold!=1){df[,c(1,cold)] <- df[,c(cold,1)]}
+if(colid!=1){df[,c(1,colid)] <- df[,c(colid,1)]}
 # read a row at a time
 for(irow in 1:nrow(df)){
 	#Write date

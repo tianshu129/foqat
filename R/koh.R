@@ -1,4 +1,10 @@
-#' Search kOH value from 'chemspider.com'. Predicted data is generated using the US Environmental Protection Agency’s EPISuite.
+#' get kOH
+#'
+#' Searches kOH value from 'chemspider.com'.
+#'
+#' Predicted data is generated using the US Environmental Protection Agency’s EPISuite.\cr
+#' Unit is cm3/molecule-sec.\cr
+#' Condition is 25 deg C.
 #'
 #' @param spec chemical specise to be searched. chemical specise's name or CAS Number is acceptable.
 #' @return kOH value
@@ -23,7 +29,7 @@ koh <- function(spec){
     poi_unit<-poi_unit[1]
     value <- namelist$name[poi_unit-2]
     order <- namelist$name[poi_unit-1]
-    print(paste(c(spec, ' ', value, order, ' (25 deg C) [AopWin v1.92]'),collapse = ""))
+    print(paste(c(spec, ' ', value, order, ' cm3/molecule-sec (25 deg C) [AopWin v1.92]'),collapse = ""))
   }else if(result_test[1] == "Found 0 result"){
     print("Not result.")
   }else{

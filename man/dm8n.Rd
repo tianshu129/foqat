@@ -2,7 +2,7 @@
 % Please edit documentation in R/dm8n.R
 \name{dm8n}
 \alias{dm8n}
-\title{Calculate daily maximum-8-hour ozone.}
+\title{Calculate daily maximum-8-hour ozone}
 \usage{
 dm8n(
   ori_df,
@@ -30,5 +30,8 @@ dm8n(
 brief results (only DMAX8), or list for for detail results (DMAX8, D8, counts for D8).
 }
 \description{
-Calculate daily maximum-8-hour ozone.
+Calculates daily maximum-8-hour ozone from ozone observation data.
+}
+\details{
+This function can calculate multiple columns of ozone observation data in 1 dataframe with 1 datetime columm (such as ozone concentration in different sites).
 }
