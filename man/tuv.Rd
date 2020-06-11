@@ -7,7 +7,7 @@
 tuv(pathtuv, df, colt)
 }
 \arguments{
-\item{pathtuv}{path for TUV folder such as "c:/tuv5.3.1.exe".}
+\item{pathtuv}{path for TUV folder, such as "c:/tuv5.3.1.exe".}
 
 \item{df}{dataframe for variable.}
 
@@ -17,16 +17,15 @@ tuv(pathtuv, df, colt)
 result_j dataframe of photolysis rate coefficients (J-values).
 }
 \description{
-Calculate TUV in batch.
-Currently, this function only support output of photolysis rate coefficients (J-values).
-Columns of photolysis rate coefficients (s-1):
-1 = O3 -> O2 + O(1D)
-2 = H2O2 -> 2 OH
-3 = NO2 -> NO + O(3P)
-4 = NO3 -> NO + O2
-5 = NO3 -> NO2 + O(3P)
-6 = CH2O -> H + HCO
-7 = CH2O -> H2 + CO
-Please download TUV executable for Windows before you use this function.
-https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip
+Calculate TUV in batch. \cr
+Currently, this function only support output of photolysis rate coefficients (J-values). \cr
+Columns of photolysis rate coefficients (s-1): \cr
+1 = O3 -> O2 + O(1D) \cr
+2 = H2O2 -> 2 OH \cr
+3 = NO2 -> NO + O(3P) \cr
+4 = NO3 -> NO + O2 \cr
+5 = NO3 -> NO2 + O(3P) \cr
+6 = CH2O -> H + HCO \cr
+7 = CH2O -> H2 + CO \cr
+Please download \href{https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip}{TUV executable for Windows} before you use this function. \cr
 }
