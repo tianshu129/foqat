@@ -26,7 +26,8 @@ outfile="usrout.txt"
 oldwd=getwd()
 #Set the TUV directory to the current working path
 setwd(paste(c(pathtuv,"/tuv"),collapse =""))
-#df<- data.frame(df,stringsAsFactors = FALSE)
+#In case df is not a dataframe.
+df<- data.frame(df,stringsAsFactors = FALSE)
 #set date to first column
 if(colt!=1){df[,c(1,colt)] <- df[,c(colt,1)]}
 # read a row at a time
