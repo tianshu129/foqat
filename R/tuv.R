@@ -1,10 +1,19 @@
 #' Calculate TUV in batch.
+#' Currently, this function only support output of photolysis rate coefficients (J-values).
+#' Columns of photolysis rate coefficients (s-1):
+#' 1 = O3 -> O2 + O(1D)
+#' 2 = H2O2 -> 2 OH
+#' 3 = NO2 -> NO + O(3P)
+#' 4 = NO3 -> NO + O2
+#' 5 = NO3 -> NO2 + O(3P)
+#' 6 = CH2O -> H + HCO
+#' 7 = CH2O -> H2 + CO
 #' Please download TUV executable for Windows before you use this function.
 #' https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip
-#' @param pathtuv path for TUV folder such as "c:/tuv".
+#' @param pathtuv path for TUV folder such as "c:/tuv5.3.1.exe".
 #' @param df dataframe for variable.
 #' @param colt column index of date.
-#' @return result_j dataframe for TUV result.
+#' @return result_j dataframe of photolysis rate coefficients (J-values).
 #' @export
 #' @importFrom stringr str_split_fixed
 #' @importFrom lubridate hour
