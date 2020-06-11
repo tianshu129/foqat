@@ -4,14 +4,14 @@
 \alias{tuv}
 \title{Calculate TUV in batch}
 \usage{
-tuv(pathtuv, df, colt)
+tuv(pathtuv, df, cold = 1)
 }
 \arguments{
 \item{pathtuv}{path for TUV folder, such as "c:/tuv5.3.1.exe".}
 
-\item{df}{dataframe for variable.}
+\item{df}{dataframe for variable, such as 'date', 'o3col'. It must includes date column.}
 
-\item{colt}{column index of date.}
+\item{cold}{column index of date. The default value is 1.}
 }
 \value{
 result_j dataframe of photolysis rate coefficients (J-values).
