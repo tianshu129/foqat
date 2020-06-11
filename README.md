@@ -23,8 +23,8 @@ Currently, this function only support output of photolysis rate coefficients (J-
 Columns of photolysis rate coefficients (s-1):  
 1 = O<sub>3</sub> -> O<sub>2</sub> + O<sub>1D</sub>  
 2 = H<sub>2</sub>O<sub>2</sub> -> 2 OH  
-3 = NO<sub>2</sub> -> NO + O<sub>3P</sub>
-4 = NO<sub>3</sub> -> NO + O<sub>2</sub>  
+3 = NO<sub>2</sub> -> NO + O<sub>3P</sub>  
+4 = NO<sub>3</sub> -> NO + O<sub>2</sub>   
 5 = NO<sub>3</sub> -> NO<sub>2</sub> + O<sub>3P</sub>  
 6 = CH<sub>2</sub>O -> H + HCO  
 7 = CH<sub>2</sub>O -> H<sub>2</sub> + CO  
