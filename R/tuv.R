@@ -16,7 +16,7 @@
 #' Please download \href{https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip}{TUV executable for Windows} before you use this function. \cr
 #'
 #' @param pathtuv path for TUV folder, such as "c:/tuv5.3.1.exe".
-#' @param df dataframe for variable, such as 'date', 'o3col'. It must includes date column.
+#' @param df dataframe for variables, such as 'date', 'o3col'. It must includes date column.
 #' @param colid column index of date. The default value is 1.
 #' @return dataframe of photolysis rate coefficients (J-values).
 #' @export

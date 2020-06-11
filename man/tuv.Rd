@@ -9,7 +9,7 @@ tuv(pathtuv, df, colid = 1)
 \arguments{
 \item{pathtuv}{path for TUV folder, such as "c:/tuv5.3.1.exe".}
 
-\item{df}{dataframe for variable, such as 'date', 'o3col'. It must includes date column.}
+\item{df}{dataframe for variables, such as 'date', 'o3col'. It must includes date column.}
 
 \item{colid}{column index of date. The default value is 1.}
 }
