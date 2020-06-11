@@ -13,14 +13,14 @@
 #' Please download \href{https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip}{TUV executable for Windows} before you use this function. \cr
 #'
 #' @param pathtuv path for TUV folder, such as "c:/tuv5.3.1.exe".
-#' @param df dataframe for variable.
-#' @param colt column index of date.
+#' @param df dataframe for variable, such as 'date', 'o3col'. It must includes date column.
+#' @param cold column index of date. The default value is 1.
 #' @return result_j dataframe of photolysis rate coefficients (J-values).
 #' @export
 #' @importFrom stringr str_split_fixed
 #' @importFrom lubridate hour
 
-tuv <- function(pathtuv, df, colt){
+tuv <- function(pathtuv, df, cold = 1){
 outfile="usrout.txt"
 #Store the original work path
 oldwd=getwd()
@@ -29,7 +29,7 @@ setwd(paste(c(pathtuv,"/tuv"),collapse =""))
 #In case df is not a dataframe.
 df<- data.frame(df,stringsAsFactors = FALSE)
 #set date to first column
-if(colt!=1){df[,c(1,colt)] <- df[,c(colt,1)]}
+if(cold!=1){df[,c(1,cold)] <- df[,c(cold,1)]}
 # read a row at a time
 for(irow in 1:nrow(df)){
 	#Write date
