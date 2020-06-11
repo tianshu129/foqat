@@ -1,9 +1,10 @@
 #' Calculate TUV in batch.
-#'
+#' Please download TUV executable for Windows before you use this function.
+#' https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip
 #' @param pathtuv path for TUV folder such as "c:/tuv".
 #' @param df dataframe for variable.
 #' @param colt column index of date.
-#' @return result_j dataframe for TUV result. 
+#' @return result_j dataframe for TUV result.
 #' @export
 #' @importFrom stringr str_split_fixed
 #' @importFrom lubridate hour
@@ -23,9 +24,9 @@ for(irow in 1:nrow(df)){
 	iyear=format(df[irow,1],'%Y')
 	imonth=format(df[irow,1],'%m')
 	iday=format(df[irow,1],'%d')
-	cmdtxt=paste(c("iyear\n", iyear, "\nimonth\n", imonth, "\niday\n", iday, "\n"),collapse ="")		
+	cmdtxt=paste(c("iyear\n", iyear, "\nimonth\n", imonth, "\niday\n", iday, "\n"),collapse ="")
 	# write other parameters
-	for(icol in 2:ncol(df)){		 		 
+	for(icol in 2:ncol(df)){
 		#combine part of the cmd
 		cmdtxt=paste(c(cmdtxt, colnames(df)[icol], "\n", df[irow,icol], "\n"),collapse ="")
 	}
