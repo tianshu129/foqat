@@ -17,7 +17,7 @@ tuv(pathtuv, df, colt)
 result_j dataframe of photolysis rate coefficients (J-values).
 }
 \description{
-Calculate TUV in batch. \cr
+run offline batch calculation of \href{https://www2.acom.ucar.edu/modeling/tropospheric-ultraviolet-and-visible-tuv-radiation-model}{TROPOSPHERIC ULTRAVIOLET AND VISIBLE (TUV) RADIATION MODEL}. \cr
 Currently, this function only support output of photolysis rate coefficients (J-values). \cr
 Columns of photolysis rate coefficients (s-1): \cr
 1 = O3 -> O2 + O(1D) \cr
