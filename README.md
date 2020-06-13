@@ -15,6 +15,7 @@ If fail to run 'install.packages("devtools")', please change primary CRAN reposi
 Tools->Global options->Packages->Primary CRAN repository  
 
 If fail to run 'devtools::install_github("tianshu129/foqat")', please enable TLS 1.2 in IE 10.  
+see https://github.com/r-lib/remotes/issues/130
 
 ## Usage
 Functions in foqat are listed below:
