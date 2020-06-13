@@ -11,10 +11,10 @@ FOQAT stands for "Filed observation quick analysis toolkit".
 # install.packages("devtools")
 devtools::install_github("tianshu129/foqat")
 ```
-If fail to 'install.packages("devtools")', please change primary CRAN repository to nearby location.  
+If fail to run 'install.packages("devtools")', please change primary CRAN repository to nearby location.  
 Tools->Global options->Packages->Primary CRAN repository  
 
-If fail to 'devtools::install_github("tianshu129/foqat")', please enable TLS 1.2 in IE 10.  
+If fail to run 'devtools::install_github("tianshu129/foqat")', please enable TLS 1.2 in IE 10.  
 
 ## Usage
 Functions in foqat are listed below:
