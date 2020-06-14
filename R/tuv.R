@@ -32,7 +32,10 @@ setwd(paste(c(pathtuv,"/tuv"),collapse =""))
 #In case df is not a dataframe.
 df<- data.frame(df,stringsAsFactors = FALSE)
 #set date to first column
-if(colid!=1){df[,c(1,colid)] <- df[,c(colid,1)]}
+if(colid != 1){
+  df[,c(1,colid)] = df[,c(colid,1)]
+  colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
+}
 # read a row at a time
 for(irow in 1:nrow(df)){
 	#Write date

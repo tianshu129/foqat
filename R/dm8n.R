@@ -20,7 +20,10 @@
 dm8n<-function(ori_df, colindex=1, starthour=0, endhour=16, na.rm = TRUE, outputmode=1){
 
 	#move datetime to first column
-	if(colindex!=1){ori_df[,c(1,colindex)]=ori_df[,c(colindex,1)]}
+  if(colid != 1){
+    df[,c(1,colid)] = df[,c(colid,1)]
+    colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
+  }
 
 	#get data list
 	datelist_raw<-as.Date(ori_df[,1])
