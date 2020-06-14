@@ -21,7 +21,10 @@
 trs <- function(df, bkip, coli = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliwd = 2, coliws = 3){
   options(warn = -1)
   #move datetime to first column
-  if(coli != 1){ori_df[,c(1, coli)] = ori_df[, c(coli,1)]}
+  if(colid != 1){
+    df[,c(1,colid)] = df[,c(colid,1)]
+    colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
+  }
 
   #if wind mode TURE, generate u, v
   if(wind == TRUE){
