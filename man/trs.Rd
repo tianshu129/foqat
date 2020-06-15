@@ -2,12 +2,12 @@
 % Please edit documentation in R/trs.R
 \name{trs}
 \alias{trs}
-\title{Resampe time series}
+\title{Resample time series}
 \usage{
 trs(
   df,
   bkip,
-  coli = 1,
+  colid = 1,
   st = NULL,
   et = NULL,
   na.rm = TRUE,
@@ -21,7 +21,7 @@ trs(
 
 \item{bkip}{break input of resampling, such as '1 hour'.}
 
-\item{coli}{column index of datetime in dataframe.}
+\item{colid}{column index of datetime in dataframe.}
 
 \item{st}{start time of resampling. The default value is the fisrt value of datetime column.}
 
