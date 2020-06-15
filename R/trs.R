@@ -1,11 +1,11 @@
-#' Resampe time series
+#' Resample time series
 #'
 #' Resamples time series, and returns complete time series with new time resolution.
 #'
 #' If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
 #'
 #' @param df dataframe contains time series.
-#' @param coli column index of datetime in dataframe.
+#' @param colid column index of datetime in dataframe.
 #' @param st start time of resampling. The default value is the fisrt value of datetime column.
 #' @param et end time of resampling. The default value is the last value of datetime column.
 #' @param bkip break input of resampling, such as '1 hour'.
@@ -18,7 +18,7 @@
 #' @importFrom dplyr full_join
 #' @importFrom stats aggregate
 
-trs <- function(df, bkip, coli = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliwd = 2, coliws = 3){
+trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliwd = 2, coliws = 3){
   options(warn = -1)
   #move datetime to first column
   if(colid != 1){
