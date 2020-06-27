@@ -34,7 +34,7 @@ Columns of photolysis rate coefficients (s-1):
 6 = CH<sub>2</sub>O -> H + HCO  
 7 = CH<sub>2</sub>O -> H<sub>2</sub> + CO  
 Please download [TUV executable for Windows](https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip) before you run this function.  
-
+**ofp**: calculate ozone formation potential of VOC time series.  
 If you want to know detail about each function, please type ?functionname in R. Below is an example:
 
 ``` r
