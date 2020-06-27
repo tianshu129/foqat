@@ -22,7 +22,9 @@ Functions in foqat are listed below:
 
 **dm8n**: calculate daily maximum-8-hour ozone.  
 **koh**: search kOH value from 'chemspider.com'. Predicted data is generated using the US Environmental Protection Agency’s EPISuite.  
-**trs**: resample time series and return complete time series with new time resolution.   
+**trs**: resample time series and return complete time series with new time resolution. 
+**ofp**: calculate ozone formation potential (MIR) of VOC time series.  
+MIR values refered from "Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339" (Revised January 28, 2010).  
 **tuv**: run offline batch calculation of [TROPOSPHERIC ULTRAVIOLET AND VISIBLE (TUV) RADIATION MODEL](https://www2.acom.ucar.edu/modeling/tropospheric-ultraviolet-and-visible-tuv-radiation-model).  
 Currently, this function only support output of photolysis rate coefficients (J-values). 
 Columns of photolysis rate coefficients (s-1):  
@@ -34,7 +36,6 @@ Columns of photolysis rate coefficients (s-1):
 6 = CH<sub>2</sub>O -> H + HCO  
 7 = CH<sub>2</sub>O -> H<sub>2</sub> + CO  
 Please download [TUV executable for Windows](https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip) before you run this function.  
-**ofp**: calculate ozone formation potential of VOC time series.  
 If you want to know detail about each function, please type ?functionname in R. Below is an example:
 
 ``` r
