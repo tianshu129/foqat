@@ -4,10 +4,16 @@
 \alias{ofp}
 \title{Calculate ozone formation potential}
 \usage{
-ofp(df, colid = 1)
+ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
 }
 \arguments{
 \item{df}{dataframe contains time series.}
+
+\item{unit}{unit for VOC concentration. A character vector from these options: "ugm" or "ppb". "ugm" means ug/m3. "ppb" means part per billion volumn.}
+
+\item{t}{temperature for conversions. Unit for t is "degrees Celsius". By default, t equals to 25 degrees Celsius.}
+
+\item{p}{pressure for conversions. Unit for p is "kPa". By default, p equals to 101.325 kPa.}
 
 \item{colid}{column index of datetime in dataframe.}
 }
