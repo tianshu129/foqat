@@ -6,7 +6,7 @@
 \usage{
 dm8n(
   ori_df,
-  colindex = 1,
+  colid = 1,
   starthour = 0,
   endhour = 16,
   na.rm = TRUE,
@@ -16,7 +16,7 @@ dm8n(
 \arguments{
 \item{ori_df}{dataframe. dataframe for ozone.}
 
-\item{colindex}{numeric. Column index for datatime. By default, it equals to 1.}
+\item{colid}{numeric. Column index for datatime. By default, it equals to 1.}
 
 \item{starthour}{numeric. Start hour for daily calculation. By default, it equals to 0.}
 
