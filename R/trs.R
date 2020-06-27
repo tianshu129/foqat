@@ -26,6 +26,9 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
     colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
   }
 
+  #In case df is not a dataframe.
+  df<- data.frame(df,stringsAsFactors = FALSE)
+
   #if wind mode TURE, generate u, v
   if(wind == TRUE){
     df$u<-sin(pi/180*df[,coliwd])*df[,coliws]
