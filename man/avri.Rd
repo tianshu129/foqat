@@ -7,7 +7,7 @@
 avri(
   df,
   bkip,
-  cycles = "1 day",
+  tcycle = "1 day",
   n = NULL,
   colid = 1,
   st = st,
@@ -22,6 +22,8 @@ avri(
 \item{df}{dataframe contains time series.}
 
 \item{bkip}{break input of resampling, such as '1 hour'.}
+
+\item{tcycle}{cycle for average variation. By default, cycle is "1 day".}
 
 \item{n}{number of items for each cycle. If n is setted, cycle will invalid.}
 
@@ -38,8 +40,6 @@ avri(
 \item{coliws}{numeric value, colindex of wind speed in dataframe.}
 
 \item{coliwd}{numeric value, colindex of wind direction (degree) in dataframe.}
-
-\item{cycle}{cycle for average variation. By default, cycle is "1 day".}
 }
 \value{
 dataframe for average variation.
