@@ -6,7 +6,7 @@
 #'
 #' @param df dataframe contains time series.
 #' @param bkip break input of resampling, such as '1 hour'.
-#' @param cycle cycle for average variation. By default, cycle is "1 day".
+#' @param tcycle cycle for average variation. By default, cycle is "1 day".
 #' @param n number of items for each cycle. If n is setted, cycle will invalid.
 #' @param colid column index of datetime in dataframe.
 #' @param st start time of resampling. The default value is the fisrt value of datetime column.
@@ -21,7 +21,7 @@
 #' @importFrom stats aggregate
 #' @importFrom lubridate duration
 
-avri<-function(df, bkip, cycles="1 day", n=NULL, colid = 1, st = st, et = et, na.rm = na.rm, wind = wind, coliws = 2, coliwd = 3){
+avri<-function(df, bkip, tcycle="1 day", n=NULL, colid = 1, st = st, et = et, na.rm = na.rm, wind = wind, coliws = 2, coliwd = 3){
   #time resampling
   rs_df <- trs(df, bkip, colid = 1, st = st, et = et, na.rm = na.rm, wind = FALSE, coliws = coliws, coliwd = coliwd)
 
@@ -36,7 +36,7 @@ avri<-function(df, bkip, cycles="1 day", n=NULL, colid = 1, st = st, et = et, na
 
   #claculate number for per_cycle
   if(is.null(n)){
-    n=duration(cycle)/duration(bkip)
+    n=duration(tcycle)/duration(bkip)
   }
   mod_list=seq(0,nrow(rs_df)-1,1)%%n
 
