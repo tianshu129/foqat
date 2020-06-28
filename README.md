@@ -18,7 +18,7 @@ If fail to run 'devtools::install_github("tianshu129/foqat")', please enable TLS
 See https://github.com/r-lib/remotes/issues/130.
 
 ## Usage
-Functions in foqat are listed below:
+Functions in foqat are listed below:  
 **statdf**: summary each variable of dataframe into: mean, sd, min, pecentag evalue (25%, 50%, 70%), max.  
 **trs**: resample time series and return complete time series with new time resolution. 
 **avri**: Calculates average of variation of time series. 
