@@ -11,14 +11,14 @@
 #' @param bkip break input of resampling, such as '1 hour'.
 #' @param na.rm logical value. Remove NA value or not?
 #' @param wind logical value. if TRUE, please set coliwd, coliws.
-#' @param coliwd numeric value, colindex of wind direction (degree) in dataframe.
 #' @param coliws numeric value, colindex of wind speed in dataframe.
+#' @param coliwd numeric value, colindex of wind direction (degree) in dataframe.
 #' @return  dataframe with new resolution.
 #' @export
 #' @importFrom dplyr full_join
 #' @importFrom stats aggregate
 
-trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliwd = 2, coliws = 3){
+trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3){
   options(warn = -1)
   #move datetime to first column
   if(colid != 1){
@@ -26,13 +26,28 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
     colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
   }
 
+  #move ws, wd to second column and third column
+  if(wind == TRUE){
+    if(coliws != 2){
+      df[,c(2,coliws)] = df[,c(coliws,2)]
+      colnames(df)[c(2,coliws)] = colnames(df)[c(coliws,2)]
+    }
+    if(coliwd != 3){
+      df[,c(3,coliwd)] = df[,c(coliwd,3)]
+      colnames(df)[c(3,coliwd)] = colnames(df)[c(coliwd,3)]
+    }
+  }
+
   #In case df is not a dataframe.
-  df<- data.frame(df,stringsAsFactors = FALSE)
+  df <- data.frame(df,stringsAsFactors = FALSE)
+
+  #get colnames of df
+  cona_df <- colnames(df)
 
   #if wind mode TURE, generate u, v
   if(wind == TRUE){
-    df$u<-sin(pi/180*df[,coliwd])*df[,coliws]
-    df$v<-cos(pi/180*df[,coliwd])*df[,coliws]
+    df$u<-sin(pi/180*df[,3])*df[,2]
+    df$v<-cos(pi/180*df[,3])*df[,2]
   }
 
   #aggregate, seq need space
@@ -82,9 +97,9 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
     datat <- within(datat, {
       true_degree = ifelse(datat$v<0,datat$fake_degree+180,ifelse(datat$u<0,datat$fake_degree+360,datat$fake_degree))
     })
-    datat <- datat[ ,-c(coliws, coliwd)]
     datat <- datat[ ,-which(names(datat) %in% c("u", "v", "fake_degree"))]
-    colnames(datat)[(length(datat)-1):length(datat)]<-c("ws", "wd")
+    datat[ ,c(2,3)] <- datat[ ,c((length(datat)-1),length(datat))]
+    datat <- datat[,-c((length(datat)-1),length(datat))]
   }
 
   #gnerate timeseries
@@ -92,8 +107,14 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
   et <- as.POSIXct(df[length(datat[,1]),1], '%Y-%m-%d %H:%M', tz="GMT")
   ts <- seq.POSIXt(st, et, by = bkip)
   eval(parse(text = paste(c("df <- data.frame(", colnames(datat)[1], " = ts)"),collapse = "")))
+
   #complete timestamp
   df <- full_join(df, datat)
+
+  #rename df
+  colnames(df) <- cona_df
+
+  #output
   options(warn = 0)
   return(df)
 }
