@@ -21,9 +21,9 @@
 #' @importFrom stats aggregate
 #' @importFrom lubridate duration
 
-avri<-function(df, bkip, tcycle="1 day", n=NULL, colid = 1, st = st, et = et, na.rm = na.rm, wind = wind, coliws = 2, coliwd = 3){
+avri<-function(df, bkip, tcycle="1 day", n=NULL, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3){
   #time resampling
-  rs_df <- trs(df, bkip, colid = 1, st = st, et = et, na.rm = na.rm, wind = FALSE, coliws = coliws, coliwd = coliwd)
+  rs_df <- trs(df, bkip, colid = 1, st = st, et = et, na.rm = na.rm, wind = wind, coliws = coliws, coliwd = coliwd)
 
   #get colnames of rs_df
   cona_df <- colnames(rs_df)

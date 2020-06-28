@@ -10,10 +10,10 @@ avri(
   tcycle = "1 day",
   n = NULL,
   colid = 1,
-  st = st,
-  et = et,
-  na.rm = na.rm,
-  wind = wind,
+  st = NULL,
+  et = NULL,
+  na.rm = TRUE,
+  wind = FALSE,
   coliws = 2,
   coliwd = 3
 )
