@@ -18,5 +18,5 @@ dataframe with new resolution.
 Summary of dataframe.
 }
 \details{
-Summary of dataframe: mean, sd, min, pecentag evalue (25%, 50%, 70%), max.
+Summary of dataframe: mean, sd, min, pecentag evalue (25%, 50%, 75%), max.
 }

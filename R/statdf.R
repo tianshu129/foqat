@@ -2,7 +2,7 @@
 #'
 #' Summary of dataframe.
 #'
-#' Summary of dataframe: mean, sd, min, pecentag evalue (25%, 50%, 70%), max.
+#' Summary of dataframe: mean, sd, min, pecentag evalue (25%, 50%, 75%), max.
 #'
 #' @param x dataframe contains time series.
 #' @param n digits for reuslt in dataframe.
