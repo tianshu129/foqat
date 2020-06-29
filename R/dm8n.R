@@ -17,7 +17,7 @@
 #' @importFrom utils stack unstack
 
 
-dm8n<-function(df, colid=1, starthour=0, endhour=16, na.rm = TRUE, outputmode=1){
+dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmode = 1){
 
   ori_df = df
 	#move datetime to first column
