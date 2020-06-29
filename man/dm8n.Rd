@@ -4,17 +4,10 @@
 \alias{dm8n}
 \title{Calculate daily maximum-8-hour ozone}
 \usage{
-dm8n(
-  ori_df,
-  colid = 1,
-  starthour = 0,
-  endhour = 16,
-  na.rm = TRUE,
-  outputmode = 1
-)
+dm8n(df, colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 1)
 }
 \arguments{
-\item{ori_df}{dataframe. dataframe for ozone.}
+\item{df}{dataframe. dataframe for ozone.}
 
 \item{colid}{numeric. Column index for datatime. By default, it equals to 1.}
 

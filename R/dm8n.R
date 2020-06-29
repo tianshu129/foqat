@@ -4,7 +4,7 @@
 #'
 #' This function can calculate multiple columns of ozone observation data in 1 dataframe with 1 datetime columm (such as ozone concentration in different sites).
 #'
-#' @param ori_df dataframe. dataframe for ozone.
+#' @param df dataframe. dataframe for ozone.
 #' @param colid numeric. Column index for datatime. By default, it equals to 1.
 #' @param starthour numeric. Start hour for daily calculation. By default, it equals to 0.
 #' @param endhour numeric.  End hour for daily calculation. By default, it equals to 16 which means averaging ozone between 16~23.
@@ -17,8 +17,9 @@
 #' @importFrom utils stack unstack
 
 
-dm8n<-function(ori_df, colid=1, starthour=0, endhour=16, na.rm = TRUE, outputmode=1){
+dm8n<-function(df, colid=1, starthour=0, endhour=16, na.rm = TRUE, outputmode=1){
 
+  ori_df = df
 	#move datetime to first column
   if(colid != 1){
     df[,c(1,colid)] = df[,c(colid,1)]
