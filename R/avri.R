@@ -6,8 +6,17 @@
 #'
 #' @param df dataframe contains time series.
 #' @param bkip break input of resampling, such as '1 hour'.
-#' @param tcycle cycle for average variation. By default, cycle is "1 day".
-#' @param n number of items for each cycle. If n is setted, cycle will invalid.
+#' @param mode for calculating cycles: "recipes", "ncycle", "custom".
+#' "recipes" means using internal setting for calculation.
+#' "ncycle" means setting number of items for per cycle.
+#' "custom" means using 1 column in dataframe as a list of grouping elements for calculation.
+#' @param value for mode. Possible values for "recipes" are "day", "week", "month", year".
+#' "day" equals to 24 (hours) values in 1 day.
+#' "week" equals to 7 (days) values in 1 week.
+#' "month" equals to 31 (days) values in 1 month.
+#' "year" equals to 12 (months) values in 1 year.
+#' values for "ncycle" is a number representing number of items in per cycle.
+#' values for "custom" is a number representing column index in dataframe.
 #' @param colid column index of datetime in dataframe.
 #' @param st start time of resampling. The default value is the fisrt value of datetime column.
 #' @param et end time of resampling. The default value is the last value of datetime column.
@@ -21,7 +30,8 @@
 #' @importFrom stats aggregate
 #' @importFrom lubridate duration
 
-avri<-function(df, bkip, tcycle="1 day", n=NULL, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3){
+avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3){
+
   #time resampling
   rs_df <- trs(df, bkip, colid = 1, st = st, et = et, na.rm = na.rm, wind = wind, coliws = coliws, coliwd = coliwd)
 
@@ -34,11 +44,28 @@ avri<-function(df, bkip, tcycle="1 day", n=NULL, colid = 1, st = NULL, et = NULL
     rs_df$v<-cos(pi/180*rs_df[,3])*rs_df[,2]
   }
 
-  #claculate number for per_cycle
-  if(is.null(n)){
-    n=duration(tcycle)/duration(bkip)
+  #mode
+  #mode recipes custom ncycle
+  #value day week month year
+  if(mode=="recipes"){
+    if(value=="day"){
+      #24 hour in 1 day
+      mod_list=hour(rs_df[,1])
+    }else if(mode=="week"){
+      #7 days in 1 week
+      mod_list=weekdays(rs_df[,1])
+    }else if(mode=="month"){
+      #31 days in 1 month
+      mod_list=day(rs_df[,1])
+    }else if(mode=="year"){
+      #12 month in 1 year
+      mod_list=month(rs_df[,1])
+    }
+  }else if(mode=="ncycle"){
+    mod_list=seq(0,nrow(rs_df)-1,1)%%n
+  }else if(mode=="custom"){
+    mod_list=rs_df[,value]
   }
-  mod_list=seq(0,nrow(rs_df)-1,1)%%n
 
   #avearage
   results=aggregate(rs_df[,-1], by=list(cycle=mod_list), mean, na.rm = na.rm)
