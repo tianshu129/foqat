@@ -21,6 +21,7 @@
 #' @param st start time of resampling. The default value is the fisrt value of datetime column.
 #' @param et end time of resampling. The default value is the last value of datetime column.
 #' @param na.rm logical value. Remove NA value or not?
+#' @param digits numeric value, digits for result dataframe.
 #' @param wind logical value. if TRUE, please set coliwd, coliws.
 #' @param coliws numeric value, colindex of wind speed in dataframe.
 #' @param coliwd numeric value, colindex of wind direction (degree) in dataframe.
@@ -30,7 +31,7 @@
 #' @importFrom stats aggregate
 #' @importFrom lubridate duration
 
-avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3){
+avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL, na.rm = TRUE, digits = 2, wind = FALSE, coliws = 2, coliwd = 3){
 
   #time resampling
   rs_df <- trs(df, bkip, colid = 1, st = st, et = et, na.rm = na.rm, wind = wind, coliws = coliws, coliwd = coliwd)
@@ -69,15 +70,9 @@ avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, 
 
   #avearage
   results=aggregate(rs_df[,-1], by=list(cycle=mod_list), mean, na.rm = na.rm)
-  results=data.frame(Time=rs_df[1:24,1],results)
-  colnames(results)[1]<-"Timestamp Reference"
-
-
 
   #sd
   results_sd=aggregate(rs_df[,-1], by=list(cycle=mod_list), sd, na.rm = na.rm)
-  results_sd=data.frame(Time=rs_df[1:24,1],results_sd)
-  colnames(results_sd)[1]<-"Timestamp Reference"
 
   #calculate avearage of ws, wd
   if(wind == TRUE){
@@ -88,7 +83,7 @@ avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, 
       true_degree = ifelse(datat$v<0,datat$fake_degree+180,ifelse(datat$u<0,datat$fake_degree+360,datat$fake_degree))
     })
     datat <- datat[ ,-which(names(datat) %in% c("u", "v", "fake_degree"))]
-    datat[ ,c(3,4)] <- datat[ ,c((length(datat)-1),length(datat))]
+    datat[ ,c(2,3)] <- datat[ ,c((length(datat)-1),length(datat))]
     datat <- datat[,-c((length(datat)-1),length(datat))]
     results=datat
   }
@@ -102,22 +97,43 @@ avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, 
       true_degree = ifelse(datat$v<0,datat$fake_degree+180,ifelse(datat$u<0,datat$fake_degree+360,datat$fake_degree))
     })
     datat <- datat[ ,-which(names(datat) %in% c("u", "v", "fake_degree"))]
-    datat[ ,c(3,4)] <- datat[ ,c((length(datat)-1),length(datat))]
+    datat[ ,c(2,3)] <- datat[ ,c((length(datat)-1),length(datat))]
     datat <- datat[,-c((length(datat)-1),length(datat))]
     results_sd=datat
   }
 
   #format average data
-  results[,-c(1,2)]=lapply(results[,-c(1,2)], formatC, format = "e", digits = 2)
+  results[,-1]=lapply(results[,-1], formatC, format = "e", digits = digits)
 
   #format sd data
-  results_sd[,-c(1,2)]=lapply(results_sd[,-c(1,2)], formatC, format = "e", digits = 2)
+  results_sd[,-1]=lapply(results_sd[,-1], formatC, format = "e", digits = digits)
+
+  #name for cycle
+  if(mode=="recipes"){
+    if(value=="day"){
+      #24 hour in 1 day
+      colnames(results)[1]="hour of day"
+    }else if(value=="week"){
+      #7 days in 1 week
+      colnames(results)[1]="day of week"
+    }else if(value=="month"){
+      #31 days in 1 month
+      colnames(results)[1]="day of month"
+    }else if(value=="year"){
+      #12 month in 1 year
+      colnames(results)[1]="month of year"
+    }
+  }else if(mode=="ncycle"){
+    colnames(results)[1]="cycle"
+  }else if(mode=="custom"){
+    colnames(results)[1]="custom cycle"
+  }
 
   #rename average df
-  colnames(results)[3:ncol(results)] <- cona_df[2:length(cona_df)]
+  colnames(results)[2:ncol(results)] <- cona_df[2:length(cona_df)]
 
   #rename sd df
-  colnames(results_sd)[3:ncol(results_sd)] <- cona_df[2:length(cona_df)]
+  colnames(results_sd) <- colnames(results)
 
   #output
   df_average=results
