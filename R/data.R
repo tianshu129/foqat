@@ -49,3 +49,18 @@
 #'   \item{Cyclohexane}{Cyclohexane}
 #' }
 "voc"
+
+#' Demo data of setup for tuv
+#'
+#' 5 days setup data for tuv includes: nt,	lat,	lon,	o3col.
+#' The variables are as follows:
+#'
+#' @format A data frame with 5 rows and 5 variables:
+#' \describe{
+#'   \item{date}{date for each day}
+#'   \item{nt}{data point for each day}
+#'   \item{lat}{lat for each day}
+#'   \item{lon}{lon for each day}
+#'   \item{o3col}{o3 column concentration for each day}
+#' }
+"setup_tuv"
