@@ -51,18 +51,18 @@ avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, 
     if(value=="day"){
       #24 hour in 1 day
       mod_list=hour(rs_df[,1])
-    }else if(mode=="week"){
+    }else if(value=="week"){
       #7 days in 1 week
       mod_list=weekdays(rs_df[,1])
-    }else if(mode=="month"){
+    }else if(value=="month"){
       #31 days in 1 month
       mod_list=day(rs_df[,1])
-    }else if(mode=="year"){
+    }else if(value=="year"){
       #12 month in 1 year
       mod_list=month(rs_df[,1])
     }
   }else if(mode=="ncycle"){
-    mod_list=seq(0,nrow(rs_df)-1,1)%%n
+    mod_list=seq(0,nrow(rs_df)-1,1)%%value
   }else if(mode=="custom"){
     mod_list=rs_df[,value]
   }
