@@ -54,3 +54,9 @@ Please contact: tianshu129@163.com
 --------------------------------
 [zhihu]:https://www.zhihu.com/people/chen-xiao-tian-92-92 "我的知乎，欢迎关注"
 [zhihu-shield]:https://img.shields.io/badge/dynamic/json?color=0084ff&logo=zhihu&label=TichPi&query=%24.data.totalSubs&url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dzhihu%26queryKey%3Dchen-xiao-tian-92-92
+
+## Donation
+
+The project took a lot of time and effort.If this project is helpful to you, you are welcome to donate. Thank you very much:
+Wecaht Pay
+<img src="./img/donation.jpg" width="200" height="200" alt="支付" align=center>
