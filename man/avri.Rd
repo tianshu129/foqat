@@ -13,6 +13,7 @@ avri(
   st = NULL,
   et = NULL,
   na.rm = TRUE,
+  digits = 2,
   wind = FALSE,
   coliws = 2,
   coliwd = 3
@@ -43,6 +44,8 @@ values for "custom" is a number representing column index in dataframe.}
 \item{et}{end time of resampling. The default value is the last value of datetime column.}
 
 \item{na.rm}{logical value. Remove NA value or not?}
+
+\item{digits}{numeric value, digits for result dataframe.}
 
 \item{wind}{logical value. if TRUE, please set coliwd, coliws.}
 
