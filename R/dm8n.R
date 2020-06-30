@@ -59,14 +59,14 @@ dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmod
 			#D8
 			st=i
 			en=i+7
-			D8_sam=colMeans(df_tar[hour(df_tar[,1])>=st&hour(df_tar[,1])<=en,-1], na.rm = TRUE)
+			D8_sam=colMeans(df_tar[hour(df_tar[,1])>=st&hour(df_tar[,1])<=en,-1], na.rm = na.rm)
 			D8_sam=stack(D8_sam)
 			D8_sam=unstack(D8_sam)
 			D8_sam=data.frame(t(D8_sam))
 			D8_sam=data.frame(date=datelist[j],start_hour=st,end_hour=en,D8_sam)
 			D8=rbind(D8,D8_sam)
 			#count
-			count_col=colSums(!is.na(df_tar[hour(df_tar[,1])>=st&hour(df_tar[,1])<=en,-1]), na.rm = TRUE)
+			count_col=colSums(!is.na(df_tar[hour(df_tar[,1])>=st&hour(df_tar[,1])<=en,-1]), na.rm = na.rm)
 			count_col=data.frame(t(count_col))
 			colnames(count_col)=colnames(df_tar)[-1]
 			D8_count_sam=data.frame(date=datelist[j],start_hour=st,end_hour=en,count_col)
@@ -78,12 +78,12 @@ dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmod
 
 	#remove start & end hour columns
 	D8_sub=D8[,c(1,4)]
-	DMAX8=data.frame(aggregate(D8_sub[,2], by = list(D8_sub[,1]), max, na.rm=TRUE))
+	DMAX8=data.frame(aggregate(D8_sub[,2], by = list(D8_sub[,1]), max, na.rm=na.rm))
 	colnames(DMAX8)[1]="date"
 	#calculate DMAX8
 	for (p in 5:ncol(D8)){
 		D8_sub=D8[,c(1,p)]
-		DMAX8_sub=data.frame(aggregate(D8_sub[,2], by = list(D8_sub[,1]), max, na.rm=TRUE))
+		DMAX8_sub=data.frame(aggregate(D8_sub[,2], by = list(D8_sub[,1]), max, na.rm=na.rm))
 		DMAX8=cbind(DMAX8,DMAX8_sub[2])
 	}
 	#set colnames
