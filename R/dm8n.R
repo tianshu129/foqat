@@ -18,53 +18,57 @@
 
 
 dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmode = 1){
-
-  ori_df = df
 	#move datetime to first column
-  if(colid != 1){
-    df[,c(1,colid)] = df[,c(colid,1)]
-    colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
-  }
+	  if(colid != 1){
+		df[,c(1,colid)] = df[,c(colid,1)]
+		colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
+	  }
 
 	#get data list
-	datelist_raw<-as.Date(ori_df[,1])
+	datelist_raw<-as.Date(df[,1])
 	datelist<-datelist_raw[!duplicated(datelist_raw)]
 
-
+	#duplicated column if only 1 site exited.
+	ncol_ori=ncol(df)
+	if(ncol_ori==2){
+		df$O32=df[,2] 
+	}
+	
 	#sstup dataframe by 0-7 in first day
-	df=ori_df[as.Date(ori_df[,1])==datelist[1],]
+	df_tar=df[as.Date(df[,1])==datelist[1],]
 	st=starthour
 	en=starthour+7
-	D8=colMeans(df[hour(df[,1])>=st&hour(df[,1])<=en,-1],na.rm = na.rm)
+	
+	D8=colMeans(df_tar[hour(df_tar[,1])>=st&hour(df_tar[,1])<=en,-1],na.rm = na.rm)
 	D8=stack(D8)
 	D8=unstack(D8)
 	D8=data.frame(t(D8))
-	D8=data.frame(date=as.Date(df[1,1]),start_hour=st,end_hour=en,D8)
-	#setup df fot count by 0-7 in first day
-	count_col=colSums(!is.na(df[hour(df[,1])>=st&hour(df[,1])<=en,-1]))
+	D8=data.frame(date=as.Date(df_tar[1,1]),start_hour=st,end_hour=en,D8)
+	#setup df_tar fot count by 0-7 in first day
+	count_col=colSums(!is.na(df_tar[hour(df_tar[,1])>=st&hour(df_tar[,1])<=en,-1]))
 	count_col=data.frame(t(count_col))
-	colnames(count_col)=colnames(ori_df)[-1]
-	D8_count=data.frame(date=as.Date(df[1,1]),start_hour=st,end_hour=en,count_col)
+	colnames(count_col)=colnames(df_tar)[-1]
+	D8_count=data.frame(date=as.Date(df_tar[1,1]),start_hour=st,end_hour=en,count_col)
 
 	#loop for d8 d8_count
 	for (j in 1:length(datelist)){
 		#select day
-		df=ori_df[as.Date(ori_df[,1])==datelist[j],]
+		df_tar=df[as.Date(df[,1])==datelist[j],]
 		print(datelist[j])
 		for (i in seq(starthour,endhour,1)){
 			#D8
 			st=i
 			en=i+7
-			D8_sam=colMeans(df[hour(df[,1])>=st&hour(df[,1])<=en,-1], na.rm = na.rm)
+			D8_sam=colMeans(df_tar[hour(df_tar[,1])>=st&hour(df_tar[,1])<=en,-1], na.rm = TRUE)
 			D8_sam=stack(D8_sam)
 			D8_sam=unstack(D8_sam)
 			D8_sam=data.frame(t(D8_sam))
 			D8_sam=data.frame(date=datelist[j],start_hour=st,end_hour=en,D8_sam)
 			D8=rbind(D8,D8_sam)
 			#count
-			count_col=colSums(!is.na(df[hour(df[,1])>=st&hour(df[,1])<=en,-1]))
+			count_col=colSums(!is.na(df_tar[hour(df_tar[,1])>=st&hour(df_tar[,1])<=en,-1]), na.rm = TRUE)
 			count_col=data.frame(t(count_col))
-			colnames(count_col)=colnames(ori_df)[-1]
+			colnames(count_col)=colnames(df_tar)[-1]
 			D8_count_sam=data.frame(date=datelist[j],start_hour=st,end_hour=en,count_col)
 			D8_count=rbind(D8_count,D8_count_sam)
 		}
@@ -84,6 +88,14 @@ dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmod
 	}
 	#set colnames
 	colnames(DMAX8)[2:ncol(DMAX8)]=colnames(D8)[4:ncol(D8)]
+	
+	#remove duplicated column.
+	if(ncol_ori==2){
+		D8 = D8[,-ncol(D8)]
+		D8_count = D8_count[,-ncol(D8_count)]
+		DMAX8 = DMAX8[,-ncol(DMAX8)]	
+	}
+	
 	#set output
 	if(outputmode==2){
 		results = list(D8=D8, D8_count=D8_count, DMAX8= DMAX8)
