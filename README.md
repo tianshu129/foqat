@@ -8,14 +8,9 @@ FOQAT stands for "Filed observation quick analysis toolkit".
 
 ``` r
 # Install from GitHub:
-# install.packages("devtools")
-devtools::install_github("tianshu129/foqat")
+# install.packages("remotes")
+remotes::install_github("tianshu129/foqat")
 ```
-If fail to run 'install.packages("devtools")', please change primary CRAN repository to nearby location.  
-Tools->Global options->Packages->Primary CRAN repository  
-
-If fail to run 'devtools::install_github("tianshu129/foqat")', please enable TLS 1.2 in IE.  
-See https://github.com/r-lib/remotes/issues/130.
 
 ## Usage
 Functions in foqat are listed below:  
