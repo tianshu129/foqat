@@ -8,7 +8,7 @@ FOQAT stands for "Filed observation quick analysis toolkit".
 
 ``` r
 # Install from GitHub:
-# install.packages("remotes")
+install.packages("remotes")
 remotes::install_github("tianshu129/foqat")
 ```
 
