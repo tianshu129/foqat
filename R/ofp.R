@@ -29,6 +29,8 @@ ofp <- function(df, unit = "ugm", t = 25, p = 101.325, colid = 1){
   colnm_df = colnames(df)[2:ncol(df)]
   chemicalnames = ifelse(substr(colnm_df, 1, 1) == "X", sub("^.", "", colnm_df), colnm_df)
   chemicalnames = gsub("\\.", "-", chemicalnames)
+  #if i-
+  chemicalnames = gsub("\\i-", "iso-", chemicalnames)
   #build name_df
   name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, MIR = NA, MW = NA, stringsAsFactors = FALSE)
 
@@ -47,6 +49,9 @@ ofp <- function(df, unit = "ugm", t = 25, p = 101.325, colid = 1){
     }else if(result_test[2] == "Search Results"){
       name_df[i,2]="More than 1 result"
       name_df[i,3]=""
+	}else if(grepl("structure unspecified",result_test[2])){
+	  name_df[i,2]="structure unspecified in NIST"
+	  name_df[i,3]=""
     }else{
       result_test<-web%>%html_nodes("li")%>%html_text()
       result_test<-strsplit(result_test[21], ": ")
@@ -57,11 +62,11 @@ ofp <- function(df, unit = "ugm", t = 25, p = 101.325, colid = 1){
 
   #match mir by different sources
   ##by NIST
-  a=lapply(name_df$CAS[which(name_df$Source=="NIST")], function(i) grep(i, datacas$`CAS`))
+  a=lapply(name_df$CAS[which(name_df$Source=="NIST"&!is.na(name_df$CAS))], function(i) grep(i, datacas$CAS))
   a=unlist(lapply(a,function(x) if(identical(x,integer(0))) ' ' else x))
-  name_df$MIR[which(name_df$Source=="NIST")] = datacas$New[as.numeric(a)]
-  name_df$Matched_Name[which(name_df$Source=="NIST")] = datacas$Description[as.numeric(a)]
-  name_df$MW[which(name_df$Source=="NIST")] = datacas$MWt[as.numeric(a)]
+  name_df$MIR[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$New[as.numeric(a)]
+  name_df$Matched_Name[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$Description[as.numeric(a)]
+  name_df$MW[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$MWt[as.numeric(a)]
 
   for(k in which(name_df$Source=="")){
     tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
