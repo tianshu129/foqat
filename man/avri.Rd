@@ -22,7 +22,7 @@ avri(
 \arguments{
 \item{df}{dataframe contains time series.}
 
-\item{bkip}{break input of resampling, such as '1 hour'.}
+\item{bkip}{new resolution breaking input of time series, such as '1 hour'.}
 
 \item{mode}{for calculating cycles: "recipes", "ncycle", "custom".
 "recipes" means using internal setting for calculation.

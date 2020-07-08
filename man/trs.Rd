@@ -19,7 +19,7 @@ trs(
 \arguments{
 \item{df}{dataframe contains time series.}
 
-\item{bkip}{break input of resampling, such as '1 hour'.}
+\item{bkip}{new resolution breaking input of time series, such as '1 hour'.}
 
 \item{colid}{column index of datetime in dataframe.}
 
@@ -36,7 +36,7 @@ trs(
 \item{coliwd}{numeric value, colindex of wind direction (degree) in dataframe.}
 }
 \value{
-dataframe with new resolution.
+dataframe with new resolution. If dealing with ws and wd, columns for ws and wd will be move into second and third columns in results.
 }
 \description{
 Resamples time series, and returns complete time series with new time resolution.

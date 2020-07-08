@@ -8,12 +8,12 @@
 #' @param colid column index of datetime in dataframe.
 #' @param st start time of resampling. The default value is the fisrt value of datetime column.
 #' @param et end time of resampling. The default value is the last value of datetime column.
-#' @param bkip break input of resampling, such as '1 hour'.
+#' @param bkip new resolution breaking input of time series, such as '1 hour'.
 #' @param na.rm logical value. Remove NA value or not?
 #' @param wind logical value. if TRUE, please set coliwd, coliws.
 #' @param coliws numeric value, colindex of wind speed in dataframe.
 #' @param coliwd numeric value, colindex of wind direction (degree) in dataframe.
-#' @return  dataframe with new resolution.
+#' @return dataframe with new resolution. If dealing with ws and wd, columns for ws and wd will be move into second and third columns in results.
 #' @export
 #' @importFrom dplyr full_join
 #' @importFrom stats aggregate
