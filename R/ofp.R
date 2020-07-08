@@ -22,8 +22,13 @@ ofp <- function(df, unit = "ugm", t = 25, p = 101.325, colid = 1){
     colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
   }
 
-  #get VOC name by colnames of df, build name_df
-  name_df = data.frame(name = colnames(df)[2:ncol(df)],CAS = NA, Source = NA, Matched_Name = NA, MIR = NA, MW = NA, stringsAsFactors = FALSE)
+  #get VOC name by colnames of df
+  #if read from xlsx, replace "X" and "."
+  colnm_df = colnames(df)[2:ncol(df)]
+  chemicalnames = ifelse(substr(colnm_df, 1, 1) == "X", sub("^.", "", colnm_df), colnm_df)
+  chemicalnames = gsub("\\.", "-", chemicalnames)
+  #build name_df
+  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, MIR = NA, MW = NA, stringsAsFactors = FALSE)
 
   #search VOC name to get CAS Number from different sources, add cas, sources, mathed_name to name_df
   ##firstly by NIST

@@ -5,7 +5,7 @@
 #' If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
 #'
 #' @param df dataframe contains time series.
-#' @param bkip break input of resampling, such as '1 hour'.
+#' @param bkip new resolution breaking input of time series, such as '1 hour'.
 #' @param mode for calculating cycles: "recipes", "ncycle", "custom".
 #' "recipes" means using internal setting for calculation.
 #' "ncycle" means setting number of items for per cycle.
@@ -34,7 +34,7 @@
 avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL, na.rm = TRUE, digits = 2, wind = FALSE, coliws = 2, coliwd = 3){
 
   #time resampling
-  rs_df <- trs(df, bkip, colid = 1, st = st, et = et, na.rm = na.rm, wind = wind, coliws = coliws, coliwd = coliwd)
+  rs_df <- trs(df, bkip, colid = colid, st = st, et = et, na.rm = na.rm, wind = wind, coliws = coliws, coliwd = coliwd)
 
   #get colnames of rs_df
   cona_df <- colnames(rs_df)
