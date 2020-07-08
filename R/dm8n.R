@@ -12,6 +12,8 @@
 #' @param outputmode numeric. 1 stands for brief results (only DMAX8). 2 stands for detail results (DMAX8, D8, counts for D8). By default, it equal to 1.
 #' @return brief results (only DMAX8), or list for for detail results (DMAX8, D8, counts for D8).
 #' @export
+#' @examples
+#' dm8n(aqi[,c(1,6)], colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 2)
 #' @import lubridate
 #' @importFrom stats aggregate
 #' @importFrom utils stack unstack
@@ -31,14 +33,14 @@ dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmod
 	#duplicated column if only 1 site exited.
 	ncol_ori=ncol(df)
 	if(ncol_ori==2){
-		df$O32=df[,2] 
+		df$O32=df[,2]
 	}
-	
+
 	#sstup dataframe by 0-7 in first day
 	df_tar=df[as.Date(df[,1])==datelist[1],]
 	st=starthour
 	en=starthour+7
-	
+
 	D8=colMeans(df_tar[hour(df_tar[,1])>=st&hour(df_tar[,1])<=en,-1],na.rm = na.rm)
 	D8=stack(D8)
 	D8=unstack(D8)
@@ -88,14 +90,14 @@ dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmod
 	}
 	#set colnames
 	colnames(DMAX8)[2:ncol(DMAX8)]=colnames(D8)[4:ncol(D8)]
-	
+
 	#remove duplicated column.
 	if(ncol_ori==2){
 		D8 = D8[,-ncol(D8)]
 		D8_count = D8_count[,-ncol(D8_count)]
-		DMAX8 = DMAX8[,-ncol(DMAX8)]	
+		DMAX8 = DMAX8[,-ncol(DMAX8)]
 	}
-	
+
 	#set output
 	if(outputmode==2){
 		results = list(D8=D8, D8_count=D8_count, DMAX8= DMAX8)

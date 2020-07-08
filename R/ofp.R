@@ -11,6 +11,8 @@
 #' @param p pressure for conversions. Unit for p is "kPa". By default, p equals to 101.325 kPa.
 #' @return  dataframes for MIR and OFP.
 #' @export
+#' @examples
+#' ofp(voc, unit = "ppb")
 #' @importFrom utils URLencode
 #' @importFrom xml2 read_html
 

@@ -20,3 +20,6 @@ Summary of dataframe.
 \details{
 Summary of dataframe: mean, sd, min, pecentag evalue (25%, 50%, 75%), max.
 }
+\examples{
+statdf(aqi)
+}

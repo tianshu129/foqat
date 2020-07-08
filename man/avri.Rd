@@ -62,3 +62,7 @@ Calculates average of variation of time series.
 \details{
 If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
 }
+\examples{
+avri(met, bkip = "1 hour", mode = "recipes", value = "day",
+st = "2017-05-01 00:00:00", wind = TRUE, coliws = 4, coliwd = 5)
+}
