@@ -21,7 +21,8 @@
 #' @return dataframe of photolysis rate coefficients (J-values).
 #' @export
 #' @importFrom stringr str_split_fixed
-#' @importFrom lubridate hour
+#' @importFrom lubridate hours
+#' @importFrom lubridate minutes
 
 tuv <- function(pathtuv, df, colid = 1){
 outfile="usrout.txt"
@@ -56,7 +57,9 @@ for(irow in 1:nrow(df)){
 	result_j <- data.frame(result[(which(grepl("deg.", result[,1]))[2]+1):(nrow(result)-1),])
 	result_j_df <- data.frame(str_split_fixed(result_j[,1], "\\s+", 10), stringsAsFactors = FALSE)[,2:10]
 	colnames(result_j_df) <- c("time hrs.", "sza deg.", "1", "2", "3", "4", "5", "6", "7")
-	result_j_df[,1] <- as.character(hours(as.numeric(result_j_df[,1])) + as.Date(df[irow,1]))
+	hours_result = round(as.numeric(result_j_df[,1]))
+	minutes_result = round((as.numeric(result_j_df[,1])-round(as.numeric(result_j_df[,1])))*60)
+	result_j_df[,1] <- as.character(as.Date(df[irow,1]) + hours(hours_result) + minutes(minutes_result))
 	# Writes result data to the result df
 	if(exists("result_j_df_all")){
 		result_j_df_all <- rbind(result_j_df_all, result_j_df)
