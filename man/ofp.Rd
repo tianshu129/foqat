@@ -26,3 +26,6 @@ Calculate ozone formation potential of VOC time series.
 \details{
 Calculate ozone formation potential of VOC time series. Returns MIR dataframe, OFP dataframe.
 }
+\examples{
+ofp(voc, unit = "ppb")
+}

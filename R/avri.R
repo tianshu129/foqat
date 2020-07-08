@@ -27,6 +27,9 @@
 #' @param coliwd numeric value, colindex of wind direction (degree) in dataframe.
 #' @return  dataframe for average variation.
 #' @export
+#' @examples
+#' avri(met, bkip = "1 hour", mode = "recipes", value = "day",
+#' st = "2017-05-01 00:00:00", wind = TRUE, coliws = 4, coliwd = 5)
 #' @importFrom dplyr full_join
 #' @importFrom stats aggregate
 #' @importFrom lubridate duration

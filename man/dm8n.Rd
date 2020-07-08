@@ -28,3 +28,6 @@ Calculates daily maximum-8-hour ozone from ozone observation data.
 \details{
 This function can calculate multiple columns of ozone observation data in 1 dataframe with 1 datetime columm (such as ozone concentration in different sites).
 }
+\examples{
+dm8n(aqi[,c(1,6)], colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 2)
+}

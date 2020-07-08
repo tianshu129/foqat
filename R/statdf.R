@@ -8,6 +8,8 @@
 #' @param n digits for reuslt in dataframe.
 #' @return  dataframe with new resolution.
 #' @export
+#' @examples
+#' statdf(aqi)
 #' @importFrom stats quantile sd
 
 statdf = function(x, n = 2) {

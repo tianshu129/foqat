@@ -15,6 +15,8 @@
 #' @param coliwd numeric value, colindex of wind direction (degree) in dataframe.
 #' @return dataframe with new resolution. If dealing with ws and wd, columns for ws and wd will be move into second and third columns in results.
 #' @export
+#' @examples
+#' trs(met, bkip = "1 hour", st = "2017-05-01 00:00:00", wind = TRUE, coliws = 4, coliwd = 5)
 #' @importFrom dplyr full_join
 #' @importFrom stats aggregate
 
