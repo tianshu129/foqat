@@ -45,13 +45,13 @@ ofp <- function(df, unit = "ugm", t = 25, p = 101.325, colid = 1){
     result_test<-web%>%html_nodes("h1")%>%html_text()
     if(result_test[2] == "Name Not Found"){
       name_df[i,2]="Name Not Found"
-      name_df[i,3]=""
+      name_df[i,3]=NA
     }else if(result_test[2] == "Search Results"){
       name_df[i,2]="More than 1 result"
-      name_df[i,3]=""
+      name_df[i,3]=NA
 	}else if(grepl("structure unspecified",result_test[2])){
 	  name_df[i,2]="structure unspecified in NIST"
-	  name_df[i,3]=""
+	  name_df[i,3]=NA
     }else{
       result_test<-web%>%html_nodes("li")%>%html_text()
       result_test<-strsplit(result_test[21], ": ")
@@ -61,14 +61,30 @@ ofp <- function(df, unit = "ugm", t = 25, p = 101.325, colid = 1){
   }
 
   #match mir by different sources
-  ##by NIST
+  ##get CAS from NIST, match name by CAS
   a=lapply(name_df$CAS[which(name_df$Source=="NIST"&!is.na(name_df$CAS))], function(i) grep(i, datacas$CAS))
   a=unlist(lapply(a,function(x) if(identical(x,integer(0))) ' ' else x))
   name_df$MIR[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$New[as.numeric(a)]
   name_df$Matched_Name[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$Description[as.numeric(a)]
   name_df$MW[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$MWt[as.numeric(a)]
 
-  for(k in which(name_df$Source=="")){
+    
+  #if it is matched by CAS in NIST and matched by name in Carter paper, but it doesn't have CAS in Carter paper.
+  for(k in which(!is.na(name_df$Source)&is.na(name_df$MIR))){
+    tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
+    tar=tolower(name_df$name[k])
+    df_null=data.frame(datacas[tarlist %in% tar,])
+    if(nrow(df_null)!=0){
+      name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
+      #name_df$CAS[as.numeric(k)] = df_null$CAS[1]
+      name_df$MIR[as.numeric(k)] = df_null$New[1]
+      name_df$Source[as.numeric(k)] = "CAS is found in NIST. But it only has name in Carter paper 2010"
+      name_df$MW[as.numeric(k)] = df_null$MWt[1]
+    }
+  }
+  
+  #if it isn't found in NIST, but its name is matched by Carter paper.
+  for(k in which(is.na(name_df$Source))){
     tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
     tar=tolower(name_df$name[k])
     df_null=data.frame(datacas[tarlist %in% tar,])
