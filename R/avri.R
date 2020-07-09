@@ -105,11 +105,15 @@ avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, 
     results_sd=datat
   }
 
-  #format average data
+  #format average data (avoid NA)
+  if(!all(is.na(results_sd[, -1]))){
   results[,-1]=lapply(results[,-1], formatC, format = "e", digits = digits)
+  }
 
-  #format sd data
+  #format sd data (avoid NA)
+  if(!all(is.na(results_sd[, -1]))){
   results_sd[,-1]=lapply(results_sd[,-1], formatC, format = "e", digits = digits)
+  }
 
   #name for cycle
   if(mode=="recipes"){
