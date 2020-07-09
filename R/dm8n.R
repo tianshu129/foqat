@@ -25,7 +25,10 @@ dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmod
 		df[,c(1,colid)] = df[,c(colid,1)]
 		colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
 	  }
-
+	
+	#In case df is not a dataframe.
+	df <- data.frame(df,stringsAsFactors = FALSE)
+  
 	#get data list
 	datelist_raw<-as.Date(df[,1])
 	datelist<-datelist_raw[!duplicated(datelist_raw)]
