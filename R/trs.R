@@ -19,6 +19,7 @@
 #' trs(met, bkip = "1 hour", st = "2017-05-01 00:00:00", wind = TRUE, coliws = 4, coliwd = 5)
 #' @importFrom dplyr full_join
 #' @importFrom stats aggregate
+#' @importFrom lubridate duration
 
 trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3){
   options(warn = -1)
@@ -91,7 +92,16 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
     df <- df[df[,1] <= et,]
   }
   eval(parse(text = paste(c("datat <- aggregate(df[,-1], list(", colnames(df)[1], " = cut(df[,1], breaks = bkip)), mean, na.rm = na.rm)"),collapse = "")))
-  datat[,1] = as.POSIXct(datat[,1], "%Y-%m-%d %H:%M", tz = "GMT")
+
+  #convert ts according to type of bkip
+  bkip_str = gsub("[^a-zA-Z]", "", bkip)
+  bkip_str = tolower(bkip_str)
+  bkip_str = gsub("[s]", "", bkip_str)
+  if(bkip_str == "sec"|bkip_str == "min"|bkip_str == "hour"){
+	datat[,1] = as.POSIXct(datat[,1], "%Y-%m-%d %H:%M", tz = "GMT")
+  }else{
+	datat[,1] = as.Date(datat[,1])
+  }
 
   if(wind == TRUE){
     datat$fake_degree<-(atan(datat$u/datat$v)/pi*180)
@@ -104,11 +114,21 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
     datat <- datat[,-c((length(datat)-1),length(datat))]
   }
 
-  #gnerate timeseries
-  st <- as.POSIXct(df[1,1], '%Y-%m-%d %H:%M', tz="GMT")
-  et <- as.POSIXct(df[length(datat[,1]),1], '%Y-%m-%d %H:%M', tz="GMT")
-  ts <- seq.POSIXt(st, et, by = bkip)
-  eval(parse(text = paste(c("df <- data.frame(", colnames(datat)[1], " = ts)"),collapse = "")))
+  #gnerate timeseries according to type of bkip
+  bkip_str = gsub("[^a-zA-Z]", "", bkip)
+  bkip_str = tolower(bkip_str)
+  bkip_str = gsub("[s]", "", bkip_str)
+  if(bkip_str == "sec"|bkip_str == "min"|bkip_str == "hour"){
+	st <- as.POSIXct(df[1,1], '%Y-%m-%d %H:%M', tz="GMT")
+	et <- as.POSIXct(df[length(datat[,1]),1], '%Y-%m-%d %H:%M', tz="GMT")
+	ts <- seq.POSIXt(st, et, by = bkip)
+	eval(parse(text = paste(c("df <- data.frame(", colnames(datat)[1], " = ts)"),collapse = "")))
+  }else{
+	st <- as.Date(df[1,1])
+	et <- as.Date(df[length(datat[,1]),1])
+	ts <- seq(st, et, by = bkip)
+	eval(parse(text = paste(c("df <- data.frame(", colnames(datat)[1], " = ts)"),collapse = "")))
+  }
 
   #complete timestamp
   df <- full_join(df, datat)
