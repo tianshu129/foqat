@@ -46,6 +46,7 @@ library(foqat)
 Please contact: tianshu129@163.com
 
 ## Link
+[![Google Scholar](https://scholar.google.com/intl/en/scholar/images/1x/scholar_logo_24dp.png)](https://scholar.google.com/citations?user=VfnzOQgAAAAJ&hl=en)
 [![Twitter](https://img.shields.io/twitter/follow/tichpi.svg?style=social&label=@tichpi)](https://twitter.com/tichpi)  
 [![zhihu-shield]][zhihu]  
 --------------------------------
