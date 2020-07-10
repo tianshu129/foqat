@@ -46,7 +46,7 @@ library(foqat)
 Please contact: tianshu129@163.com
 
 ## Link
-[![Twitter](https://img.shields.io/twitter/follow/:tichpi.svg?style=social&label=@:tichpi)](https://twitter.com/:tichpi)
+[![Twitter](https://img.shields.io/twitter/follow/tichpi.svg?style=social&label=@tichpi)](https://twitter.com/tichpi)  
 知乎 [![zhihu-shield]][zhihu]
 --------------------------------
 [zhihu]:https://www.zhihu.com/people/chen-xiao-tian-92-92 "我的知乎，欢迎关注"
