@@ -47,7 +47,7 @@ library(foqat)
 Please contact: tianshu129@163.com
 
 ## Link
-[![ResearchGate](https://c5.rgstatic.net/m/433110575315790/images/template/brand-header-logo.svg)](https://www.researchgate.net/profile/Tianshu_Chen)   
+[![ResearchGate](https://pbs.twimg.com/profile_images/1186252947417636866/SsIMiCEU_400x400.jpg)](https://www.researchgate.net/profile/Tianshu_Chen)   
 [![Google Scholar](https://scholar.google.com/intl/en/scholar/images/1x/scholar_logo_24dp.png)](https://scholar.google.com/citations?user=VfnzOQgAAAAJ&hl=en)  
 [![Twitter](https://img.shields.io/twitter/follow/tichpi.svg?style=social&label=@tichpi)](https://twitter.com/tichpi)  
 [![zhihu-shield]][zhihu]  
