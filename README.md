@@ -4,6 +4,8 @@ FOQAT is an R package designed for quick analysis of atmospheric (especially for
 
 FOQAT stands for "Filed observation quick analysis toolkit".
 
+Twitter: [@tichpi](https://twitter.com/tichpi)
+
 ## Installation
 
 ``` r
