@@ -47,7 +47,7 @@ library(foqat)
 Please contact: tianshu129@163.com
 
 ## Link
-[![ResearchGate](https://www.google.com/search?q=researchgate&rlz=1C1CHWL_zh-CNCN813CN813&sxsrf=ALeKk00XhWs_B0VEdqCUHE0HZlipjN4K-g:1594424615506&tbm=isch&source=iu&ictx=1&fir=bU2QeNQObTpFAM%252C9NV8_ScCb5vBsM%252C%252Fm%252F0rzn56s&vet=1&usg=AI4_-kTObPlOBWs0ZvEth65t-_gUo8VcCA&sa=X&ved=2ahUKEwip3s_G7sPqAhXqAZ0JHTMADtMQ_B16BAgOEA8&cshid=1594424718407175#imgrc=bU2QeNQObTpFAM)](https://www.researchgate.net/profile/Tianshu_Chen)   
+[![ResearchGate](https://c5.rgstatic.net/m/433110575315790/images/template/brand-header-logo.svg)](https://www.researchgate.net/profile/Tianshu_Chen)   
 [![Google Scholar](https://scholar.google.com/intl/en/scholar/images/1x/scholar_logo_24dp.png)](https://scholar.google.com/citations?user=VfnzOQgAAAAJ&hl=en)  
 [![Twitter](https://img.shields.io/twitter/follow/tichpi.svg?style=social&label=@tichpi)](https://twitter.com/tichpi)  
 [![zhihu-shield]][zhihu]  
