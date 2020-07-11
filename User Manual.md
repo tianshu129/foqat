@@ -252,11 +252,11 @@ View(x[["OFP_Result"]])
 ```
 
 
-### 最大八小时臭氧 dm8n
+### Calculate daily maximum-8-hour ozone (dm8n)
 ----------
 * #### Description
 
-计算每日最大八小时臭氧。
+Calculates daily maximum-8-hour ozone from ozone observation data.
 
 * #### Usage
 ``` r
@@ -266,16 +266,16 @@ dm8n(df, colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 1)
 
 | variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `df`              | 臭氧时间序列的数据框                     |                       | 可以同时计算多个站点，输入多列即可。    |
-| `colid`           | 时间列的列号                       |                            |                                      |
-| `starthour`       | 平均八小时臭氧的起点时间            | 0                          |                                      |
-| `endhour`         | 平均八小时臭氧的终点时间            | 16                         |16就是平均16-23点的八小时臭氧。          |
-| `na.rm`           | 是否排除NA值                       | TRUE                       |                                      |
-| `outputmode`      | 输出结果的格式                     | 1                           |填写1或2的结果见“输出”。               |
+| `df`              | dataframe of time series          |                            |                                      |
+| `colid`           | column index for date             |                            |                                      |
+| `starthour`       | start hour for calculating 8-hour ozone | 0                    |                                      |
+| `endhour`         | end hour for calculating 8-hour ozone   | 16     |16 is the average of 8-hour ozone between 16 and 23.|
+| `na.rm`           | logical value. Remove NA value or not? | TRUE                  |                                      |
+| `outputmode`      | the format of the output, possible value: 1 or 2.| 1 |See output for the results of filling in 1 or 2.|
 
-* #### 输出
+* #### Output
 
-取决于函数中的参数`outputmode`。填1只输出1个表：最大八小时臭氧。填2输出1个列表，其中包含3个表：八小时臭氧、每个计算区间的数据个数统计、最大八小时臭氧。
+Depends on the value of 'outputMode'. Value 1 will output 1 table: maximum-8-hour ozone. Value 1 will output 1 list, which contains 3 tables: 8-hour ozone, statistics of number of valid items within each calculation interval, and maximum-8-hour ozone.
 
 * #### Examples
 
