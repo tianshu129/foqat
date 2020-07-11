@@ -154,7 +154,7 @@ trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliw
 ```
 * #### Arguments
 
-| 变量名             | 含义                              | 默认值                     | 示例值/备注                           |
+| variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | 时间序列的数据框                    |                            |                                     |
 | `bkip`            | 重采样的时间区间长度                |                            | '1 hour'                             |
@@ -190,7 +190,7 @@ avri(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL,
 ```
 * #### Arguments
 
-| 变量名             | 含义                              | 默认值                     | 示例值/备注                            |
+| variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | 时间序列的数据框                    |                            |                                      |
 | `bkip`            | 基础时间区间长度                    |                            | 计算小时分辨率的平均日变化就写'1 hour'。|
@@ -230,7 +230,7 @@ ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
 ```
 * #### Arguments
 
-| 变量名             | 含义                              | 默认值                     |示例值/备注                            |
+| variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | VOC时间序列的数据框                |                            |                                      |
 | `unit`            | VOC数据的单位（微克每立方米或者ppb)  | "ugm"                     | 填写"ugm"或者"ppb"(带英文引号）。       
@@ -264,7 +264,7 @@ dm8n(df, colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 1)
 ```
 * #### Arguments
 
-| 变量名             | 含义                              | 默认值                     |示例值/备注                            |
+| variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | 臭氧时间序列的数据框                     |                       | 可以同时计算多个站点，输入多列即可。    |
 | `colid`           | 时间列的列号                       |                            |                                      |
@@ -288,7 +288,7 @@ View(x[["DMAX8"]])
 ```
 
 
-### OH反应活性 koh
+### OH Reactivity (koh)
 ----------
 * #### Description
 
@@ -300,7 +300,7 @@ koh(spec)
 ```
 * #### Arguments
 
-| 变量名             | 含义                              | 默认值                     |示例值/备注                            |
+| variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `spec`            | 物种                               |                            |输入物种名称或者CAS号均可。            |
 
@@ -328,7 +328,7 @@ tuv(pathtuv, df, colid = 1)
 ```
 * #### Arguments
 
-| 变量名             | 含义                              | 默认值                     |示例值/备注                            |
+| variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `pathtuv`         | TUV的windows程序的母文件夹路径      |                            |"G:/tuv5.3.1.exe"                     |
 | `df`              | 拟输入的参数及其数值的时间序列的数据框|                            |必须包含日期列。                       |
@@ -360,5 +360,5 @@ Please send email to: tianshu129@163.com
 
 ## DONATION
 
-本项目耗费了很多时间和精力。如果本项目对你有帮助，欢迎投食，非常感谢：  
+The project took a lot of time and effort.If this project is helpful to you, you are welcome to donate. Thank you very much:
 <img src="./img/donation.jpg" width="200" height="200" alt="支付" align=center>
