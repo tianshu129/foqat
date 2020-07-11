@@ -29,15 +29,15 @@ Features currently included:
 
 * [Calculate TUV in batch (tuv)](#calculate-tuv-in-batch-tuv)
 
-包中包含了4个随机样本数据集（时长5天），用于演示功能:
+The package contains 4 random sample data sets (5 days in length) to demonstrate functions:
 
-* 空气质量数据集aqi
+* Air quality data set (aqi)
 
-* 气象数据集met
+* Meteorological data set (met)
 
-* 挥发性有机物数据集voc
+* Volatile organic compounds data set (voc)
 
-* 配置tuv的示范数据集setup_tuv
+* Demonstration dataset to configure the TUV (setup_tuv)
 
 
 ## INSTALLATION OF R & RSTUDIO
@@ -47,7 +47,7 @@ Please install the R program first, then install the R integrated development pl
 
 ## BREIF KNOWLEDGE OF R
 
-### R的函数 
+### Functions in R
 ----------
 R语言中，操作依赖于函数。 
 
@@ -102,11 +102,11 @@ write.csv(result,"E:/Users/Chen/Desktop/tuv_result.csv",row.names=F)
 
 
 ## INSTALLATION OF FOQAT
-本包当前不是官方包，需要安装官方包‘remotes’。然后用"remotes"中的‘install_github’函数在线安装本包。
+This package is not currently collected by CRAN, you need to install the CARN package 'Remotes'.Then install this package using the 'install_github' function in "remotes".
 ``` r
-#安装官方包‘remotes’
+#Install the CRAN package ‘remotes’
 install.packages("remotes")
-#调用其中的‘install_github’函数安装本包
+#Call the 'install_github' function to install this package
 remotes::install_github("tianshu129/foqat")
 ```
 
