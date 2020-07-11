@@ -15,19 +15,19 @@ The FOQAT package is a toolkit for rapid processing and analysis of atmospheric 
 
 Features currently included:
 
-* [数据统计](#数据统计-statdf)
+* [Summary data (statdf)](#summary-data-statdf)
 
-* [数据重采样 (会自动补齐时间，包含风数据处理）](#数据重采样-trs)
+* [Resample time series (trs) (Return complete time series. Wind data is acceptable.)](#resample-time-series-trs)
 
-* [计算平均变化 (包含风数据处理）](#平均变化-avri)
+* [Calculate average of variation (avri) (Wind data is acceptable.)](#calculate-average-of-variation-avri)
 
-* [计算臭氧生成潜势（OFP）](#臭氧生成潜势-ofp)
+* [Calcualte Ozone Formation Potential (ofp)](#calcualte-ozone-formation-potential-ofp)
 
-* [计算最大八小时臭氧](#最大八小时臭氧-dm8n)
+* [Calculate daily maximum-8-hour ozone (dm8n)](#calculate-daily-maximum-8-hour-ozone-dm8n)
 
-* [获取OH反应活性](#OH反应活性-koh)
+* [Get OH Reactivity (koh)](#oh-reactivity-koh)
 
-* [批量计算对流层紫外可见(TUV)辐射模型](#对流层紫外可见TUV辐射模型批量计算-tuv)
+* [Calculate TUV in batch (tuv)](#calculate-tuv-in-batch-tuv)
 
 包中包含了4个随机样本数据集（时长5天），用于演示功能:
 
@@ -288,7 +288,7 @@ View(x[["DMAX8"]])
 ```
 
 
-### OH Reactivity (koh)
+### Get OH Reactivity (koh)
 ----------
 * #### Description
 
