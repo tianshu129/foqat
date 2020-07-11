@@ -3,11 +3,11 @@
 ## Tableof Contents
 * [GENERAL OVERVIEW](#general-overview)
 * [INSTALLATION OF R & RSTUDIO](#R程序的安装)
-* [简要R语言背景知识](#简要R语言知识)
-* [本包的安装](#本包的安装)
-* [函数及实例](#函数及实例)
-* [获取帮助](#获取帮助)
-* [捐赠](#捐赠)
+* [BREIF KNOWLEDGE OF R](#简要R语言知识)
+* [INSTALLATION OF FOQAT](#本包的安装)
+* [FUNCTIONS AND EXAMPLES](#函数及实例)
+* [GETTING HELP](#获取帮助)
+* [DONATION](#DONATION)
 
 ## GENERAL OVERVIEW
 
@@ -45,7 +45,7 @@ FOQAT包是一个基于R对大气外场观测数据和空气污染数据进行�
 [R](https://cloud.r-project.org/)  
 [rstudio-desktop](https://rstudio.com/products/rstudio/#rstudio-desktop)  
 
-## 简要R语言背景知识
+## BREIF KNOWLEDGE OF R
 
 ### R的函数 
 ----------
@@ -101,7 +101,7 @@ write.csv(result,"E:/Users/Chen/Desktop/tuv_result.csv",row.names=F)
 ```
 
 
-## 本包的安装
+## INSTALLATION OF FOQAT
 本包当前不是官方包，需要安装官方包‘remotes’。然后用"remotes"中的‘install_github’函数在线安装本包。
 ``` r
 #安装官方包‘remotes’
@@ -111,7 +111,7 @@ remotes::install_github("tianshu129/foqat")
 ```
 
 
-## 函数及实例
+## FUNCTIONS AND EXAMPLES
 
 ### 数据统计 statdf 
 ----------
@@ -353,12 +353,12 @@ x=tuv(pathtuv, setup_tuv, colid = 1)
 View(x)
 ```
 
-## 获取帮助
+## GETTING HELP
 
 请联系：tianshu129@163.com  
 
 
-## 捐赠
+## DONATION
 
 本项目耗费了很多时间和精力。如果本项目对你有帮助，欢迎投食，非常感谢：  
 <img src="./img/donation.jpg" width="200" height="200" alt="支付" align=center>
