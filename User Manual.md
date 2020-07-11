@@ -168,7 +168,6 @@ trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliw
 * #### Output
 
 Output is a dataframe which contain a time series with a new time resolution.   
-If dealing with wind speed and wind direction, columns for wind speed and wind direction will be move into second and third columns in result table.
 
 * #### Examples
 
@@ -207,7 +206,6 @@ avri(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL,
 * #### Output
 
 The output is a dataframe. The first column is the serial number within the period. The average variation start from the second column. Note that when the pattern USES "ncycle" or "custom", the start time determines the start time of the first element in the average variation. For example, if the first timestamp of data is "2010-05-01 12:00:00", the resolution is 1 hour, the mode is "ncycle", and the value is 24, then the result represents diurnal variation starting from 12 o'clock.  
-If dealing with wind speed and wind direction, columns for wind speed and wind direction will be move into second and third columns in result table.
 
 * #### Examples
 
