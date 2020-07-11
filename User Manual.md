@@ -163,7 +163,7 @@ trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliw
 | `na.rm`           | logical value. Remove NA value or not? | TRUE                  |                                      |
 | `wind`            | logical value. if TRUE, please set coliwd, coliws. | FALSE     |                                      |
 | `coliws`          | numeric value, colindex of wind speed in dataframe. | 2        |                                      |
-| `coliwd`          | numeric value, colindex of wind direction (degree) in dataframe. | 3   Unit for wind is dgree.        |
+| `coliwd`          | numeric value, colindex of wind direction (degree) in dataframe. | 3 | Unit for wind is dgree.        |
 
 * #### Output
 
