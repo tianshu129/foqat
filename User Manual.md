@@ -115,26 +115,26 @@ remotes::install_github("tianshu129/foqat")
 
 ### 数据统计 statdf 
 ----------
-* #### 描述
+* #### Description
 
 统计数据的情况。包括：均值、方差、最小值、最大值、分位数值（25%、50%、75%）。
 
-* #### 用法
+* #### Usage
 ``` r
 statdf(x, n = 2)
 ```
-* #### 参数
+* #### Arguments
 
 | 变量名             | 含义                              | 默认值                     | 示例值/备注                           |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `x`               | 时间序列的数据框                   |                            |                                      |
 | `n`               | 结果数据保留的小数位数              | 2                          |                                      |
 
-* #### 输出
+* #### Output
 
 输出一个数据框，列为统计参数、行为变量。
 
-* #### 示例
+* #### Examples
 
 ``` r
 x = statdf(aqi, n = 2)
@@ -144,15 +144,15 @@ View(x)
 
 ### 数据重采样 trs
 ----------
-* #### 描述
+* #### Description
 
 对时间序列进行分辨率重采样（可处理风向、风速数据）。
 
-* #### 用法
+* #### Usage
 ``` r
 trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3)
 ```
-* #### 参数
+* #### Arguments
 
 | 变量名             | 含义                              | 默认值                     | 示例值/备注                           |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
@@ -166,11 +166,11 @@ trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliw
 | `coliws`          | 风速列的列号                       | 2                          |                                      |
 | `coliwd`          | 风向列的列号                       | 3                          | 风向为度数（dgree)                    |
 
-* #### 输出
+* #### Output
 
 输出一个数据框，内容为新时间分辨率的时间序列。
 
-* #### 示例
+* #### Examples
 
 ``` r
 x = trs(met, bkip = "1 hour", colid = 1, st = "2017-05-01 00:00:00", et = NULL, na.rm = TRUE, wind = TRUE, coliws = 4, coliwd = 5)
@@ -180,15 +180,15 @@ View(x)
 
 ### 平均变化 avri
 ----------
-* #### 描述
+* #### Description
 
 计算时间序列的平均变化（可以但不限于：日均变化、月均变化、年均变化）。
 
-* #### 用法
+* #### Usage
 ``` r
 avri(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3)
 ```
-* #### 参数
+* #### Arguments
 
 | 变量名             | 含义                              | 默认值                     | 示例值/备注                            |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
@@ -204,11 +204,11 @@ avri(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL,
 | `coliws`          | 风速列的列号                       | 2                          |                                      |
 | `coliwd`          | 风向列的列号                       | 3                          |  风向为度数（dgree)                    |
 
-* #### 输出
+* #### Output
 
 输出为一个数据框，内容为平均变化。第一列为周期内的序号，第二列开始为平均变化数据。需要注意的是，当模式用"ncycle"或"custom"时，起始时间决定了平均变化的结果中第一个要素的开始时间。例如：数据第一个时间为"2010-05-01 12:00:00"， 分辨率为1小时，模式用"ncycle"，”value"用24，则平均变化结果的是从12点开始的日均变化（24个数）。 
 
-* #### 示例
+* #### Examples
 
 ``` r
 x = avri(met, bkip = "1 hour", mode = "recipes", value = "day", colid = 1, st = "2017-05-01 00:00:00", et = NULL, na.rm = TRUE, wind = TRUE, coliws = 4, coliwd = 5)
@@ -220,15 +220,15 @@ View(x[["df_sd"]])
 
 ### 臭氧生成潜势 ofp
 ----------
-* #### 描述
+* #### Description
 计算VOC时间序列的“臭氧生成潜势”（OFP）。  
 搜寻匹配CAS号，通过CAS号查询对应“最大增量反应活性”（MIR）值，并用于时间序列计算。  
 MIR值来“Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339”（修改于 January 28, 2010）。
-* #### 用法
+* #### Usage
 ``` r
 ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
 ```
-* #### 参数
+* #### Arguments
 
 | 变量名             | 含义                              | 默认值                     |示例值/备注                            |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
@@ -238,11 +238,11 @@ ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
 | `p`               | 压强，单位kPa，用于从ppb换算至微克每立方米| 101.325               |                                      |
 | `colid`           | 时间列的列号                       |                            |                                      |
 
-* #### 输出
+* #### Output
 
 输出1个列表，其中包含2个表：MIR值匹配结果、OFP时间序列。
 
-* #### 示例
+* #### Examples
 
 ``` r
 x = ofp(voc, unit = "ppb", t = 25, p = 101.325, colid = 1)
@@ -254,15 +254,15 @@ View(x[["OFP_Result"]])
 
 ### 最大八小时臭氧 dm8n
 ----------
-* #### 描述
+* #### Description
 
 计算每日最大八小时臭氧。
 
-* #### 用法
+* #### Usage
 ``` r
 dm8n(df, colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 1)
 ```
-* #### 参数
+* #### Arguments
 
 | 变量名             | 含义                              | 默认值                     |示例值/备注                            |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
@@ -277,7 +277,7 @@ dm8n(df, colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 1)
 
 取决于函数中的参数`outputmode`。填1只输出1个表：最大八小时臭氧。填2输出1个列表，其中包含3个表：八小时臭氧、每个计算区间的数据个数统计、最大八小时臭氧。
 
-* #### 示例
+* #### Examples
 
 ``` r 
 x = dm8n(aqi[,c(1,6)], colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 2)
@@ -290,25 +290,25 @@ View(x[["DMAX8"]])
 
 ### OH反应活性 koh
 ----------
-* #### 描述
+* #### Description
 
 从‘chemspider.com’查询物种在25度条件下的OH反应常数kOH的理论值。数值来源为US Environmental Protection Agency’s EPISuite。
 
-* #### 用法
+* #### Usage
 ``` r
 koh(spec)
 ```
-* #### 参数
+* #### Arguments
 
 | 变量名             | 含义                              | 默认值                     |示例值/备注                            |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `spec`            | 物种                               |                            |输入物种名称或者CAS号均可。            |
 
-* #### 输出
+* #### Output
 
 输出物种在25度条件下的OH反应常数kOH的理论值。
 
-* #### 示例
+* #### Examples
 
 ``` r
 koh("propane")
@@ -317,16 +317,16 @@ koh("propane")
 
 ### 对流层紫外可见(TUV)辐射模型批量计算 tuv
 ----------
-* #### 描述
+* #### Description
 
 TUV模型有在线版本和离线版本，但是都需要按天跑（也就是每跑一天重新设置一次参数）。该功能通过读取拟输入的参数及其数值的时间序列批量运行TUV，并汇总结果至新数据框。
 当前仅支持模式2（输出光解速率的模式）。
 使用该函数之前，请先下载TUV的windows程序[TUV executable for Windows](https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip)。
-* #### 用法
+* #### Usage
 ``` r
 tuv(pathtuv, df, colid = 1)
 ```
-* #### 参数
+* #### Arguments
 
 | 变量名             | 含义                              | 默认值                     |示例值/备注                            |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
@@ -334,7 +334,7 @@ tuv(pathtuv, df, colid = 1)
 | `df`              | 拟输入的参数及其数值的时间序列的数据框|                            |必须包含日期列。                       |
 | `colid`           | 时间列的列号                       |                            |                                      |
 
-* #### 输出
+* #### Output
 
 输出一个数据框。第一列为时间。第二列为太阳高度角。第三列开始为各个反应的光解速率。依次为（单位为s-1）:  
 1 = O<sub>3</sub> -> O<sub>2</sub> + O<sub>1D</sub>  
@@ -345,7 +345,7 @@ tuv(pathtuv, df, colid = 1)
 6 = CH<sub>2</sub>O -> H + HCO  
 7 = CH<sub>2</sub>O -> H<sub>2</sub> + CO  
 
-* #### 示例
+* #### Examples
 
 ``` r
 #please use your path for master folder of tuv in "pathtuv".
@@ -355,7 +355,7 @@ View(x)
 
 ## GETTING HELP
 
-请联系：tianshu129@163.com  
+Please send email to: tianshu129@163.com  
 
 
 ## DONATION
