@@ -192,21 +192,21 @@ avri(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL,
 
 | variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `df`              | 时间序列的数据框                    |                            |                                      |
-| `bkip`            | 基础时间区间长度                    |                            | 计算小时分辨率的平均日变化就写'1 hour'。|
-| `mode`            | 计算平均变化的模式                  |"recipes"                   | 可选模式为："recipes", "ncycle", "custom"。"recipes"代表内置方案。"ncycle"代表用个数表示每个周期。"custom"代表选取数据框中的某列作为计算平均变化的参考。|
-| `value`           | 模式所需的参数值                    |"day"                       | 模式"recipes"对应三种数值："day", "week", "month"。"day"代表天为周期，小时为分辨率。"week"代表周为周期，天为分辨率。"month"代表月为周期，天为分辨率。  模式"ncycle"对应数值型value，表示每个周期的元素个数。  模式"custom"对应数值型value，表示数据框中的列号。|
-| `colid`           | 时间列的列号                       |                            |                                      |
-| `st`              | 开始时间                           | NULL                       | 默认取时间序列开始时间。需要注意的是，当模式用"ncycle"或"custom"时，起始时间决定了平均变化的结果中第一个要素的开始时间。例如：数据第一个时间为"2010-05-01 12:00:00"， 分辨率为1小时，模式用"ncycle"，”value"用24，则平均变化结果是从12点开始的日均变化。|
-| `et`              | 结束时间                           | NULL                       | 默认取时间序列结束时间。                 |
-| `na.rm`           | 是否排除NA值                       | TRUE                       |                                      |
-| `wind`            | 是否包含风向风速数据                | FALSE                      |                                      |
-| `coliws`          | 风速列的列号                       | 2                          |                                      |
-| `coliwd`          | 风向列的列号                       | 3                          |  风向为度数（dgree)                    |
+| `df`              | dataframe of time series          |                            |                                      |
+| `bkip`            | the basic time reslution for average variation|                            | 计算小时分辨率的平均日变化就写'1 hour'。|
+| `mode`            | mode for calculating cycles       |"recipes"                   | 3 modes: "recipes", "ncycle", "custom". "recipes" means using internal setting for calculation. "ncycle" means setting number of items for per cycle. "custom" means using 1 column in dataframe as a list of grouping elements for calculation.|
+| `value`           | value for deail seting of mode    |"day"                       | Possible values for "recipes" are "day", "week", "month", year". "day" equals to 24 (hours) values in 1 day. "week" equals to 7 (days) values in 1 week. "month" equals to 31 (days) values in 1 month. "year" equals to 12 (months) values in 1 year. values for "ncycle" is a number representing number of items in per cycle. values for "custom" is a number representing column index in dataframe.|
+| `colid`           | column index for date             |                            |                                      |
+| `st`              | start time of resampling          | NULL                       | The default value is the fisrt value of datetime column. |
+| `et`              | end time of resampling            | NULL                       | The default value is the last value of datetime column. |              
+| `na.rm`           | logical value. Remove NA value or not? | TRUE                  |                                      |
+| `wind`            | logical value. if TRUE, please set coliwd, coliws. | FALSE     |                                      |
+| `coliws`          | numeric value, colindex of wind speed in dataframe. | 2        |                                      |
+| `coliwd`          | numeric value, colindex of wind direction (degree) in dataframe. | 3   Unit for wind is dgree.        |
 
 * #### Output
 
-输出为一个数据框，内容为平均变化。第一列为周期内的序号，第二列开始为平均变化数据。需要注意的是，当模式用"ncycle"或"custom"时，起始时间决定了平均变化的结果中第一个要素的开始时间。例如：数据第一个时间为"2010-05-01 12:00:00"， 分辨率为1小时，模式用"ncycle"，”value"用24，则平均变化结果的是从12点开始的日均变化（24个数）。 
+The output is a dataframe. The first column is the serial number within the period. The average variation starts from the second column. Note that when the pattern USES "ncycle" or "custom", the start time determines the start time of the first element in the average variation. For example, if the first timestamp of data is "2010-05-01 12:00:00", the resolution is 1 hour, the mode is "ncycle", and the value is 24, then the result represents diurnal variation starting from 12 o'clock.
 
 * #### Examples
 
