@@ -113,7 +113,7 @@ remotes::install_github("tianshu129/foqat")
 
 ## FUNCTIONS AND EXAMPLES
 
-### Summary of data (statdf) 
+### Summary data (statdf) 
 ----------
 * #### Description
 
@@ -142,11 +142,11 @@ View(x)
 ```
 
 
-### 数据重采样 trs
+### Resample time series (trs)
 ----------
 * #### Description
 
-对时间序列进行分辨率重采样（可处理风向、风速数据）。
+Resample time series, and returns complete time series with new time resolution. (wind data is acceptable)
 
 * #### Usage
 ``` r
@@ -156,19 +156,19 @@ trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliw
 
 | variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `df`              | 时间序列的数据框                    |                            |                                     |
-| `bkip`            | 重采样的时间区间长度                |                            | '1 hour'                             |
-| `colid`           | 时间列的列号                       |                            |                                      |
-| `st`              | 开始时间                           | NULL                       | 默认取时间序列开始时间。               |
-| `et`              | 结束时间                           | NULL                       | 默认取时间序列结束时间。               
-| `na.rm`           | 是否排除NA值                       | TRUE                       |                                      |
-| `wind`            | 是否包含风向风速数据                | FALSE                      |                                      |
-| `coliws`          | 风速列的列号                       | 2                          |                                      |
-| `coliwd`          | 风向列的列号                       | 3                          | 风向为度数（dgree)                    |
+| `df`              | dataframe of time series          |                            |                                     |
+| `bkip`            | the new time reslution for resampling|                         | '1 hour'                             |
+| `colid`           | column index for date             |                            |                                      |
+| `st`              | start time of resampling          | NULL                       | The default value is the fisrt value of datetime column. |
+| `et`              | end time of resampling            | NULL                       | The default value is the last value of datetime column. |              
+| `na.rm`           | logical value. Remove NA value or not? | TRUE                  |                                      |
+| `wind`            | logical value. if TRUE, please set coliwd, coliws. | FALSE     |                                      |
+| `coliws`          | numeric value, colindex of wind speed in dataframe. | 2        |                                      |
+| `coliwd`          | numeric value, colindex of wind direction (degree) in dataframe. | 3   Unit for wind is dgree.        |
 
 * #### Output
 
-输出一个数据框，内容为新时间分辨率的时间序列。
+Output is a dataframe which contain a time series with a new time resolution.
 
 * #### Examples
 
