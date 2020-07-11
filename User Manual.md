@@ -111,6 +111,7 @@ remotes::install_github("tianshu129/foqat")
 
 ## FUNCTIONS AND EXAMPLES
 
+
 ### Summary data (statdf) 
 ----------
 * #### Description
@@ -138,6 +139,7 @@ Output a dataframe, columns stands for parameters, rows stands for variables.
 x = statdf(aqi, n = 2)
 View(x)
 ```
+
 
 ### Resample time series (trs)
 ----------
@@ -173,6 +175,7 @@ Output is a dataframe which contain a time series with a new time resolution.
 x = trs(met, bkip = "1 hour", colid = 1, st = "2017-05-01 00:00:00", et = NULL, na.rm = TRUE, wind = TRUE, coliws = 4, coliwd = 5)
 View(x)
 ```
+
 
 ### Calculate average of variation (avri)
 ----------
@@ -213,6 +216,7 @@ View(x[["df_average"]])
 View(x[["df_sd"]])
 ```
 
+
 ### Calcualte Ozone Formation Potential (ofp)
 ----------
 * #### Description
@@ -245,6 +249,7 @@ View(x)
 View(x[["MIR_Result"]])
 View(x[["OFP_Result"]])
 ```
+
 
 ### Calculate daily maximum-8-hour ozone (dm8n)
 ----------
@@ -281,6 +286,7 @@ View(x[["D8_count"]])
 View(x[["DMAX8"]])
 ```
 
+
 ### Get OH Reactivity (koh)
 ----------
 * #### Description
@@ -306,6 +312,7 @@ Output is the theoretical value of the species' OH reaction constant kOH at 25 d
 ``` r
 koh("propane")
 ```
+
 
 ### Calculate TUV in batch (tuv)
 ----------
