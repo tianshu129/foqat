@@ -162,8 +162,8 @@ trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliw
 | `et`              | end time of resampling            | NULL                       | The default value is the last value of datetime column. |              
 | `na.rm`           | logical value. Remove NA value or not? | TRUE                  |                                      |
 | `wind`            | logical value. if TRUE, please set coliwd, coliws. | FALSE     |                                      |
-| `coliws`          | numeric value, colindex of wind speed in dataframe. | 2        |                                      |
-| `coliwd`          | numeric value, colindex of wind direction (degree) in dataframe. | 3 | Unit for wind is degree.        |
+| `coliws`          | numeric value, column index of wind speed in dataframe. | 2        |                                      |
+| `coliwd`          | numeric value, column index of wind direction (degree) in dataframe. | 3 | Unit for wind is degree.        |
 
 * #### Output
 
@@ -201,8 +201,8 @@ avri(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL,
 | `et`              | end time of resampling            | NULL                       | The default value is the last value of datetime column. |              
 | `na.rm`           | logical value. Remove NA value or not? | TRUE                  |                                      |
 | `wind`            | logical value. if TRUE, please set coliwd, coliws. | FALSE     |                                      |
-| `coliws`          | numeric value, colindex of wind speed in dataframe. | 2        |                                      |
-| `coliwd`          | numeric value, colindex of wind direction (degree) in dataframe. | 3   Unit for wind is dgree.        |
+| `coliws`          | numeric value, column index of wind speed in dataframe. | 2        |                                      |
+| `coliwd`          | numeric value, column index of wind direction (degree) in dataframe. | 3   Unit for wind is dgree.        |
 
 * #### Output
 
@@ -267,7 +267,7 @@ dm8n(df, colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 1)
 
 | variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `df`              | dataframe of time series          |                            |                                      |
+| `df`              | dataframe of time series for ozone |                            |                                      |
 | `colid`           | column index for date             |                            |                                      |
 | `starthour`       | start hour for calculating 8-hour ozone | 0                    |                                      |
 | `endhour`         | end hour for calculating 8-hour ozone   | 16     |16 is the average of 8-hour ozone between 16 and 23.|
@@ -293,7 +293,7 @@ View(x[["DMAX8"]])
 ----------
 * #### Description
 
-Theoretical values of the SPECIES 'OH reaction constant kOH at 25 degrees were obtained from' Chemspider.com '. Value source: US Environmental Protection Agency’s EPISuite。
+Theoretical values of the SPECIES 'OH reaction constant kOH at 25 degrees were obtained from' Chemspider.com '. Value source: US Environmental Protection Agency’s EPISuite.
 
 * #### Usage
 ``` r
@@ -322,7 +322,7 @@ koh("propane")
 
 There are online and offline versions of the TUV model, but both need to run on a daily basis (that means manually reset parameters for each day's simulation). This function runs TUV in batch by reading the time series of values for the parameters to be entered, and summarizes the results to the new dataframe.
 Currently only mode 2 (mode that outputs the photolysis rate) is supported.
-Before you use this function, please download [TUV executable for Windows](https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip)。
+Before you use this function, please download [TUV executable for Windows](https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip).
 * #### Usage
 ``` r
 tuv(pathtuv, df, colid = 1)
