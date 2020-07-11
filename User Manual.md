@@ -49,7 +49,7 @@ Please install the R program first, then install the R integrated development pl
 
 ### FUNCTIONS IN R
 ----------
-In R language, operation is realized by function. 
+In R language, operation is conducted by function. 
 
 Functions exist in the R package.
 
