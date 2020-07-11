@@ -167,7 +167,7 @@ trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliw
 
 * #### Output
 
-Output is a dataframe which contain a time series with a new time resolution.
+Output is a dataframe which contain a time series with a new time resolution. If dealing with wind speed and wind direction, columns for wind speed and wind direction will be move into second and third columns in result table.
 
 * #### Examples
 
