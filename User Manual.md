@@ -41,7 +41,7 @@ The package contains 4 random sample data sets (5 days in length) to demonstrate
 
 
 ## INSTALLATION OF R & RSTUDIO
-Please install the R program first, then install the R integrated development platform Rstudio (Desktop version).Then open Rstudio and enter the code from the console at the bottom right of the interface.Please click on the link: 
+Please install the R program first, then install the R integrated development platform Rstudio (Desktop version).Then open Rstudio and enter the code from the console at the bottom right of the interface.Please click on the link:  
 [R](https://cloud.r-project.org/)    
 [rstudio-desktop](https://rstudio.com/products/rstudio/#rstudio-desktop)    
 
