@@ -321,7 +321,7 @@ koh("propane")
 
 There are online and offline versions of the TUV model, but both need to run on a daily basis (that means manually reset parameters for each day's simulation). This function runs TUV in batch by reading the time series of values for the parameters to be entered, and summarizes the results to the new dataframe.
 Currently only mode 2 (mode that outputs the photolysis rate) is supported.
-Before you use this function, please download the Windows program for TUV[TUV executable for Windows](https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip)。
+Before you use this function, please download [TUV executable for Windows](https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip)。
 * #### Usage
 ``` r
 tuv(pathtuv, df, colid = 1)
