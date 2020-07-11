@@ -71,32 +71,32 @@ install.packages("remotes")
 remotes::install_github("tianshu129/foqat")
 ```
 
-函数由“函数名（参数1，参数2，···）”构成。不同参数之间用逗号隔开。函数中的符号都是英文符号。可将运行结果赋值给任意变量。例如以下代码将生成一个包含3个1的向量集：
+Function structure is "function name(parameter 1, parameter 2, etc.)". The different parameters are separated with commas. The result of running function can be assigned to any variable. For example, the following code will generate a vector:
 ``` r
 x=rep(1,3)
 View(x)
 ```
 
-此外， 需要特别指出的是，一些函数的参数有默认值。如果有默认值，则函数用法中会列出默认值。例如“函数A（参数1，参数2=参数2的默认值，···）”，则函数A中，参数1无默认值，参数2有默认值。  
-如果默认值符合你的需求，则无需列出该参数。例如，以下两句函数得到的结果是一样的（statdf参数中，n有默认值2，假设你要设置的n也是2）：  
+In addition, it is important to note that some arguments have default values. Defaults are listed in the function usage. For example, "Function A (parameter 1, parameter 2 = default value of parameter 2, ··)", then in function A, parameter 1 has no default value and parameter 2 has default value.  
+If the default value meets your requirements, you don't need to list this parameter. For example, the following 2 line code get the same result (assuming you want to set n to 2) :
 ``` r
 statdf(x, n = 2)
 statdf(x)
 ```
 
-### 数据读写 
+### READ AND WRITE DATA
 ----------
-R有数据读写有很多方式。此处讲解最常用的方式。
-可以将数据放在xlsx文件中，并通过readxl包中的read_xlsx函数将数据读入R中的任意变量。例如：
+There are many ways to read and write data in R. Here are the most common ones.
+You can put the data in an XLSX file and read it into any variable in R through the read_xlsx function in the 'readxl' package. Such as:
 ``` r
 library(readxl)
-#此处跳过了很多默认参数，第1个参数为文件路径，第2个参数为每一列的数据类型，第3个参数将na值读取为空，第4个参数是sheet表号。读取数据后赋值给变量df。
+#Many default parameters are skipped here.The first parameter is the file path, the second parameter is the data type of each column, the third parameter reads NA value as null, and the fourth parameter is the SHEET number. Read the data and assign the value to the variable df.
 df <- read_xlsx("E:/Users/Chen/Desktop/input.xlsx", col_types = c("date",rep("numeric",7)), na = "", sheet = 1)
 ```
 
-可以采用内置函数write.csv将数据写入csv文件中，例如：
+The built-in function write.csv can be used to write the data into the CSV file, for example:
 ``` r
-#此处跳过了很多默认参数，第1个参数为要输出的数据变量，第2个参数为输出路径，第3个参数设置为不输出列号。
+#Many default parameters are skipped here.The first parameter is the data variable to output, the second parameter is the output path, and the third parameter is set to not output row number.
 write.csv(result,"E:/Users/Chen/Desktop/tuv_result.csv",row.names=F)
 ```
 
@@ -356,7 +356,6 @@ View(x)
 ## GETTING HELP
 
 Please send email to: tianshu129@163.com  
-
 
 ## DONATION
 
