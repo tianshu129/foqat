@@ -193,7 +193,7 @@ avri(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL,
 | variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series          |                            |                                      |
-| `bkip`            | the basic time reslution for average variation|                            | 计算小时分辨率的平均日变化就写'1 hour'。|
+| `bkip`            | the basic time reslution for average variation|                            | If you want to calculate the diurnal varivation in hourly resolution, write '1 hour'.|
 | `mode`            | mode for calculating cycles       |"recipes"                   | 3 modes: "recipes", "ncycle", "custom". "recipes" means using internal setting for calculation. "ncycle" means setting number of items for per cycle. "custom" means using 1 column in dataframe as a list of grouping elements for calculation.|
 | `value`           | value for deail seting of mode    |"day"                       | Possible values for "recipes" are "day", "week", "month", year". "day" equals to 24 (hours) values in 1 day. "week" equals to 7 (days) values in 1 week. "month" equals to 31 (days) values in 1 month. "year" equals to 12 (months) values in 1 year. values for "ncycle" is a number representing number of items in per cycle. values for "custom" is a number representing column index in dataframe.|
 | `colid`           | column index for date             |                            |                                      |
@@ -218,12 +218,12 @@ View(x[["df_sd"]])
 ```
 
 
-### 臭氧生成潜势 ofp
+### Calcualte Ozone Formation Potential (ofp)
 ----------
 * #### Description
-计算VOC时间序列的“臭氧生成潜势”（OFP）。  
-搜寻匹配CAS号，通过CAS号查询对应“最大增量反应活性”（MIR）值，并用于时间序列计算。  
-MIR值来“Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339”（修改于 January 28, 2010）。
+Calculate Ozone Formation Potential (OFP) of VOC time series.  
+The CAS number was matched for each VOC speices (from column name), and the Maximum Incremental Reactivity (MIR) value was matched through the CAS number and used for time series calculation.  
+The MIR value comes from “Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339” (revised January 28, 2010).  
 * #### Usage
 ``` r
 ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
@@ -232,15 +232,15 @@ ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
 
 | variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `df`              | VOC时间序列的数据框                |                            |                                      |
-| `unit`            | VOC数据的单位（微克每立方米或者ppb)  | "ugm"                     | 填写"ugm"或者"ppb"(带英文引号）。       
-| `t`               | 温度，单位k，用于从ppb换算至微克每立方米| 25                      |                                      |
-| `p`               | 压强，单位kPa，用于从ppb换算至微克每立方米| 101.325               |                                      |
-| `colid`           | 时间列的列号                       |                            |                                      |
+| `df`              | dataframe of time series          |                            |                                      |
+| `unit`            | unit for VOC data (micrograms per cubic meter or PPB).Please fill in "UGM" or "PPB" in quotation marks. | "ugm"                     |  |
+| `t`               | Temperature, in units k, for conversion from PPB to micrograms per cubic meter.| 25|                  |
+| `p`               | Pressure, in kPa, for converting from PPB to micrograms per cubic meter.| 101.325|                    |
+| `colid`           | column index for date             |                            |                                      |
 
 * #### Output
 
-输出1个列表，其中包含2个表：MIR值匹配结果、OFP时间序列。
+Output is a list containing 2 tables: results for matched MIR values and OFP time series.
 
 * #### Examples
 
