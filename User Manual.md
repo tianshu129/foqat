@@ -116,7 +116,7 @@ remotes::install_github("tianshu129/foqat")
 ----------
 * #### Description
 
-Summary of dataframe: mean, standard deviation (sd), minimum (min), pecentage value (0.25, 0.50, 0.75), maximum (max).
+Summary of dataframe: mean, standard deviation (sd), minimum (min), percentiles (0.25, 0.50, 0.75), maximum (max).
 
 * #### Usage
 ``` r
