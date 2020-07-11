@@ -1,8 +1,8 @@
 # FOQAT
 
 ## Tableof Contents
-* [GENERAL OVERVIEW](#GENERAL OVERVIEW)
-* [R语言程序的安装](#R程序的安装)
+* [GENERAL OVERVIEW](#general-overview)
+* [INSTALLATION OF R & RSTUDIO](#R程序的安装)
 * [简要R语言背景知识](#简要R语言知识)
 * [本包的安装](#本包的安装)
 * [函数及实例](#函数及实例)
@@ -40,7 +40,7 @@ FOQAT包是一个基于R对大气外场观测数据和空气污染数据进行�
 * 配置tuv的示范数据集setup_tuv
 
 
-## R语言程序的安装
+## INSTALLATION OF R & RSTUDIO
 请先安装R语言原生程序，后安装R语言集成开发平台Rstudio (Desktop版本即可）。然后打开Rstudio，即可在界面右下方的控制台开始输入代码。请点击链接：  
 [R](https://cloud.r-project.org/)  
 [rstudio-desktop](https://rstudio.com/products/rstudio/#rstudio-desktop)  
