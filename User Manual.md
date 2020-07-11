@@ -47,27 +47,27 @@ Please install the R program first, then install the R integrated development pl
 
 ## BREIF KNOWLEDGE OF R
 
-### Functions in R
+### FUNCTIONS IN R
 ----------
-R语言中，操作依赖于函数。 
+In R language, operation is realized by function. 
 
-函数存在于R包中。 
+Functions exist in the R package.
 
-想要运行函数需要先调用已安装的包。例如，以下语句将调用readxl包，该包含有用于读取excel文件的函数：  
+To run the function, you need to call the installed package first. For example, the following statement calls the readxl package, which contains functions for reading excel files:  
 ``` r
 library(readxl)
 ```
 
-默认R程序只自带一些基础函数。需要额外安装包来获取所需函数。R包分为官方包和非官方包。安装方式分为在线和离线。以下介绍在线安装方式：    
-官方包安装方式：  
+The default R comes with only a few base functions.  Installation of Additional packages are required to obtain the additional functions. R packages are divided into CRAN and non-CRAN packages CRAN packages are certificated by R and can be download from R  server.The installation methods are divided into online and offline. The following describes the online installation method:
+installation method for CRAN package:
 ``` r
 install.packages("readxl")
 ```
-非官方包安装方式（通过官方包‘remotes’中的‘install_github’函数从github上安装非官方包）：  
+installation method for non-CRAN package:  
 ``` r
-#安装官方包remotes
+#Install the CRAN package ‘remotes’
 install.packages("remotes")
-#调用其中的‘install_github’函数安装非官方包
+#Call the 'install_github' function to install non-CRAN package
 remotes::install_github("tianshu129/foqat")
 ```
 
