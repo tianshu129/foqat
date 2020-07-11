@@ -2,18 +2,18 @@
 
 ## Tableof Contents
 * [GENERAL OVERVIEW](#general-overview)
-* [INSTALLATION OF R & RSTUDIO](#R程序的安装)
-* [BREIF KNOWLEDGE OF R](#简要R语言知识)
-* [INSTALLATION OF FOQAT](#本包的安装)
-* [FUNCTIONS AND EXAMPLES](#函数及实例)
-* [GETTING HELP](#获取帮助)
+* [INSTALLATION OF R & RSTUDIO](#Rinstallation-of-r--rstudio)
+* [BREIF KNOWLEDGE OF R](#breif-knowledge-of-r)
+* [INSTALLATION OF FOQAT](#installation-of-foqat)
+* [FUNCTIONS AND EXAMPLES](#functions-and-examples)
+* [GETTING HELP](#getting-help)
 * [DONATION](#DONATION)
 
 ## GENERAL OVERVIEW
 
-FOQAT包是一个基于R对大气外场观测数据和空气污染数据进行快速处理分析的工具包。
+The FOQAT package is a toolkit for rapid processing and analysis of atmospheric field observations and air pollution data based on R.
 
-目前包含功能有：
+Features currently included:
 
 * [数据统计](#数据统计-statdf)
 
@@ -41,7 +41,7 @@ FOQAT包是一个基于R对大气外场观测数据和空气污染数据进行�
 
 
 ## INSTALLATION OF R & RSTUDIO
-请先安装R语言原生程序，后安装R语言集成开发平台Rstudio (Desktop版本即可）。然后打开Rstudio，即可在界面右下方的控制台开始输入代码。请点击链接：  
+Please install the R program first, then install the R integrated development platform Rstudio (Desktop version).Then open Rstudio and enter the code from the console at the bottom right of the interface.Please click on the link: 
 [R](https://cloud.r-project.org/)  
 [rstudio-desktop](https://rstudio.com/products/rstudio/#rstudio-desktop)  
 
