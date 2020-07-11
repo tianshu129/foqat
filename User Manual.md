@@ -113,11 +113,11 @@ remotes::install_github("tianshu129/foqat")
 
 ## FUNCTIONS AND EXAMPLES
 
-### 数据统计 statdf 
+### Summary of data (statdf) 
 ----------
 * #### Description
 
-统计数据的情况。包括：均值、方差、最小值、最大值、分位数值（25%、50%、75%）。
+Summary of data, including：Mean, variance, min, Max, fractional values (25%, 50%, 75%).
 
 * #### Usage
 ``` r
@@ -125,14 +125,14 @@ statdf(x, n = 2)
 ```
 * #### Arguments
 
-| 变量名             | 含义                              | 默认值                     | 示例值/备注                           |
+| variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `x`               | 时间序列的数据框                   |                            |                                      |
-| `n`               | 结果数据保留的小数位数              | 2                          |                                      |
+| `x`               | dataframe of time series          |                            |                                      |
+| `n`               | digits for reuslt in dataframe.   | 2                          |                                      |
 
 * #### Output
 
-输出一个数据框，列为统计参数、行为变量。
+Output a dataframe, columns stands for parameters, rows stands for variables.
 
 * #### Examples
 
