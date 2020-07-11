@@ -206,7 +206,7 @@ avri(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL,
 
 * #### Output
 
-The output is a dataframe. The first column is the serial number within the period. The average variation starts from the second column. Note that when the pattern USES "ncycle" or "custom", the start time determines the start time of the first element in the average variation. For example, if the first timestamp of data is "2010-05-01 12:00:00", the resolution is 1 hour, the mode is "ncycle", and the value is 24, then the result represents diurnal variation starting from 12 o'clock.
+The output is a dataframe. The first column is the serial number within the period. The average variation start from the second column. Note that when the pattern USES "ncycle" or "custom", the start time determines the start time of the first element in the average variation. For example, if the first timestamp of data is "2010-05-01 12:00:00", the resolution is 1 hour, the mode is "ncycle", and the value is 24, then the result represents diurnal variation starting from 12 o'clock.
 
 * #### Examples
 
@@ -292,7 +292,7 @@ View(x[["DMAX8"]])
 ----------
 * #### Description
 
-从‘chemspider.com’查询物种在25度条件下的OH反应常数kOH的理论值。数值来源为US Environmental Protection Agency’s EPISuite。
+Theoretical values of the SPECIES 'OH reaction constant kOH at 25 degrees were obtained from' Chemspider.com '. Value source: US Environmental Protection Agency’s EPISuite。
 
 * #### Usage
 ``` r
@@ -302,11 +302,11 @@ koh(spec)
 
 | variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `spec`            | 物种                               |                            |输入物种名称或者CAS号均可。            |
+| `spec`            |  species                          |          |The name of the species or CAS number are both acceptable.|
 
 * #### Output
 
-输出物种在25度条件下的OH反应常数kOH的理论值。
+Output is the theoretical value of the species' OH reaction constant kOH at 25 degrees.
 
 * #### Examples
 
@@ -315,13 +315,13 @@ koh("propane")
 ```
 
 
-### 对流层紫外可见(TUV)辐射模型批量计算 tuv
+### Calculate TUV in batch (tuv)
 ----------
 * #### Description
 
-TUV模型有在线版本和离线版本，但是都需要按天跑（也就是每跑一天重新设置一次参数）。该功能通过读取拟输入的参数及其数值的时间序列批量运行TUV，并汇总结果至新数据框。
-当前仅支持模式2（输出光解速率的模式）。
-使用该函数之前，请先下载TUV的windows程序[TUV executable for Windows](https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip)。
+There are online and offline versions of the TUV model, but both need to run on a daily basis (that means manually reset parameters for each day's simulation). This function runs TUV in batch by reading the time series of values for the parameters to be entered, and summarizes the results to the new dataframe.
+Currently only mode 2 (mode that outputs the photolysis rate) is supported.
+Before you use this function, please download the Windows program for TUV[TUV executable for Windows](https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip)。
 * #### Usage
 ``` r
 tuv(pathtuv, df, colid = 1)
@@ -330,13 +330,13 @@ tuv(pathtuv, df, colid = 1)
 
 | variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `pathtuv`         | TUV的windows程序的母文件夹路径      |                            |"G:/tuv5.3.1.exe"                     |
-| `df`              | 拟输入的参数及其数值的时间序列的数据框|                            |必须包含日期列。                       |
-| `colid`           | 时间列的列号                       |                            |                                      |
+| `pathtuv`         | path for parent folder of TUV Windows program |                |"G:/tuv5.3.1.exe"                     |
+| `df`              | the time series of values for the parameters to be entered|   |The date column must be included.      |
+| `colid`           | column index for date             |                            |                                      |
 
 * #### Output
 
-输出一个数据框。第一列为时间。第二列为太阳高度角。第三列开始为各个反应的光解速率。依次为（单位为s-1）:  
+Output a dataframe.The first column is datetime. The second column is the solar altitude Angle. The rates of photolysis for each reaction(Unit: s-1) start from third column:
 1 = O<sub>3</sub> -> O<sub>2</sub> + O<sub>1D</sub>  
 2 = H<sub>2</sub>O<sub>2</sub> -> 2 OH  
 3 = NO<sub>2</sub> -> NO + O<sub>3P</sub>  
