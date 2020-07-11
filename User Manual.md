@@ -178,11 +178,11 @@ View(x)
 ```
 
 
-### 平均变化 avri
+### Calculate average of variation (avri)
 ----------
 * #### Description
 
-计算时间序列的平均变化（可以但不限于：日均变化、月均变化、年均变化）。
+Calculates average of variation of time series. (contain but not limited to: average daily variation, average monthly variation, average annual variation)
 
 * #### Usage
 ``` r
