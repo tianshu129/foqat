@@ -145,7 +145,8 @@ View(x)
 ----------
 * #### Description
 
-Resample time series, and returns complete time series with new time resolution. (wind data is acceptable)
+Resample time series, and returns complete time series with new time resolution. (wind data is acceptable)  
+If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
 
 * #### Usage
 ``` r
@@ -181,7 +182,8 @@ View(x)
 ----------
 * #### Description
 
-Calculates average of variation of time series. (contain but not limited to: average daily variation, average monthly variation, average annual variation)
+Calculates average of variation of time series. (contain but not limited to: average daily variation, average monthly variation, average annual variation)  
+If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
 
 * #### Usage
 ``` r
