@@ -220,7 +220,7 @@ View(x[["df_sd"]])
 ```
 
 
-### Calcualte Ozone Formation Potential (ofp)
+### Calculate Ozone Formation Potential (ofp)
 ----------
 * #### Description
 Calculate Ozone Formation Potential (OFP) of VOC time series.  
