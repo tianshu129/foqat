@@ -124,7 +124,7 @@ statdf(x, n = 2)
 ```
 * #### Arguments
 
-| variable name     |  definition                       | default                    | Example values/remarks               |
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `x`               | dataframe of time series          |                            |                                      |
 | `n`               | digits for reuslt in dataframe.   | 2                          |                                      |
@@ -154,7 +154,7 @@ trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliw
 ```
 * #### Arguments
 
-| variable name     |  definition                       | default                    | Example values/remarks               |
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series          |                            |                                     |
 | `bkip`            | the new time reslution for resampling|                         | '1 hour'                             |
@@ -191,7 +191,7 @@ avri(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL,
 ```
 * #### Arguments
 
-| variable name     |  definition                       | default                    | Example values/remarks               |
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series          |                            |                                      |
 | `bkip`            | the basic time reslution for average variation|                            | If you want to calculate the diurnal varivation in hourly resolution, write '1 hour'.|
@@ -231,7 +231,7 @@ ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
 ```
 * #### Arguments
 
-| variable name     |  definition                       | default                    | Example values/remarks               |
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series          |                            |                                      |
 | `unit`            | unit for VOC data (micrograms per cubic meter or PPB).Please fill in "UGM" or "PPB" in quotation marks.| "ugm"                     |  |
@@ -265,7 +265,7 @@ dm8n(df, colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 1)
 ```
 * #### Arguments
 
-| variable name     |  definition                       | default                    | Example values/remarks               |
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series for ozone|                            |                                      |
 | `colid`           | column index for date-time        |1                           |                                      |
@@ -301,7 +301,7 @@ koh(spec)
 ```
 * #### Arguments
 
-| variable name     |  definition                       | default                    | Example values/remarks               |
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `spec`            |  species                          |          |The name of the species or CAS number are both acceptable.|
 
@@ -329,7 +329,7 @@ tuv(pathtuv, df, colid = 1)
 ```
 * #### Arguments
 
-| variable name     |  definition                       | default                    | Example values/remarks               |
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `pathtuv`         | path for parent folder of TUV executable for Windows|         |"G:/tuv5.3.1.exe"                     |
 | `df`              | dataframe of the time series for the parameters to be entered|   |The date column must be included. |
