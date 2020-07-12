@@ -20,16 +20,16 @@ avri(
 )
 }
 \arguments{
-\item{df}{dataframe contains time series.}
+\item{df}{dataframe of time series.}
 
-\item{bkip}{new resolution breaking input of time series, such as '1 hour'.}
+\item{bkip}{the basic time reslution for average variation, such as '1 hour'.}
 
 \item{mode}{for calculating cycles: "recipes", "ncycle", "custom".
 "recipes" means using internal setting for calculation.
 "ncycle" means setting number of items for per cycle.
 "custom" means using 1 column in dataframe as a list of grouping elements for calculation.}
 
-\item{value}{for mode. Possible values for "recipes" are "day", "week", "month", year".
+\item{value}{for detail setting of mode. Possible values for "recipes" are "day", "week", "month", year".
 "day" equals to 24 (hours) values in 1 day.
 "week" equals to 7 (days) values in 1 week.
 "month" equals to 31 (days) values in 1 month.
@@ -37,7 +37,7 @@ avri(
 values for "ncycle" is a number representing number of items in per cycle.
 values for "custom" is a number representing column index in dataframe.}
 
-\item{colid}{column index of datetime in dataframe.}
+\item{colid}{column index for date-time. The default value is 1.}
 
 \item{st}{start time of resampling. The default value is the fisrt value of datetime column.}
 
@@ -49,15 +49,22 @@ values for "custom" is a number representing column index in dataframe.}
 
 \item{wind}{logical value. if TRUE, please set coliwd, coliws.}
 
-\item{coliws}{numeric value, colindex of wind speed in dataframe.}
+\item{coliws}{numeric value, column index of wind speed in dataframe.}
 
-\item{coliwd}{numeric value, colindex of wind direction (degree) in dataframe.}
+\item{coliwd}{numeric value, column index of wind direction (degree) in dataframe.}
 }
 \value{
-dataframe for average variation.
+a dataframe. The first column is the serial number within the period. The
+average variation start from the second column. \cr
+Note that when the pattern USES
+"ncycle" or "custom", the start time determines the start time of the first
+element in the average variation. For example, if the first timestamp of data is
+"2010-05-01 12:00:00", the resolution is 1 hour, the mode is "ncycle", and the
+value is 24, then the result represents diurnal variation starting from 12 o'clock.
 }
 \description{
-Calculates average of variation of time series.
+Calculates average of variation of time series. (contain but not limited to:
+average daily variation, average monthly variation, average annual variation)
 }
 \details{
 If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.

@@ -4,13 +4,15 @@
 #'
 #' This function can calculate multiple columns of ozone observation data in 1 dataframe with 1 datetime columm (such as ozone concentration in different sites).
 #'
-#' @param df dataframe. dataframe for ozone.
-#' @param colid numeric. Column index for datatime. By default, it equals to 1.
-#' @param starthour numeric. Start hour for daily calculation. By default, it equals to 0.
-#' @param endhour numeric.  End hour for daily calculation. By default, it equals to 16 which means averaging ozone between 16~23.
+#' @param df dataframe of time series for ozone.
+#' @param colid column index for date-time. By default, it equals to 1.
+#' @param starthour numeric, start hour for calculating 8-hour ozone. By default, it equals to 0.
+#' @param endhour numeric, end hour for calculating 8-hour ozone. By default, it equals to 16 which means averaging ozone between 16~23.
 #' @param na.rm logical. Should missing values (including NaN) be omitted from the calculations?
-#' @param outputmode numeric. 1 stands for brief results (only DMAX8). 2 stands for detail results (DMAX8, D8, counts for D8). By default, it equal to 1.
-#' @return brief results (only DMAX8), or list for for detail results (DMAX8, D8, counts for D8).
+#' @param outputmode numeric, the format of the output, possible value: 1 or 2. See 'value' for the results of filling in 1 or 2.
+#' @return a dataframe depends on the value of 'outputMode'. Value 1 will output 1 #' table: maximum-8-hour ozone. Value 1 will output 1 list, which contains 3
+#' tables: 8-hour ozone, statistics of number of valid items within each
+#' calculation interval, and maximum-8-hour ozone.
 #' @export
 #' @examples
 #' dm8n(aqi[,c(1,6)], colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 2)
@@ -25,10 +27,10 @@ dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmod
 		df[,c(1,colid)] = df[,c(colid,1)]
 		colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
 	  }
-	
+
 	#In case df is not a dataframe.
 	df <- data.frame(df,stringsAsFactors = FALSE)
-  
+
 	#get data list
 	datelist_raw<-as.Date(df[,1])
 	datelist<-datelist_raw[!duplicated(datelist_raw)]

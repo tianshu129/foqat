@@ -1,31 +1,39 @@
 #' Calculate average of variation
 #'
-#' Calculates average of variation of time series.
+#' Calculates average of variation of time series. (contain but not limited to:
+#' average daily variation, average monthly variation, average annual variation)
 #'
 #' If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
 #'
-#' @param df dataframe contains time series.
-#' @param bkip new resolution breaking input of time series, such as '1 hour'.
+#' @param df dataframe of time series.
+#' @param bkip the basic time reslution for average variation, such as '1 hour'.
 #' @param mode for calculating cycles: "recipes", "ncycle", "custom".
 #' "recipes" means using internal setting for calculation.
 #' "ncycle" means setting number of items for per cycle.
 #' "custom" means using 1 column in dataframe as a list of grouping elements for calculation.
-#' @param value for mode. Possible values for "recipes" are "day", "week", "month", year".
+#' @param value for detail setting of mode. Possible values for "recipes" are "day", "week", "month", year".
 #' "day" equals to 24 (hours) values in 1 day.
 #' "week" equals to 7 (days) values in 1 week.
 #' "month" equals to 31 (days) values in 1 month.
 #' "year" equals to 12 (months) values in 1 year.
 #' values for "ncycle" is a number representing number of items in per cycle.
 #' values for "custom" is a number representing column index in dataframe.
-#' @param colid column index of datetime in dataframe.
+#' @param colid column index for date-time. The default value is 1.
 #' @param st start time of resampling. The default value is the fisrt value of datetime column.
 #' @param et end time of resampling. The default value is the last value of datetime column.
 #' @param na.rm logical value. Remove NA value or not?
 #' @param digits numeric value, digits for result dataframe.
 #' @param wind logical value. if TRUE, please set coliwd, coliws.
-#' @param coliws numeric value, colindex of wind speed in dataframe.
-#' @param coliwd numeric value, colindex of wind direction (degree) in dataframe.
-#' @return  dataframe for average variation.
+#' @param coliws numeric value, column index of wind speed in dataframe.
+#' @param coliwd numeric value, column index of wind direction (degree) in dataframe.
+#' @return  a dataframe. The first column is the serial number within the period. The
+#' average variation start from the second column. \cr
+#' Note that when the pattern USES
+#' "ncycle" or "custom", the start time determines the start time of the first
+#' element in the average variation. For example, if the first timestamp of data is
+#' "2010-05-01 12:00:00", the resolution is 1 hour, the mode is "ncycle", and the
+#' value is 24, then the result represents diurnal variation starting from 12 o'clock.
+
 #' @export
 #' @examples
 #' avri(met, bkip = "1 hour", mode = "recipes", value = "day",
@@ -44,8 +52,8 @@ avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, 
 
   #generate u, v
   if(wind == TRUE){
-    rs_df$u<-sin(pi/180*rs_df[,3])*rs_df[,2]
-    rs_df$v<-cos(pi/180*rs_df[,3])*rs_df[,2]
+    rs_df$u<-sin(pi/180*rs_df[,coliwd])*rs_df[,coliws]
+    rs_df$v<-cos(pi/180*rs_df[,coliwd])*rs_df[,coliws]
   }
 
   #mode
@@ -86,7 +94,7 @@ avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, 
       true_degree = ifelse(datat$v<0,datat$fake_degree+180,ifelse(datat$u<0,datat$fake_degree+360,datat$fake_degree))
     })
     datat <- datat[ ,-which(names(datat) %in% c("u", "v", "fake_degree"))]
-    datat[ ,c(2,3)] <- datat[ ,c((length(datat)-1),length(datat))]
+    datat[ ,c(coliws,coliwd)] <- datat[ ,c((length(datat)-1),length(datat))]
     datat <- datat[,-c((length(datat)-1),length(datat))]
     results=datat
   }
@@ -100,7 +108,7 @@ avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, 
       true_degree = ifelse(datat$v<0,datat$fake_degree+180,ifelse(datat$u<0,datat$fake_degree+360,datat$fake_degree))
     })
     datat <- datat[ ,-which(names(datat) %in% c("u", "v", "fake_degree"))]
-    datat[ ,c(2,3)] <- datat[ ,c((length(datat)-1),length(datat))]
+    datat[ ,c(coliws,coliwd)] <- datat[ ,c((length(datat)-1),length(datat))]
     datat <- datat[,-c((length(datat)-1),length(datat))]
     results_sd=datat
   }

@@ -1,19 +1,20 @@
 #' Resample time series
 #'
 #' Resamples time series, and returns complete time series with new time resolution.
+#'   (wind data is acceptable)
 #'
 #' If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
 #'
-#' @param df dataframe contains time series.
-#' @param colid column index of datetime in dataframe.
+#' @param df dataframe of time series.
+#' @param bkip new resolution breaking input of time series, such as '1 hour'.
+#' @param colid column index for date-time. The default value is 1.
 #' @param st start time of resampling. The default value is the fisrt value of datetime column.
 #' @param et end time of resampling. The default value is the last value of datetime column.
-#' @param bkip new resolution breaking input of time series, such as '1 hour'.
 #' @param na.rm logical value. Remove NA value or not?
 #' @param wind logical value. if TRUE, please set coliwd, coliws.
-#' @param coliws numeric value, colindex of wind speed in dataframe.
-#' @param coliwd numeric value, colindex of wind direction (degree) in dataframe.
-#' @return dataframe with new resolution. If dealing with ws and wd, columns for ws and wd will be move into second and third columns in results.
+#' @param coliws numeric value, column index of wind speed in dataframe.
+#' @param coliwd numeric value, column index of wind direction (degree) in dataframe.
+#' @return a dataframe which contains a time series with a new time resolution.
 #' @export
 #' @examples
 #' trs(met, bkip = "1 hour", st = "2017-05-01 00:00:00", wind = TRUE, coliws = 4, coliwd = 5)
@@ -29,18 +30,6 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
     colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
   }
 
-  #move ws, wd to second column and third column
-  if(wind == TRUE){
-    if(coliws != 2){
-      df[,c(2,coliws)] = df[,c(coliws,2)]
-      colnames(df)[c(2,coliws)] = colnames(df)[c(coliws,2)]
-    }
-    if(coliwd != 3){
-      df[,c(3,coliwd)] = df[,c(coliwd,3)]
-      colnames(df)[c(3,coliwd)] = colnames(df)[c(coliwd,3)]
-    }
-  }
-
   #In case df is not a dataframe.
   df <- data.frame(df,stringsAsFactors = FALSE)
 
@@ -49,8 +38,8 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
 
   #if wind mode TURE, generate u, v
   if(wind == TRUE){
-    df$u<-sin(pi/180*df[,3])*df[,2]
-    df$v<-cos(pi/180*df[,3])*df[,2]
+    df$u<-sin(pi/180*df[,coliwd])*df[,coliws]
+    df$v<-cos(pi/180*df[,coliwd])*df[,coliws]
   }
 
   #aggregate, seq need space
@@ -110,7 +99,7 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
       true_degree = ifelse(datat$v<0,datat$fake_degree+180,ifelse(datat$u<0,datat$fake_degree+360,datat$fake_degree))
     })
     datat <- datat[ ,-which(names(datat) %in% c("u", "v", "fake_degree"))]
-    datat[ ,c(2,3)] <- datat[ ,c((length(datat)-1),length(datat))]
+    datat[ ,c(coliws,coliwd)] <- datat[ ,c((length(datat)-1),length(datat))]
     datat <- datat[,-c((length(datat)-1),length(datat))]
   }
 

@@ -10,13 +10,13 @@ koh(spec)
 \item{spec}{chemical specise to be searched. chemical specise's name or CAS Number is acceptable.}
 }
 \value{
-kOH value
+the theoretical value of the species' OH reaction constant kOH at 25 degrees.
 }
 \description{
 Searches kOH value from 'chemspider.com'.
 }
 \details{
-Predicted data is generated using the US Environmental Protection Agency’s EPISuite.\cr
+Theoretical values of the species' OH reaction constant kOH at 25 degrees were obtained from 'Chemspider.com'. Value source: US Environmental Protection Agency’s EPISuite.\cr
 Unit is cm3/molecule-sec.\cr
 Condition is 25 deg C.
 }
