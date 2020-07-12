@@ -1,15 +1,21 @@
 #' Calculate ozone formation potential
 #'
-#' Calculate ozone formation potential of VOC time series.
+#' Calculate Ozone Formation Potential (OFP) of VOC time series.
 #'
-#'Calculate ozone formation potential of VOC time series. Returns MIR dataframe, OFP dataframe.
+#' The CAS number was matched for each VOC speices (from column name), and the
+#' Maximum Incremental Reactivity (MIR) value was matched through the CAS number and used for time series calculation. \cr
+#' The MIR value comes from "Carter, W. P. (2009). Updated maximum incremental
+#' reactivity scale and hydrocarbon bin reactivities for regulatory applications.
+#' California Air Resources Board Contract, 2009, 339" (revised January 28, 2010).
 #'
 #' @param df dataframe contains time series.
-#' @param colid column index of datetime in dataframe.
+#' @param colid column index for date-time. The default value is 1.
 #' @param unit unit for VOC concentration. A character vector from these options: "ugm" or "ppb". "ugm" means ug/m3. "ppb" means part per billion volumn.
-#' @param t temperature for conversions. Unit for t is "degrees Celsius". By default, t equals to 25 degrees Celsius.
-#' @param p pressure for conversions. Unit for p is "kPa". By default, p equals to 101.325 kPa.
-#' @return  dataframes for MIR and OFP.
+#' @param t Temperature, in units k, for conversion from PPB to micrograms per
+#' cubic meter. By default, t equals to 25 degrees Celsius.
+#' @param p Pressure, in kPa, for converting from PPB to micrograms per cubic
+#' meter. By default, p equals to 101.325 kPa.
+#' @return  a list contains 2 tables: results for matched MIR values and OFP time series.
 #' @export
 #' @examples
 #' ofp(voc, unit = "ppb")
@@ -68,7 +74,7 @@ ofp <- function(df, unit = "ugm", t = 25, p = 101.325, colid = 1){
   name_df$Matched_Name[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$Description[as.numeric(a)]
   name_df$MW[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$MWt[as.numeric(a)]
 
-    
+
   #if it is matched by CAS in NIST and matched by name in Carter paper, but it doesn't have CAS in Carter paper.
   for(k in which(!is.na(name_df$Source)&is.na(name_df$MIR))){
     tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
@@ -82,7 +88,7 @@ ofp <- function(df, unit = "ugm", t = 25, p = 101.325, colid = 1){
       name_df$MW[as.numeric(k)] = df_null$MWt[1]
     }
   }
-  
+
   #if it isn't found in NIST, but its name is matched by Carter paper.
   for(k in which(is.na(name_df$Source))){
     tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)

@@ -2,12 +2,12 @@
 #'
 #' Searches kOH value from 'chemspider.com'.
 #'
-#' Predicted data is generated using the US Environmental Protection Agency’s EPISuite.\cr
+#' Theoretical values of the species' OH reaction constant kOH at 25 degrees were obtained from 'Chemspider.com'. Value source: US Environmental Protection Agency’s EPISuite.\cr
 #' Unit is cm3/molecule-sec.\cr
 #' Condition is 25 deg C.
 #'
 #' @param spec chemical specise to be searched. chemical specise's name or CAS Number is acceptable.
-#' @return kOH value
+#' @return the theoretical value of the species' OH reaction constant kOH at 25 degrees.
 #' @export
 #' @import magrittr
 #' @importFrom xml2 read_html

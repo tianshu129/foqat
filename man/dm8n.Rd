@@ -7,20 +7,22 @@
 dm8n(df, colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 1)
 }
 \arguments{
-\item{df}{dataframe. dataframe for ozone.}
+\item{df}{dataframe of time series for ozone.}
 
-\item{colid}{numeric. Column index for datatime. By default, it equals to 1.}
+\item{colid}{column index for date-time. By default, it equals to 1.}
 
-\item{starthour}{numeric. Start hour for daily calculation. By default, it equals to 0.}
+\item{starthour}{numeric, start hour for calculating 8-hour ozone. By default, it equals to 0.}
 
-\item{endhour}{numeric.  End hour for daily calculation. By default, it equals to 16 which means averaging ozone between 16~23.}
+\item{endhour}{numeric, end hour for calculating 8-hour ozone. By default, it equals to 16 which means averaging ozone between 16~23.}
 
 \item{na.rm}{logical. Should missing values (including NaN) be omitted from the calculations?}
 
-\item{outputmode}{numeric. 1 stands for brief results (only DMAX8). 2 stands for detail results (DMAX8, D8, counts for D8). By default, it equal to 1.}
+\item{outputmode}{numeric, the format of the output, possible value: 1 or 2. See 'value' for the results of filling in 1 or 2.}
 }
 \value{
-brief results (only DMAX8), or list for for detail results (DMAX8, D8, counts for D8).
+a dataframe depends on the value of 'outputMode'. Value 1 will output 1 #' table: maximum-8-hour ozone. Value 1 will output 1 list, which contains 3
+tables: 8-hour ozone, statistics of number of valid items within each
+calculation interval, and maximum-8-hour ozone.
 }
 \description{
 Calculates daily maximum-8-hour ozone from ozone observation data.

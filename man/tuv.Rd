@@ -7,20 +7,27 @@
 tuv(pathtuv, df, colid = 1)
 }
 \arguments{
-\item{pathtuv}{path for TUV folder, such as "c:/tuv5.3.1.exe".}
+\item{pathtuv}{path for parent folder of TUV executable for Windows, such as "c:/tuv5.3.1.exe".}
 
-\item{df}{dataframe for variables, such as 'date', 'o3col'. It must includes date column.}
+\item{df}{dataframe of the time series for the parameters to be entered, such as 'date', 'o3col'. It must includes date column.}
 
 \item{colid}{column index of date. The default value is 1.}
 }
 \value{
-dataframe of photolysis rate coefficients (J-values).
+a dataframe.The first column is datetime. The second column is the solar altitude Angle. The rates of photolysis for each reaction(Unit: s-1)
+start from third column: 1 = O3 -> O2 + O1D
 }
 \description{
-run offline batch calculation of \href{https://www2.acom.ucar.edu/modeling/tropospheric-ultraviolet-and-visible-tuv-radiation-model}{TROPOSPHERIC ULTRAVIOLET AND VISIBLE (TUV) RADIATION MODEL}. \cr
+This function runs TUV in batch by reading the time series for the
+parameters to be entered, and summarizes the results to the new dataframe. \cr
 }
 \details{
-Currently, this function only supports output of photolysis rate coefficients (J-values). \cr
+There are online and offline versions of the TUV model, but both need to run on
+a daily basis (that means manually reset parameters for each day's simulation). \cr
+This function runs TUV in batch by reading the time series for the
+parameters to be entered, and summarizes the results to the new dataframe. \cr
+Currently only mode 2 (mode that outputs the photolysis rates) is supported. \cr
+Please download \href{https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip}{TUV executable for Windows} before you use this function.
 
 Columns of photolysis rate coefficients (s-1): \cr
 1 = O3 -> O2 + O(1D) \cr
@@ -30,6 +37,4 @@ Columns of photolysis rate coefficients (s-1): \cr
 5 = NO3 -> NO2 + O(3P) \cr
 6 = CH2O -> H + HCO \cr
 7 = CH2O -> H2 + CO \cr
-
-Please download \href{https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip}{TUV executable for Windows} before you use this function. \cr
 }

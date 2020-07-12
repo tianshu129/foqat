@@ -11,20 +11,26 @@ ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
 
 \item{unit}{unit for VOC concentration. A character vector from these options: "ugm" or "ppb". "ugm" means ug/m3. "ppb" means part per billion volumn.}
 
-\item{t}{temperature for conversions. Unit for t is "degrees Celsius". By default, t equals to 25 degrees Celsius.}
+\item{t}{Temperature, in units k, for conversion from PPB to micrograms per
+cubic meter. By default, t equals to 25 degrees Celsius.}
 
-\item{p}{pressure for conversions. Unit for p is "kPa". By default, p equals to 101.325 kPa.}
+\item{p}{Pressure, in kPa, for converting from PPB to micrograms per cubic
+meter. By default, p equals to 101.325 kPa.}
 
-\item{colid}{column index of datetime in dataframe.}
+\item{colid}{column index for date-time. The default value is 1.}
 }
 \value{
-dataframes for MIR and OFP.
+a list contains 2 tables: results for matched MIR values and OFP time series.
 }
 \description{
-Calculate ozone formation potential of VOC time series.
+Calculate Ozone Formation Potential (OFP) of VOC time series.
 }
 \details{
-Calculate ozone formation potential of VOC time series. Returns MIR dataframe, OFP dataframe.
+The CAS number was matched for each VOC speices (from column name), and the
+Maximum Incremental Reactivity (MIR) value was matched through the CAS number and used for time series calculation. \cr
+The MIR value comes from "Carter, W. P. (2009). Updated maximum incremental
+reactivity scale and hydrocarbon bin reactivities for regulatory applications.
+California Air Resources Board Contract, 2009, 339" (revised January 28, 2010).
 }
 \examples{
 ofp(voc, unit = "ppb")

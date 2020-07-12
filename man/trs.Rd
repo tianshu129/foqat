@@ -17,11 +17,11 @@ trs(
 )
 }
 \arguments{
-\item{df}{dataframe contains time series.}
+\item{df}{dataframe of time series.}
 
 \item{bkip}{new resolution breaking input of time series, such as '1 hour'.}
 
-\item{colid}{column index of datetime in dataframe.}
+\item{colid}{column index for date-time. The default value is 1.}
 
 \item{st}{start time of resampling. The default value is the fisrt value of datetime column.}
 
@@ -31,15 +31,16 @@ trs(
 
 \item{wind}{logical value. if TRUE, please set coliwd, coliws.}
 
-\item{coliws}{numeric value, colindex of wind speed in dataframe.}
+\item{coliws}{numeric value, column index of wind speed in dataframe.}
 
-\item{coliwd}{numeric value, colindex of wind direction (degree) in dataframe.}
+\item{coliwd}{numeric value, column index of wind direction (degree) in dataframe.}
 }
 \value{
-dataframe with new resolution. If dealing with ws and wd, columns for ws and wd will be move into second and third columns in results.
+a dataframe which contains a time series with a new time resolution.
 }
 \description{
 Resamples time series, and returns complete time series with new time resolution.
+  (wind data is acceptable)
 }
 \details{
 If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.

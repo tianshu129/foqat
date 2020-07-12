@@ -2,11 +2,12 @@
 #'
 #' Summary of dataframe.
 #'
-#' Summary of dataframe: mean, sd, min, pecentag evalue (25%, 50%, 75%), max.
+#' Summary of dataframe: mean, standard deviation (sd), minimum (min), percentiles
+#' (0.25, 0.50, 0.75), maximum (max).
 #'
-#' @param x dataframe contains time series.
+#' @param x dataframe of time series.
 #' @param n digits for reuslt in dataframe.
-#' @return  dataframe with new resolution.
+#' @return  a dataframe, columns stands for parameters, rows stands for variables.
 #' @export
 #' @examples
 #' statdf(aqi)

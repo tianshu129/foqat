@@ -7,18 +7,19 @@
 statdf(x, n = 2)
 }
 \arguments{
-\item{x}{dataframe contains time series.}
+\item{x}{dataframe of time series.}
 
 \item{n}{digits for reuslt in dataframe.}
 }
 \value{
-dataframe with new resolution.
+a dataframe, columns stands for parameters, rows stands for variables.
 }
 \description{
 Summary of dataframe.
 }
 \details{
-Summary of dataframe: mean, sd, min, pecentag evalue (25%, 50%, 75%), max.
+Summary of dataframe: mean, standard deviation (sd), minimum (min), percentiles
+(0.25, 0.50, 0.75), maximum (max).
 }
 \examples{
 statdf(aqi)
