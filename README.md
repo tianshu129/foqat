@@ -11,14 +11,15 @@ Regular users are encouraged to enlist in the [FOQAT users email group](https://
 
 For getting start or detail usage, please visit: [user manual](https://github.com/tianshu129/foqat/blob/master/UserManual.md) or [说明手册](https://github.com/tianshu129/foqat/blob/master/%E8%AF%B4%E6%98%8E%E6%89%8B%E5%86%8C.md) .  
 
+So far, FOQAT has users from: Chinese Research Academy of Environmental Sciences (CRAES), Chinese Academy of Meteorological Sciences (CAMS)，Anhui Institute of Optics and Fine Mechanics (AIOFM) for Chinese Academy of Sciences (CAS), Peking University (PKU), City University of Hong Kong (CityU), Shandong University (SDU).  
 
 If FOQAT is used to support a scientific publication, please cite the following reference:
 
 >*Tianshu Chen: Filed Observation Quick Analysis Toolkit (FOQAT), available at: https://github.com/tianshu129/foqat (last access: 12 July 2020), 2020.* 
 
-In addition, please send an email to [me](tianshu129@163.com) so that the paper may be added to my 'List of Publications Using FOQAT'.
+In addition, please send an email to [me](tianshu129@163.com) so that the paper may be added to my 'List of Publications Using FOQAT'.  
 
-## Installation
+## Installation 
 
 ``` r
 # Install from GitHub:
