@@ -18,7 +18,7 @@ remotes::install_github("tianshu129/foqat")
 
 ## Usage
 Functions in foqat are listed below:  
-**statdf**: summary each variable of dataframe into: mean, sd, min, pecentag evalue (25%, 50%, 75%), max.  
+**statdf**: summary each variable of dataframe into: mean, sd, min, percentiles (25%, 50%, 75%), max.  
 **trs**: resample time series and return complete time series with new time resolution.  
 **avri**: calculate average of variation of time series.  
 **ofp**: calculate ozone formation potential (OFP) of VOC time series.  
