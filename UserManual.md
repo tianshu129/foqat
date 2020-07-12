@@ -44,7 +44,7 @@ If FOQAT is used to support a scientific publication, please cite the following 
 
 >*Tianshu Chen: Filed Observation Quick Analysis Toolkit (FOQAT), available at: https://github.com/tianshu129/foqat (last access: 12 July 2020), 2020.* 
 
-In addition, please send an email to [me](tianshu129@163.com) so that the paper may be added to my List of Publications Using FOQAT.  
+In addition, please send an email to [me](tianshu129@163.com) so that the paper may be added to my 'List of Publications Using FOQAT'.  
 
 
 ## INSTALLATION OF R & RSTUDIO
