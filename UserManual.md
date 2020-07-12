@@ -12,7 +12,7 @@
 ## GENERAL OVERVIEW
 
 The FOQAT package is a toolkit for rapid processing and analysis of atmospheric field observations and air pollution data based on R.  
-Regular users are encouraged to enlist in the [FOQAT users group](https://groups.google.com/d/forum/foqat), a combo email list and Q/A forum, or add [my WeChat](https://github.com/tianshu129/foqat/blob/master/img/wechat.jpg) to enter FOQAT users WeChat group.
+Regular users are encouraged to enlist in the [FOQAT users email group](https://groups.google.com/d/forum/foqat), a combo email list and Q/A forum, or add [my WeChat](https://github.com/tianshu129/foqat/blob/master/img/wechat.jpg) to enter FOQAT users WeChat group.
 
 Features currently included:
 
