@@ -158,7 +158,7 @@ trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliw
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series          |                            |                                     |
 | `bkip`            | the new time reslution for resampling|                         | '1 hour'                             |
-| `colid`           | column index for date             |                            |                                      |
+| `colid`           | column index for date-time        |1                           |                                      |
 | `st`              | start time of resampling          | NULL                       | The default value is the fisrt value of datetime column. |
 | `et`              | end time of resampling            | NULL                       | The default value is the last value of datetime column. |              
 | `na.rm`           | logical value. Remove NA value or not? | TRUE                  |                                      |
@@ -168,7 +168,7 @@ trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliw
 
 * #### Output
 
-Output is a dataframe which contain a time series with a new time resolution.   
+Output is a dataframe which contains a time series with a new time resolution.   
 
 * #### Examples
 
@@ -197,7 +197,7 @@ avri(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL,
 | `bkip`            | the basic time reslution for average variation|                            | If you want to calculate the diurnal varivation in hourly resolution, write '1 hour'.|
 | `mode`            | mode for calculating cycles       |"recipes"                   | 3 modes: "recipes", "ncycle", "custom". "recipes" means using internal setting for calculation. "ncycle" means setting number of items for per cycle. "custom" means using 1 column in dataframe as a list of grouping elements for calculation.|
 | `value`           | value for detail setting of mode  |"day"                       | Possible values for "recipes" are "day", "week", "month", year". "day" equals to 24 (hours) values in 1 day. "week" equals to 7 (days) values in 1 week. "month" equals to 31 (days) values in 1 month. "year" equals to 12 (months) values in 1 year. values for "ncycle" is a number representing number of items in per cycle. values for "custom" is a number representing column index in dataframe.|
-| `colid`           | column index for date             |                            |                                      |
+| `colid`           | column index for date-time        |1                           |                                      |
 | `st`              | start time of resampling          | NULL                       | The default value is the fisrt value of datetime column. |
 | `et`              | end time of resampling            | NULL                       | The default value is the last value of datetime column. |              
 | `na.rm`           | logical value. Remove NA value or not? | TRUE                  |                                      |
@@ -234,10 +234,10 @@ ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
 | variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series          |                            |                                      |
-| `unit`            | unit for VOC data (micrograms per cubic meter or PPB).Please fill in "UGM" or "PPB" in quotation marks. | "ugm"                     |  |
+| `unit`            | unit for VOC data (micrograms per cubic meter or PPB).Please fill in "UGM" or "PPB" in quotation marks.| "ugm"                     |  |
 | `t`               | Temperature, in units k, for conversion from PPB to micrograms per cubic meter.| 25|                  |
 | `p`               | Pressure, in kPa, for converting from PPB to micrograms per cubic meter.| 101.325|                    |
-| `colid`           | column index for date             |                            |                                      |
+| `colid`           | column index for date-time        |1                           |                                      |
 
 * #### Output
 
@@ -267,8 +267,8 @@ dm8n(df, colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 1)
 
 | variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `df`              | dataframe of time series for ozone |                            |                                      |
-| `colid`           | column index for date             |                            |                                      |
+| `df`              | dataframe of time series for ozone|                            |                                      |
+| `colid`           | column index for date-time        |1                           |                                      |
 | `starthour`       | start hour for calculating 8-hour ozone | 0                    |                                      |
 | `endhour`         | end hour for calculating 8-hour ozone   | 16     |16 is the average of 8-hour ozone between 16 and 23.|
 | `na.rm`           | logical value. Remove NA value or not? | TRUE                  |                                      |
@@ -293,7 +293,7 @@ View(x[["DMAX8"]])
 ----------
 * #### Description
 
-Theoretical values of the SPECIES 'OH reaction constant kOH at 25 degrees were obtained from' Chemspider.com '. Value source: US Environmental Protection Agency’s EPISuite.
+Theoretical values of the species' OH reaction constant kOH at 25 degrees were obtained from' Chemspider.com '. Value source: US Environmental Protection Agency’s EPISuite.
 
 * #### Usage
 ``` r
@@ -331,9 +331,9 @@ tuv(pathtuv, df, colid = 1)
 
 | variable name     |  definition                       | default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `pathtuv`         | path for parent folder of TUV Windows program |                |"G:/tuv5.3.1.exe"                     |
-| `df`              | the time series of values for the parameters to be entered|   |The date column must be included.      |
-| `colid`           | column index for date             |                            |                                      |
+| `pathtuv`         | path for parent folder of TUV executable for Windows|         |"G:/tuv5.3.1.exe"                     |
+| `df`              | dataframe of the time series for the parameters to be entered|   |The date column must be included. |
+| `colid`           | column index for date             |1                          |                                       |
 
 * #### Output
 
