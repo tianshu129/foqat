@@ -22,7 +22,7 @@ Features currently included:
 
 * [Calculate average of variation (avri) (Wind data is acceptable.)](#calculate-average-of-variation-avri)
 
-* [Calcualte Ozone Formation Potential (ofp)](#calcualte-ozone-formation-potential-ofp)
+* [Calculate Ozone Formation Potential (ofp)](#calculate-ozone-formation-potential-ofp)
 
 * [Calculate daily maximum-8-hour ozone (dm8n)](#calculate-daily-maximum-8-hour-ozone-dm8n)
 
