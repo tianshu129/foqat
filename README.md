@@ -27,7 +27,7 @@ install.packages("remotes")
 remotes::install_github("tianshu129/foqat")
 ```
 
-## Usage
+## Functions
 Functions in foqat are listed below:  
 **statdf**: summary each variable of dataframe into: mean, sd, min, max, percentiles (25%, 50%, 75%).  
 **trs**: resample time series and return complete time series with new time resolution.  
