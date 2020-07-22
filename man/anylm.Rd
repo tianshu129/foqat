@@ -14,6 +14,7 @@ anylm(
   range.y = "interval",
   range.x = "interval",
   nperm = 99,
+  showpage = TRUE,
   scint = FALSE,
   dign = 1,
   zfill = "lightgray",
@@ -48,6 +49,8 @@ If range.x = "interval": variable x possibly includes negative values (interval-
 
 \item{nperm}{Number of permutations for the tests. If nperm = 0, tests will not be computed. Refered from R package 'lmodel2'.}
 
+\item{showpage}{logical value for showing all plots. If TRUE, print all plot in 1 page. Default vaule is 'TRUE'.}
+
 \item{scint}{logical value for displaying scientific notion in legend and plot title. Default vaule is 'FALSE'.}
 
 \item{dign}{numeric value for digists in legend and plot title. Default vaule is '1'.}
@@ -68,7 +71,11 @@ data_list: a list contains data for linear regression.\cr
 lm_df: a dataframe for key results of linear regression. row index of lm_df corresponds to 'id' of plot in 'all_plot'.\cr
 lm_list: a list contains detail results of linear regression.\cr
 plot_list: a list contains plots for linear regression. \cr
-all_plot: a page for all plots in 'plot_list'. to see page please use this function: 'ggplotify::grid.arrange()'.\cr
+all_plot: a page for all plots in 'plot_list'.\cr
+To see page, please use this function: 'gridExtra::grid.arrange(grobs=...)'.\cr
+To see page, please use this 2-lines function:\cr
+'g=gridExtra::arrangeGrob(grobs=...)',\cr
+'ggplot2::ggsave(filename = "example.jpg", plot =g)'.\cr
 'id' of plot corresponds to row index of 'lm_df'.\cr
 }
 \description{

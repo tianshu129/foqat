@@ -20,6 +20,7 @@
 #' If range.x = "interval": variable x possibly includes negative values (interval-scale variable). Refered from R package 'lmodel2'.
 #' @param range.x Parametres, please see 'range.y'.
 #' @param nperm Number of permutations for the tests. If nperm = 0, tests will not be computed. Refered from R package 'lmodel2'.
+#' @param showpage logical value for showing all plots. If TRUE, print all plot in 1 page. Default vaule is 'TRUE'.
 #' @param scint logical value for displaying scientific notion in legend and plot title. Default vaule is 'FALSE'.
 #' @param dign numeric value for digists in legend and plot title. Default vaule is '1'.
 #' @param zfill color for points, only valid when zd is NULL. Default vaule is "lightgray".
@@ -32,7 +33,11 @@
 #' lm_df: a dataframe for key results of linear regression. row index of lm_df corresponds to 'id' of plot in 'all_plot'.\cr
 #' lm_list: a list contains detail results of linear regression.\cr
 #' plot_list: a list contains plots for linear regression. \cr
-#' all_plot: a page for all plots in 'plot_list'. to see page please use this function: 'ggplotify::grid.arrange()'.\cr
+#' all_plot: a page for all plots in 'plot_list'.\cr
+#' To see page, please use this function: 'gridExtra::grid.arrange(grobs=...)'.\cr
+#' To see page, please use this 2-lines function:\cr
+#' 'g=gridExtra::arrangeGrob(grobs=...)',\cr
+#' 'ggplot2::ggsave(filename = "example.jpg", plot =g)'.\cr
 #' 'id' of plot corresponds to row index of 'lm_df'.\cr
 #'
 #' @export
@@ -45,7 +50,7 @@
 #' @examples
 #' anylm(aqi, xd=c(2,3), yd=6, zd=4, td=NULL, dign=3)
 
-anylm<-function(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", range.x="interval", nperm=99, scint=FALSE, dign=1, zfill="lightgray", ppsize=2, showinfo=TRUE, ptsize=12, pncol=NULL){
+anylm<-function(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", range.x="interval", nperm=99, showpage=TRUE, scint=FALSE, dign=1, zfill="lightgray", ppsize=2, showinfo=TRUE, ptsize=12, pncol=NULL){
 
   #function start################################
   #default vaules for zn & tn
@@ -240,7 +245,7 @@ anylm<-function(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", rang
             if(showinfo==TRUE){
               rsqr=round(lm_df[coli,5], digits = 4)
               if(scint==TRUE){slp <- formatC(lm_df[coli,7], format = "e", digits = dign)}else{slp <- round(lm_df[coli,7], digits = dign)}
-              title_text=paste0("id=", coli, " r2=", rsqr, " slp=", slp, " gp=", as.character(ti), collapse = NULL)
+              title_text=paste0("id=", coli, " r2=", rsqr, " slp=", slp, " gp=", as.character(tdsub[ti]), collapse = NULL)
             }else{title_text=paste0("id=", coli, collapse = NULL)}
             p = ggplot(tar, aes_string(x=names(tar)[1], y=names(tar)[2])) + geom_point(size=ppsize, shape = 21, fill = zfill, color = "black") + geom_abline(intercept = lm_df[coli,8], slope = lm_df[coli,7], size=1) + ggtitle(title_text) + theme_bw() + theme(plot.title = element_text(size=ptsize))
             plot_list_raw[[coli]]=ggplotGrob(p)
@@ -256,7 +261,7 @@ anylm<-function(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", rang
               if(showinfo==TRUE){
                 rsqr=round(lm_df[coli,5], digits = 4)
                 if(scint==TRUE){slp <- formatC(lm_df[coli,7], format = "e", digits = dign)}else{slp <- round(lm_df[coli,7], digits = dign)}
-                title_text=paste0("id=", coli, " r2=", rsqr, " slp=", slp, " gp=", as.character(ti), collapse = NULL)
+                title_text=paste0("id=", coli, " r2=", rsqr, " slp=", slp, " gp=", as.character(tdsub[ti]), collapse = NULL)
               }else{title_text=paste0("id=", coli, collapse = NULL)}
               li <- c(min(tar[,3], na.rm=T),max(tar[,3], na.rm=T))
               la <- quantile(tar[,3], probs = c(0, 0.25, 0.5, 0.75, 1),na.rm=T)
@@ -271,7 +276,12 @@ anylm<-function(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", rang
     }
   }
 
-  all_plot=grid.arrange(grobs=plot_list_raw[which(!is.na(lm_df$r2))], ncol=pncol)
+  #save all_plot
+  all_plot=plot_list_raw[which(!is.na(lm_df$r2))]
+
+  #show all_plot
+  if(showpage==TRUE){grid.arrange(grobs=all_plot, ncol=pncol)}
+
   plot_list=list()
   for(pi in 1:length(plot_list_raw)){
     plot_list[[pi]]=as.ggplot(plot_list_raw[[pi]])
@@ -279,7 +289,7 @@ anylm<-function(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", rang
 
   #generate final output
   result<-list(data_list=data_list, lm_df=lm_df, lm_list=lm_list, plot_list=plot_list, all_plot=all_plot)
-
+  return(result)
   #function end################################
 }
 
