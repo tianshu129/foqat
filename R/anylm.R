@@ -53,6 +53,9 @@
 anylm<-function(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", range.x="interval", nperm=99, showpage=TRUE, scint=FALSE, dign=1, zfill="lightgray", ppsize=2, showinfo=TRUE, ptsize=12, pncol=NULL){
 
   #function start################################
+  #In case df is not a dataframe.
+  df <- data.frame(df)
+
   #default vaules for zn & tn
   zn=0
   tn=0
