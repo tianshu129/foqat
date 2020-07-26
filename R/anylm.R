@@ -216,7 +216,7 @@ anylm<-function(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", rang
             if(scint==TRUE){slp <- formatC(lm_df[coli,7], format = "e", digits = dign)}else{slp <- round(lm_df[coli,7], digits = dign)}
             title_text=paste0("id=", coli, " r2=", rsqr, " slp=", slp, collapse = NULL)
           }else{title_text=paste0("id=", coli, collapse = NULL)}
-          p = ggplot(tar, aes_string(x=names(tar)[1], y=names(tar)[2])) + geom_point(size=ppsize, shape = 21, fill = zfill, color = "black") + ggtitle(title_text) + theme_bw() + theme(plot.title = element_text(size=ptsize))
+          p = ggplot(tar, aes_string(x=names(tar)[1], y=names(tar)[2])) + geom_point(size=ppsize, shape = 21, fill = zfill, color = "black") + geom_abline(intercept = lm_df[coli,8], slope = lm_df[coli,7], size=1) + ggtitle(title_text) + theme_bw() + theme(plot.title = element_text(size=ptsize))
           plot_list_raw[[coli]] = ggplotGrob(p)
         }
       }else if(zn!=0&tn==0){
@@ -234,7 +234,7 @@ anylm<-function(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", rang
             la <- quantile(tar[,3], probs = c(0, 0.25, 0.5, 0.75, 1),na.rm=T)
             if(scint==TRUE){la <- formatC(la, format = "e", digits = dign)}else{la <- round(la, digits = dign)}
             br <- quantile(tar[,3], probs = c(0, 0.25, 0.5, 0.75, 1),na.rm=T)
-            p = ggplot(tar, aes_string(x=names(tar)[1], y=names(tar)[2])) + geom_point(size=ppsize, aes(colour=tar[,3])) + scale_colour_gradientn(name=names(tar)[3], colours=rainbow(5), limits = li, labels = la, breaks = br)+geom_abline(intercept = lm_df[coli,8], slope = lm_df[coli,7], size=1) + ggtitle(title_text) + theme_bw() + theme(plot.title = element_text(size=ptsize))
+            p = ggplot(tar, aes_string(x=names(tar)[1], y=names(tar)[2])) + geom_point(size=ppsize, aes(colour=tar[,3])) + scale_colour_gradientn(name=names(tar)[3], colours=rainbow(5), limits = li, labels = la, breaks = br) + geom_abline(intercept = lm_df[coli,8], slope = lm_df[coli,7], size=1) + ggtitle(title_text) + theme_bw() + theme(plot.title = element_text(size=ptsize))
             plot_list_raw[[coli]]=ggplotGrob(p)
           }
         }
