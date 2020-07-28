@@ -11,7 +11,15 @@ Regular users are encouraged to enlist in the [FOQAT users email group](https://
 
 For getting start or detail usage, please visit: [user manual](https://github.com/tianshu129/foqat/blob/master/UserManual.md) or [说明手册](https://github.com/tianshu129/foqat/blob/master/%E8%AF%B4%E6%98%8E%E6%89%8B%E5%86%8C.md) .  
 
-As far as I know, FOQAT has users from: Chinese Research Academy of Environmental Sciences (CRAES), Chinese Academy of Meteorological Sciences (CAMS)，Research Center for Eco-Environmental Sciences (RCEES) for Chinese Academy of Sciences (CAS), Anhui Institute of Optics and Fine Mechanics (AIOFM) for Chinese Academy of Sciences (CAS), Peking University (PKU), City University of Hong Kong (CityU), The Hong Kong Polytechnic University (PolyU), Shandong University (SDU).  
+As far as I know, FOQAT has users from: 
+* Chinese Research Academy of Environmental Sciences (CRAES)
+* Chinese Academy of Meteorological Sciences (CAMS)
+* Research Center for Eco-Environmental Sciences (RCEES) for Chinese Academy of Sciences (CAS)
+* Anhui Institute of Optics and Fine Mechanics (AIOFM) for Chinese Academy of Sciences (CAS)
+* Peking University (PKU)
+* City University of Hong Kong (CityU)
+* The Hong Kong Polytechnic University (PolyU)
+* Shandong University (SDU)
 
 If FOQAT is used to support a scientific publication, please cite the following reference:
 
