@@ -2,7 +2,7 @@
 ## Overview
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-success.svg)](http://perso.crans.org/besson/LICENSE.html)
 ![Version](https://img.shields.io/badge/Version-1.2.3-important) 
-![Clones](https://img.shields.io/badge/Clones-279+-Red)  
+![Clones](https://img.shields.io/badge/Clones-280+-Red)  
 FOQAT is an R package designed for quick analysis of atmospheric (especially for chemistry) field observation and air pollution time series data. And the functions for time series analysis could also applied to time serires of any other fileds. 
 
 FOQAT stands for "Filed observation quick analysis toolkit".
