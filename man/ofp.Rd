@@ -4,18 +4,23 @@
 \alias{ofp}
 \title{Calculate ozone formation potential}
 \usage{
-ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
+ofp(df, unit = "ppbv", t = 25, p = 101.325, sortd = TRUE, colid = 1)
 }
 \arguments{
 \item{df}{dataframe contains time series.}
 
-\item{unit}{unit for VOC concentration. A character vector from these options: "ugm" or "ppb". "ugm" means ug/m3. "ppb" means part per billion volumn.}
+\item{unit}{unit for VOC concentration. A character vector from these options: "ugm" or "ppbv". "ugm" means ug/m3. "ppbv" means part per billion volumn.}
 
 \item{t}{Temperature, in units k, for conversion from PPB to micrograms per
 cubic meter. By default, t equals to 25 degrees Celsius.}
 
 \item{p}{Pressure, in kPa, for converting from PPB to micrograms per cubic
 meter. By default, p equals to 101.325 kPa.}
+
+\item{sortd}{logical value. It determines whether the VOC species 
+are sorted or not. By default, sortd has value "TRUE". 
+If TRUE, VOC species in time series will be arranged according to VOC group,
+ relative molecular weight, and MIR value.}
 
 \item{colid}{column index for date-time. The default value is 1.}
 }
@@ -33,5 +38,5 @@ reactivity scale and hydrocarbon bin reactivities for regulatory applications.
 California Air Resources Board Contract, 2009, 339" (revised January 28, 2010).
 }
 \examples{
-ofp(voc, unit = "ppb")
+ofp(voc)
 }
