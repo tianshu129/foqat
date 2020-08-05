@@ -168,9 +168,9 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1){
 			Con_ugm_group[,gn+1]=Con_ugm[,gn_sub_index+1]
 			ofp_df_group[,gn+1]=ofp_df[,gn_sub_index+1]
 		}else{
-			Con_ppbv_group[,gn+1]=rowSums(Con_ppbv[,gn_sub_index+1],na.rm = TRUE)
-			Con_ugm_group[,gn+1]=rowSums(Con_ugm[,gn_sub_index+1],na.rm = TRUE)
-			ofp_df_group[,gn+1]=rowSums(ofp_df[,gn_sub_index+1],na.rm = TRUE)
+			Con_ppbv_group[,gn+1]=rowSums(Con_ppbv[,gn_sub_index+1], na.rm=TRUE) *NA^!rowSums(!is.na(Con_ppbv[,gn_sub_index+1]))			
+			Con_ugm_group[,gn+1]=rowSums(Con_ugm[,gn_sub_index+1], na.rm=TRUE) *NA^!rowSums(!is.na(Con_ugm[,gn_sub_index+1]))
+			ofp_df_group[,gn+1]=rowSums(ofp_df[,gn_sub_index+1], na.rm=TRUE) *NA^!rowSums(!is.na(ofp_df[,gn_sub_index+1]))
 		}
 	}
   }
