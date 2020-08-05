@@ -31,6 +31,9 @@ dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmod
 	#In case df is not a dataframe.
 	df <- data.frame(df,stringsAsFactors = FALSE)
 
+	
+	df <- trs(df, bkip="1 hour", na.rm = na.rm)
+	
 	#get data list
 	datelist_raw<-as.Date(df[,1])
 	datelist<-datelist_raw[!duplicated(datelist_raw)]
