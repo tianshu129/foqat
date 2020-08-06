@@ -89,13 +89,18 @@ There are many ways to read and write data in R. Here are the most common ones.
 You can put the data in an XLSX file and read it into any variable in R through the read_xlsx function in the 'readxl' package. Such as:
 ``` r
 library(readxl)
-#Many default parameters are skipped here.The first parameter is the file path, the second parameter is the data type of each column, the third parameter reads NA value as null, and the fourth parameter is the SHEET number. Read the data and assign the value to the variable df.
+#Many default parameters are skipped here.
+The first parameter is the file path, the second parameter is the data type of each column, 
+the third parameter reads NA value as null, and the fourth parameter is the SHEET number. 
+Read the data and assign the value to the variable df.  
 df <- read_xlsx("E:/Users/Chen/Desktop/input.xlsx", col_types = c("date",rep("numeric",7)), na = "", sheet = 1)
 ```
 
 The built-in function write.csv can be used to write the data into the CSV file, for example:
 ``` r
-#Many default parameters are skipped here.The first parameter is the data variable to output, the second parameter is the output path, and the third parameter is set to not output row number.
+#Many default parameters are skipped here.
+The first parameter is the data variable to output, the second parameter is the output path, 
+and the third parameter is set to not output row number.
 write.csv(result,"E:/Users/Chen/Desktop/tuv_result.csv",row.names=F)
 ```
 
