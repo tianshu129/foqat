@@ -323,7 +323,7 @@ View(x[["OFP_Result"]])
 * #### Description
 
 Format the historical data from openAQ retrieved by AWS Athena.
-
+How to download data? Please read https://medium.com/@openaq/how-in-the-world-do-you-access-air-quality-data-older-than-90-days-on-the-openaq-platform-8562df519ecd.
 * #### Usage
 ``` r
 openaq(df)
