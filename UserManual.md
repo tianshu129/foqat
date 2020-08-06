@@ -21,7 +21,7 @@ Features currently included:
 
 * [Calculate average of variation (avri) (Wind data is acceptable.)](#calculate-average-of-variation-avri)
 
-* [Batch linear regression analysis (anylm)](#Batch-linear-regression-analysis-anyl))
+* [Batch linear regression analysis (anylm)](#batch-linear-regression-analysis-anylm)
 
 * [Calculate Ozone Formation Potential (ofp)](#calculate-ozone-formation-potential-ofp)
 
@@ -235,9 +235,9 @@ Batch calculation and analysis of linear regression.Multiple species can be sele
 ``` r
 anylm(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", range.x="interval", nperm=99, scint=FALSE, dign=1, zfill="lightgray", ppsize=2, showinfo=TRUE, ptsize=12, pncol=NULL)
 ```
-* #### 参数
+* #### parameter
 
-| 变量名             | 含义                              | 默认值                     | 示例值/备注                            |
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              |Time series data frame             |                            |                                      |
 | `xd`              |species for x-axis (columns)       |2                 | Either column name or column nidex can be used.|
