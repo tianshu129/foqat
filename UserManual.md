@@ -21,6 +21,8 @@ Features currently included:
 
 * [Calculate average of variation (avri) (Wind data is acceptable.)](#calculate-average-of-variation-avri)
 
+* [Batch linear regression analysis (anylm)](#Batch-linear-regression-analysis-anyl))
+
 * [Calculate Ozone Formation Potential (ofp)](#calculate-ozone-formation-potential-ofp)
 
 * [Calculate daily maximum-8-hour ozone (dm8n)](#calculate-daily-maximum-8-hour-ozone-dm8n)
@@ -220,6 +222,64 @@ x = avri(met, bkip = "1 hour", mode = "recipes", value = "day", colid = 1, st = 
 View(x)
 View(x[["df_average"]])
 View(x[["df_sd"]])
+```
+
+
+### Batch linear regression analysis (anylm)
+----------
+* #### Description
+
+Batch calculation and analysis of linear regression.Multiple species can be selected for each of the x and Y and fill color (z) dimensions.Support for a fourth dimensional operation called data grouping (T).
+
+* #### Usage
+``` r
+anylm(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", range.x="interval", nperm=99, scint=FALSE, dign=1, zfill="lightgray", ppsize=2, showinfo=TRUE, ptsize=12, pncol=NULL)
+```
+* #### 参数
+
+| 变量名             | 含义                              | 默认值                     | 示例值/备注                            |
+| ------------------| ----------------------------------|----------------------------|--------------------------------------|
+| `df`              |Time series data frame             |                            |                                      |
+| `xd`              |species for x-axis (columns)       |2                 | Either column name or column nidex can be used.|
+| `yd`              |species for y-axis (columns)       |3                 | Either column name or column nidex can be used.|
+| `zd`              | Species used to fill the color (column) |NULL  | Either column name or column index can be used. If zd is set, the legend in the figure will display the values  corresponding to the 5 percentiles (0%, 25%, 50%, 75%, 100%).|
+| `td`              | Columns used for data grouping     |NULL                        | Either column name or column index can be used. You can only select one column.        |
+| `mi`              | Linear regression method           |1                     | The optional values are 1~4, which represent: ordinary least squares (OLS), major axis (MA), standard major axis (SMA), ranged major axis (RMA).|
+| `range.y`         | Parameters of RMA regression method                  | "interval"       | Option are "interval" and "relative". The parameters are from the lmodel2 package. Refer to https://www.rdocumentation.org/packages/lmodel2/versions/1.7-3/topics/lmodel2|
+| `range.x`         |Parameters of RMA regression method                  | "interval"                  | Option are "interval" and "relative". The parameters are from the lmodel2 package. Refer to https://www.rdocumentation.org/packages/lmodel2/versions/1.7-3/topics/lmodel2|
+| `nperm`           | The number of permutations tested.                     | 99                          | The parameters are from the lmodel2 package. Refer to https://www.rdocumentation.org/packages/lmodel2/versions/1.7-3/topics/lmodel2|             |
+| `showpage`        | Whether to automatically print the page containing all the pictures after getting the result | "TRUE" | |
+| `scint`           | Whether the numbers in the figure use scientific notation           | "FALSE"                     |     |
+| `dign`            | The number of decimal places in the figure               | 1                           |                |
+| `zfill`           | When there is no species (column) fill color, specify the fill color.| "lightgray"              |       |
+| `ppsize`          | Point size                      | 2                           |                                         |
+| `showinfo`        | Whether to display linear regression information in the figure title         | TRUE            |        |
+| `ptsize`          | Font size of figure title                   | 12                          |                             |
+| `pncol`           | The number of columns in the graph on the summary page                 | NULL                       |   |
+
+* #### Output
+
+The output is a list, including: a list data_list containing all data sets used to calculate linear regression, a batch linear regression result summary table lm_df, a column lm_list containing all the detailed results of linear regression, a list plot_list containing all graphs, and a storage The summary page all_plot for all plots.
+There are a few points to note: data_list is a multi-level list. The levels are: x->y->z (if any) -> t (if any). The data group can be indexed progressively by level, and the data group corresponding to the regression result of interest can be quickly found and exported.
+The plot_list list contains all the graphs you see in the total page, and the serial number corresponds to the page id. The format is ggplot. It can be processed with ggplot2 package after export.
+You can use the gridExtra::grid.arrange() function to display the total map page all_plot. You can use the ridExtra::arrangeGrob()+ggplot2::ggsave() function to output the total graph page all_plot.
+   
+``` r
+#Examples of displaying and outputting the page all_plot overall view of the code 
+gridExtra::grid.arrange(grobs=..., nrow=...)
+g <- gridExtra::arrangeGrob(grobs=..., nrow=...)
+ggplot2::ggsave(filename="example.jpg", plot=g)
+```
+
+* #### Examples
+
+``` r
+# Loading lubridate pack, adding additional data set represents a day calendar day by day so that packet. 
+library(lubridate)
+df=data.frame(aqi,day=day(aqi$Time))
+# Batch linear regression analysis
+x=anylm(df, xd=c(2,3), yd=6, zd=4, td=7,dign=3)
+View(x)
 ```
 
 
