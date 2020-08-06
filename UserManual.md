@@ -316,6 +316,42 @@ View(x[["MIR_Result"]])
 View(x[["OFP_Result"]])
 ```
 
+### Format the historical data from openAQ (openaq)
+----------
+* #### Description
+
+Format the historical data from openAQ retrieved by AWS Athena.
+
+* #### Usage
+``` r
+openaq(df)
+```
+* #### Arguments
+
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
+| ------------------| ----------------------------------|----------------------------|--------------------------------------|
+| `df`              | dataframe of historical data from openAQ with certain format|  |Need to have 5 species: "o3", "no2", "co", "pm25", "pm10".|
+
+* #### Output
+
+A list which contain a dataframe of formated OpenAQ data and a dataframe for time series of OpenAQ data.
+
+* #### Examples
+
+``` r 
+#read data into R by using 'read_xlsx' function in 'readxl' pacakage
+library(readxl)
+#please use your path
+path_for_file="xx.xlsx", col_types=c(rep("text",3), "numeric", rep("text",9))
+aqidata<- read_xlsx(path_for_file,col_types = col_types)
+#process data by using 'openaq' function in 'foqat' pacakage
+x=openaq(aqidata)
+#view results
+View(x)
+View(x[["aqidata"]])
+View(x[["aqits"]])
+```
+
 
 ### Calculate daily maximum-8-hour ozone (dm8n)
 ----------
