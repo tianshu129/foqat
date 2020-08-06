@@ -25,6 +25,8 @@ Features currently included:
 
 * [Calculate Ozone Formation Potential (ofp)](#calculate-ozone-formation-potential-ofp)
 
+* [Format the historical data from openAQ (openaq)](#format-the-historical-data-from-openaq-openaq)
+
 * [Calculate daily maximum-8-hour ozone (dm8n)](#calculate-daily-maximum-8-hour-ozone-dm8n)
 
 * [Get OH Reactivity (koh)](#oh-reactivity-koh)
