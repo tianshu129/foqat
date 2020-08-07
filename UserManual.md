@@ -25,7 +25,7 @@ Features currently included:
 
 * [Calculate Ozone Formation Potential (ofp)](#calculate-ozone-formation-potential-ofp)
 
-* [Format the historical data from openAQ (openaq)](#format-the-historical-data-from-openaq-openaq)
+* [Format the historical data from OpenAQ (openaq)](#format-the-historical-data-from-openaq-openaq)
 
 * [Calculate daily maximum-8-hour ozone (dm8n)](#calculate-daily-maximum-8-hour-ozone-dm8n)
 
@@ -318,7 +318,7 @@ View(x[["MIR_Result"]])
 View(x[["OFP_Result"]])
 ```
 
-### Format the historical data from openAQ (openaq)
+### Format the historical data from OpenAQ (openaq)
 ----------
 * #### Description
 
