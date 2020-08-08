@@ -9,7 +9,7 @@ FOQAT stands for "Filed observation quick analysis toolkit".
 
 The R package was developed and maintained by Chen Tianshu from Professor Xue Likun's research group of Environmental Research Institute of Shandong University.  
 
-Regular users are encouraged to enlist in the [FOQAT users email group](https://groups.google.com/d/forum/foqat), a combo email list and Q/A forum, or add [my WeChat](https://github.com/tianshu129/foqat/blob/master/img/wechat.jpg) to enter FOQAT user WeChat group.  
+Regular users are encouraged to enlist in the [FOQAT users email group](https://groups.google.com/d/forum/foqat), a combo email list and Q/A forum.  
 
 
 For getting start or detail usage, please visit: [user manual](https://github.com/tianshu129/foqat/blob/master/UserManual.md) or [说明手册](https://github.com/tianshu129/foqat/blob/master/%E8%AF%B4%E6%98%8E%E6%89%8B%E5%86%8C.md) .  
