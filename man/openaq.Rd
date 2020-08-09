@@ -2,16 +2,16 @@
 % Please edit documentation in R/openaq.R
 \name{openaq}
 \alias{openaq}
-\title{Format the data downloaded from OpenAQ}
+\title{Format the historical data from openAQ retrieved by AWS Athena}
 \usage{
 openaq(df)
 }
 \arguments{
-\item{df}{data downloaded from OpenAQ.}
+\item{df}{the historical data from openAQ retrieved by AWS Athena.}
 }
 \value{
 a list which contain a dataframe of formated OpenAQ data and a dataframe for time series of OpenAQ data.
 }
 \description{
-Format the data downloaded from OpenAQ
+Format the historical data from openAQ retrieved by AWS Athena.
 }

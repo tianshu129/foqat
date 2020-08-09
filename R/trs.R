@@ -67,17 +67,11 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
   }
   if(is.null(et)){
     #if not input et, set last timestamp as et
-    et<-as.POSIXct(as.character(df[length(df[,1]),1]),'%Y-%m-%d %H:%M')
+    et<-as.POSIXct(as.character(df[length(df[,1]),1]),'%Y-%m-%d %H:%M',tz= "GMT")
   }else{
     #if input et, cut df by et
     et=as.POSIXct(et,format="%Y-%m-%d %H:%M",tz= "GMT")
-    ##if et not exist in df, insert et
-    if(et != df[max(which(df[,1] <= et)),1]){
-      k=max(which(df[,1] <= et))
-      df[seq(k+1,nrow(df)+1),] <- df[seq(k,nrow(df)),]
-      df[k,1] <- as.POSIXct(et,tz="GMT")
-      df[k,2:ncol(df)] <- c(rep(NA, ncol(df)-1))
-    }
+    #not need to insert et, just need to trunck by et (">=").
     df <- df[df[,1] <= et,]
   }
   eval(parse(text = paste(c("datat <- aggregate(df[,-1], list(", colnames(df)[1], " = cut(df[,1], breaks = bkip)), mean, na.rm = na.rm)"),collapse = "")))
@@ -108,13 +102,11 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
   bkip_str = tolower(bkip_str)
   bkip_str = gsub("[s]", "", bkip_str)
   if(bkip_str == "sec"|bkip_str == "min"|bkip_str == "hour"){
-	st <- as.POSIXct(df[1,1], '%Y-%m-%d %H:%M', tz="GMT")
-	et <- as.POSIXct(df[length(datat[,1]),1], '%Y-%m-%d %H:%M', tz="GMT")
 	ts <- seq.POSIXt(st, et, by = bkip)
 	eval(parse(text = paste(c("df <- data.frame(", colnames(datat)[1], " = ts)"),collapse = "")))
   }else{
-	st <- as.Date(df[1,1])
-	et <- as.Date(df[length(datat[,1]),1])
+	st <- as.Date(st)
+	et <- as.Date(et)
 	ts <- seq(st, et, by = bkip)
 	eval(parse(text = paste(c("df <- data.frame(", colnames(datat)[1], " = ts)"),collapse = "")))
   }
