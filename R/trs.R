@@ -114,6 +114,9 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
   #complete timestamp
   df <- full_join(df, datat)
 
+  #In case first row is NaN
+  df[,-1][df[,-1] == "NaN"] <- NA
+
   #rename df
   colnames(df) <- cona_df
 
