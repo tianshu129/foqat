@@ -1,4 +1,4 @@
-# FOQAT
+# FOQAT <img src="img/logo.png" align="right" width="120" />
 
 ## Tableof Contents
 * [GENERAL OVERVIEW](#general-overview)
