@@ -1,5 +1,9 @@
 # FOQAT <img src="img/logo.png" align="right" width="120" />
 
+![Language](https://img.shields.io/badge/Language-R-blue.svg) [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-success.svg)](http://perso.crans.org/besson/LICENSE.html)
+![Version](https://img.shields.io/badge/Version-1.3.4-important) 
+![Clones](https://img.shields.io/badge/Clones-357-Red)  
+ 
 ## Tableof Contents
 * [GENERAL OVERVIEW](#general-overview)
 * [INSTALLATION OF R & RSTUDIO](#Rinstallation-of-r--rstudio)
