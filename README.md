@@ -1,3 +1,4 @@
+# FOQAT <img src="img/logo.png" align="right" width="120" />
 
 ## Overview
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-success.svg)](http://perso.crans.org/besson/LICENSE.html)
