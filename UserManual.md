@@ -305,7 +305,7 @@ ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series          |                            |                                      |
 | `unit`            | unit for VOC data (micrograms per cubic meter or PPB).Please fill in "UGM" or "PPB" in quotation marks.| "ugm"                     |  |
-| `t`               | Temperature, in units k, for conversion from PPB to micrograms per cubic meter.| 25|                  |
+| `t`               | Temperature, in units Degrees Celsius, for conversion from PPB to micrograms per cubic meter.| 25|                  |
 | `p`               | Pressure, in kPa, for converting from PPB to micrograms per cubic meter.| 101.325|                    |
 | `colid`           | column index for date-time        |1                           |                                      |
 
