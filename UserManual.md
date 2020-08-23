@@ -33,7 +33,7 @@ Features currently included:
 
 * [Get OH Reactivity (koh)](#oh-reactivity-koh)
 
-* [Calculate OH reactivity (loh))](#calculate-oh-reactivity-loh)
+* [Calculate OH reactivity (loh)](#calculate-oh-reactivity-loh)
 
 * [Format the historical data from OpenAQ (openaq)](#format-the-historical-data-from-openaq-openaq)
 
@@ -299,7 +299,7 @@ Calculates daily maximum-8-hour ozone from ozone observation data.
 
 * #### Usage
 ``` r
-dm8n(df, colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 1)
+dm8n(df, colid = 1, colio = 2, starthour = 0, endhour = 16, nh=6, nc=14, na.rm = TRUE, outputmode = 1)
 ```
 * #### Arguments
 
@@ -309,17 +309,19 @@ dm8n(df, colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 1)
 | `colid`           | column index for date-time        |1                           |                                      |
 | `starthour`       | start hour for calculating 8-hour ozone | 0                    |                                      |
 | `endhour`         | end hour for calculating 8-hour ozone   | 16     |16 is the average of 8-hour ozone between 16 and 23.|
+| `nh`              | The number of effective hourly concentrations per 8-hour period.| 6   |                               |
+| `nc`              | The number of effective 8-hour average concentrations per day.  | 14  |                               |
 | `na.rm`           | logical value. Remove NA value or not? | TRUE                  |                                      |
 | `outputmode`      | the format of the output, possible value: 1 or 2.| 1 |See output for the results of filling in 1 or 2.|
 
 * #### Output
 
-Depends on the value of 'outputMode'. Value 1 will output 1 table: maximum-8-hour ozone. Value 1 will output 1 list, which contains 3 tables: 8-hour ozone, statistics of number of valid items within each calculation interval, and maximum-8-hour ozone.
+Depends on the value of 'outputMode'. Value 1 will output 1 table: maximum-8-hour ozone. Value 1 will output 1 list, which contains 4 tables: 8-hour ozone, statistics of the number of effective hourly concentrations in each 8-hour average concentration, statistics of the number of effective 8-hour average concentrations in each day, maximum-8-hour ozone.
 
 * #### Examples
 
 ``` r 
-x = dm8n(aqi[,c(1,6)], colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 2)
+x = dm8n(aqi[,c(1,6)], outputmode = 2)
 View(x)
 View(x[["D8"]])
 View(x[["D8_count"]])
