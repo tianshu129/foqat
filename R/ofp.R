@@ -156,16 +156,17 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, 
   #set concentration df, multiple df with MIR in name_df
   ofp_df = df
   r = 22.4*(273.15+t)*101.325/(273.15*p)
+  r2 = (273.15+t)*101.325/(273.15*p)
   if(unit=="ugm"){
     Con_ugm = df
 	Con_ppbv = Con_ugm
 	Con_ppbv[,2:ncol(Con_ugm)] = data.frame(sapply(2:ncol(Con_ugm),function(x) Con_ugm[,x]*as.numeric(r/name_df$MW)[x-1]))
-	ofp_df[,2:ncol(ofp_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$MIR)[x-1]))
+	ofp_df[,2:ncol(ofp_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$MIR/r2)[x-1]))
   }else if(unit=="ppbv"){
     Con_ppbv = df
 	Con_ugm = Con_ppbv
-	Con_ugm[,2:ncol(Con_ppbv)] = data.frame(sapply(2:ncol(Con_ppbv),function(x) Con_ppbv[,x]*as.numeric(name_df$MW/r)[x-1]))
-    ofp_df[,2:ncol(ofp_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$MIR*name_df$MW/r)[x-1]))
+	Con_ugm[,2:ncol(Con_ppbv)] = data.frame(sapply(2:ncol(Con_ppbv),function(x) Con_ppbv[,x]*as.numeric(name_df$MW/24.45016)[x-1]))
+    ofp_df[,2:ncol(ofp_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$MIR*name_df$MW/24.45016)[x-1]))
   }else{
     print("unit error")
   }

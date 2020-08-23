@@ -4,12 +4,26 @@
 \alias{loh}
 \title{Calculate OH reactivity}
 \usage{
-loh(df, unit = "ppbv", sortd = TRUE, colid = 1, wamg = FALSE)
+loh(
+  df,
+  unit = "ppbv",
+  t = 25,
+  p = 101.325,
+  sortd = TRUE,
+  colid = 1,
+  wamg = FALSE
+)
 }
 \arguments{
 \item{df}{dataframe contains time series.}
 
 \item{unit}{unit for VOC concentration. A character vector from these options: "ugm" or "ppbv". "ugm" means ug/m3. "ppbv" means part per billion volumn.}
+
+\item{t}{Temperature, in units Degrees Celsius, for conversion from ppbv to micrograms per
+cubic meter. By default, t equals to 25 Degrees Celsius.}
+
+\item{p}{Pressure, in kPa, for converting from ppbv to micrograms per cubic
+meter. By default, p equals to 101.325 kPa.}
 
 \item{sortd}{logical value. It determines whether the VOC species
 are sorted or not. By default, sortd has value "TRUE".
