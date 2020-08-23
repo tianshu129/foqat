@@ -17,6 +17,7 @@
 #' @param p Pressure, in kPa, used to convert data in micrograms per cubic meter 
 #' to standard conditions (25 Degrees Celsius, 101.325 kPa). 
 #' By default, p equals to 101.325 kPa.
+#' @param stcd logical. Does it output results in standard conditions? The default vaule is FALSE.
 #' @param sortd logical value. It determines whether the VOC species
 #' are sorted or not. By default, sortd has value "TRUE".
 #' If TRUE, VOC species in time series will be arranged according to VOC group,
@@ -44,7 +45,7 @@
 #' @importFrom utils URLencode
 #' @importFrom xml2 read_html
 
-ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, wamg=FALSE){
+ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE){
 
   #suppress warnings temporarily?
   if(wamg==FALSE){options(warn=-1)}
@@ -158,17 +159,27 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, 
   #set concentration df, multiple df with MIR in name_df
   ofp_df = df
   r = 22.4*(273.15+t)*101.325/(273.15*p)
-  r2 = (273.15+t)*101.325/(273.15*p)
+  r2 = (298.15*p)/((273.15+t)*101.325)
   if(unit=="ugm"){
     Con_ugm = df
-	Con_ppbv = Con_ugm
-	Con_ppbv[,2:ncol(Con_ugm)] = data.frame(sapply(2:ncol(Con_ugm),function(x) Con_ugm[,x]*as.numeric(r/name_df$MW)[x-1]))
-	ofp_df[,2:ncol(ofp_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$MIR/r2)[x-1]))
+	Con_ppbv = df
+	Con_ppbv[,2:ncol(df)] = data.frame(sapply(2:ncol(df),function(x) df[,x]*as.numeric(r/name_df$MW)[x-1]))
+	if(stcd==FALSE){
+		ofp_df[,2:ncol(ofp_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$MIR)[x-1]))
+	}else{
+		Con_ugm[,2:ncol(df)] = Con_ugm[,2:ncol(df)]/r2			
+		ofp_df[,2:ncol(ofp_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$MIR)[x-1]))
+	}
   }else if(unit=="ppbv"){
     Con_ppbv = df
 	Con_ugm = Con_ppbv
-	Con_ugm[,2:ncol(Con_ppbv)] = data.frame(sapply(2:ncol(Con_ppbv),function(x) Con_ppbv[,x]*as.numeric(name_df$MW/24.45016)[x-1]))
-    ofp_df[,2:ncol(ofp_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$MIR*name_df$MW/24.45016)[x-1]))
+	if(stcd==FALSE){
+		Con_ugm[,2:ncol(Con_ppbv)] = data.frame(sapply(2:ncol(Con_ppbv),function(x) Con_ppbv[,x]*as.numeric(name_df$MW/r)[x-1]))
+		ofp_df[,2:ncol(ofp_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$MIR*name_df$MW/r)[x-1]))
+	}else{
+		Con_ugm[,2:ncol(Con_ppbv)] = data.frame(sapply(2:ncol(Con_ppbv),function(x) Con_ppbv[,x]*as.numeric(name_df$MW/24.45016)[x-1]))
+		ofp_df[,2:ncol(ofp_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$MIR*name_df$MW/24.45016)[x-1]))
+	}
   }else{
     print("unit error")
   }

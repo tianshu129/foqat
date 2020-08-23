@@ -9,6 +9,7 @@ ofp(
   unit = "ppbv",
   t = 25,
   p = 101.325,
+  stcd = FALSE,
   sortd = TRUE,
   colid = 1,
   wamg = FALSE
@@ -26,6 +27,8 @@ micrograms per cubic meter to standard conditions
 \item{p}{Pressure, in kPa, used to convert data in micrograms per cubic meter 
 to standard conditions (25 Degrees Celsius, 101.325 kPa). 
 By default, p equals to 101.325 kPa.}
+
+\item{stcd}{logical. Does it output results in standard conditions? The default vaule is FALSE.}
 
 \item{sortd}{logical value. It determines whether the VOC species
 are sorted or not. By default, sortd has value "TRUE".
