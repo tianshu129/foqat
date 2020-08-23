@@ -337,14 +337,14 @@ The CAS number was matched for each VOC speices (from column name), and the Maxi
 The MIR value comes from “Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339” (revised January 28, 2010).  
 * #### Usage
 ``` r
-ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
+ofp(df, unit = "ppbv", t = 25, p = 101.325, colid = 1)
 ```
 * #### Arguments
 
 | Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series          |                            |                                      |
-| `unit`            | unit for VOC data (micrograms per cubic meter or PPB).Please fill in "UGM" or "PPB" in quotation marks.| "ugm"                     |  |
+| `unit`            | unit for VOC data (micrograms per cubic meter or ppbv).Please fill in "ugm" or "ppbv" in quotation marks.| "ppbv"                     |  |
 | `t`               | Temperature, in Degrees Celsius, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 25|                  |
 | `p`               |Pressure, in kPa, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 101.325|                         |
 | `colid`           | column index for date-time        |1                           |                                      |
@@ -357,7 +357,7 @@ Output is a list containing 2 tables: results for matched MIR values and OFP tim
 * #### Examples
 
 ``` r
-x = ofp(voc, unit = "ppb", t = 25, p = 101.325, colid = 1)
+x = ofp(voc, unit = "ppbv")
 View(x)
 View(x[["MIR_Result"]])
 View(x[["OFP_Result"]])
@@ -410,7 +410,7 @@ loh(df, unit = "ppbv", t = 25, p = 101.325, sortd=TRUE, colid = 1)
 | Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series          |                            |                                      |
-| `unit`            | unit for VOC data (micrograms per cubic meter or ppbv).Please fill in "ugm" or "ppbv" in quotation marks.| "ugm"                     |  |
+| `unit`            | unit for VOC data (micrograms per cubic meter or ppbv).Please fill in "ugm" or "ppbv" in quotation marks.| "ppbv"                     |  |
 | `t`               | Temperature, in Degrees Celsius, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 25|                  |
 | `p`               |Pressure, in kPa, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 101.325|                         |
 | `colid`           | column index for date-time        |1                           |                                      |
