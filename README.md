@@ -1,7 +1,7 @@
 # FOQAT <img src="img/logo.png" align="right" width="120" />
 
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-success.svg)](http://perso.crans.org/besson/LICENSE.html)
-![Version](https://img.shields.io/badge/Version-1.4.1-important) 
+![Version](https://img.shields.io/badge/Version-1.5.2-important) 
 ![Clones](https://img.shields.io/badge/Clones-405-Red)  
  
 ## Overview
@@ -46,12 +46,13 @@ Functions in foqat are listed below:
 **statdf**: summary each variable of dataframe into: mean, sd, min, max, percentiles (25%, 50%, 75%).  
 **trs**: resample time series and return complete time series with new time resolution.  
 **avri**: calculate average of variation of time series.   
-**anylm**: analyse linear regression for time series in batch.  
+**anylm**: analyse linear regression for time series in batch.
+**dm8n**: calculate daily maximum-8-hour ozone.  
 **ofp**: calculate ozone formation potential (OFP) of VOC time series.  
 MIR values are refered from "Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339" (Revised January 28, 2010).  
-**openaq**: process the historical data from openaq.org retrieved by AWS Athena.  
-**dm8n**: calculate daily maximum-8-hour ozone.  
 **koh**: search kOH value from 'chemspider.com'. Predicted data is generated using the US Environmental Protection Agency’s EPISuite.  
+**loh**: calculate OH reactivity (LOH) of VOC time series. kOH value is generated using the US Environmental Protection Agency’s EPISuite.  
+**openaq**: process the historical data from openaq.org retrieved by AWS Athena.  
 **tuv**: run offline batch calculation of [TROPOSPHERIC ULTRAVIOLET AND VISIBLE (TUV) RADIATION MODEL](https://www2.acom.ucar.edu/modeling/tropospheric-ultraviolet-and-visible-tuv-radiation-model).  
 Currently, this function only support output of photolysis rate coefficients (J-values). 
 If you want to know detail about each function, please type ?functionname in R. Below is an example:
