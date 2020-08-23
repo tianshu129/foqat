@@ -4,25 +4,42 @@
 \alias{dm8n}
 \title{Calculate daily maximum-8-hour ozone}
 \usage{
-dm8n(df, colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 1)
+dm8n(
+  df,
+  colid = 1,
+  colio = 2,
+  starthour = 0,
+  endhour = 16,
+  nh = 6,
+  nc = 14,
+  na.rm = TRUE,
+  outputmode = 1
+)
 }
 \arguments{
 \item{df}{dataframe of time series for ozone.}
 
 \item{colid}{column index for date-time. By default, it equals to 1.}
 
+\item{colio}{column index for ozone. By default, it equals to 2.}
+
 \item{starthour}{numeric, start hour for calculating 8-hour ozone. By default, it equals to 0.}
 
 \item{endhour}{numeric, end hour for calculating 8-hour ozone. By default, it equals to 16 which means averaging ozone between 16~23.}
+
+\item{nh}{numeric. The number of effective hourly concentrations per 8-hour period.}
+
+\item{nc}{numeric. The number of effective 8-hour average concentrations per day.}
 
 \item{na.rm}{logical. Should missing values (including NaN) be omitted from the calculations?}
 
 \item{outputmode}{numeric, the format of the output, possible value: 1 or 2. See 'value' for the results of filling in 1 or 2.}
 }
 \value{
-a dataframe depends on the value of 'outputMode'. Value 1 will output 1 #' table: maximum-8-hour ozone. Value 1 will output 1 list, which contains 3
-tables: 8-hour ozone, statistics of number of valid items within each
-calculation interval, and maximum-8-hour ozone.
+a dataframe depends on the value of 'outputMode'. Value 1 will output 1 
+table: maximum-8-hour ozone. Value 2 will output 1 list, which contains 4
+tables: 8-hour ozone, statistics of the number of effective hourly concentrations in each 8-hour average concentration, 
+statistics of the number of effective 8-hour average concentrations in each day, maximum-8-hour ozone.
 }
 \description{
 Calculates daily maximum-8-hour ozone from ozone observation data.
@@ -31,5 +48,6 @@ Calculates daily maximum-8-hour ozone from ozone observation data.
 This function can calculate multiple columns of ozone observation data in 1 dataframe with 1 datetime columm (such as ozone concentration in different sites).
 }
 \examples{
-dm8n(aqi[,c(1,6)], colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 2)
+dm8n(aqi[,c(1,6)], colid = 1, starthour = 0, endhour = 16, nh=6, 
+nc=14, na.rm = TRUE, outputmode = 2)
 }

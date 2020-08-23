@@ -1,24 +1,18 @@
-#' Calculate ozone formation potential
+#' Calculate OH reactivity
 #'
-#' Calculate Ozone Formation Potential (OFP) of VOC time series.
+#' Calculate OH reactivity of VOC time series in 25 degree celsius.
 #'
 #' The CAS number was matched for each VOC speices (from column name), and the
-#' Maximum Incremental Reactivity (MIR) value was matched through the CAS number and used for time series calculation. \cr
-#' The MIR value comes from "Carter, W. P. (2009). Updated maximum incremental
-#' reactivity scale and hydrocarbon bin reactivities for regulatory applications.
-#' California Air Resources Board Contract, 2009, 339" (revised January 28, 2010).
+#' OH Rate Constant was matched through the CAS number and used for time series calculation. \cr
+#' The OH Rate Constant comes from 'AopWin v1.92' in 25 degree celsius.
 #'
 #' @param df dataframe contains time series.
 #' @param colid column index for date-time. The default value is 1.
 #' @param unit unit for VOC concentration. A character vector from these options: "ugm" or "ppbv". "ugm" means ug/m3. "ppbv" means part per billion volumn.
-#' @param t Temperature, in units Degrees Celsius, for conversion from ppbv to micrograms per
-#' cubic meter. By default, t equals to 25 Degrees Celsius.
-#' @param p Pressure, in kPa, for converting from ppbv to micrograms per cubic
-#' meter. By default, p equals to 101.325 kPa.
 #' @param sortd logical value. It determines whether the VOC species
 #' are sorted or not. By default, sortd has value "TRUE".
 #' If TRUE, VOC species in time series will be arranged according to VOC group,
-#'  relative molecular weight, and MIR value.
+#'  relative molecular weight, and OH Rate Constant.
 #' @param colid column index for date-time. The default value is 1.
 #' @param wamg logical. Should warnings be presented? The default vaule is FALSE.
 #' @return  a list contains 13 tables:
@@ -30,19 +24,19 @@
 #' Con_ppbv_mean: the average volume concentration and proportion of VOC by species (sorted from large to small);
 #' Con_ppbv_group: time series of VOC volume concentration according to major groups;
 #' Con_ppbv_group_mean: VOC volume concentration average and proportion (sorted from large to small) according to major groups;
-#' MIR_Result: matched MIR value result;
-#' OFP_Result: OFP time series of VOC by species;
-#' OFP_Result_mean: the average value and proportion of OFP of VOC by species (sorted from large to small);
-#' OFP_Result_group: OFP time series of VOC classified by groups;
-#' OFP_Result_group_mean: the average value and proportion of OFP of VOC according to major groups (sorted from large to small).
+#' KOH_Result: matched KOH value result;
+#' LOH_Result: LOH time series of VOC by species;
+#' LOH_Result_mean: the average value and proportion of LOH of VOC by species (sorted from large to small);
+#' LOH_Result_group: LOH time series of VOC classified by groups;
+#' LOH_Result_group_mean: the average value and proportion of LOH of VOC according to major groups (sorted from large to small).
 #'
 #' @export
 #' @examples
-#' ofp(voc)
+#' loh(voc)
 #' @importFrom utils URLencode
 #' @importFrom xml2 read_html
 
-ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, wamg=FALSE){
+loh <- function(df, unit = "ppbv", sortd =TRUE, colid = 1, wamg=FALSE){
 
   #suppress warnings temporarily?
   if(wamg==FALSE){options(warn=-1)}
@@ -67,7 +61,7 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, 
   chemicalnames = gsub("\\i-", "iso-", chemicalnames)
 
   #build name_df
-  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, MIR = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
+  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, koh = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
 
   #search VOC name to get CAS Number from different sources, add cas, sources, mathed_name to name_df
   ##firstly by NIST
@@ -95,25 +89,25 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, 
     }
   }
 
-  #match mir by different sources
+  #match koh by different sources
   ##get CAS from NIST, match name by CAS
   a=lapply(name_df$CAS[which(name_df$Source=="NIST"&!is.na(name_df$CAS))], function(i) grep(i, datacas$CAS))
   a=unlist(lapply(a,function(x) if(identical(x,integer(0))) ' ' else x))
-  name_df$MIR[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$New[as.numeric(a)]
+  name_df$koh[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$koh[as.numeric(a)]
   name_df$Matched_Name[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$Description[as.numeric(a)]
   name_df$MW[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$MWt[as.numeric(a)]
   name_df$Group[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$Group[as.numeric(a)]
 
 
   #if it is matched by CAS in NIST and matched by name in Carter paper, but it doesn't have CAS in Carter paper.
-  for(k in which(!is.na(name_df$Source)&is.na(name_df$MIR))){
+  for(k in which(!is.na(name_df$Source)&is.na(name_df$koh))){
     tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
     tar=tolower(name_df$name[k])
     df_null=data.frame(datacas[tarlist %in% tar,])
     if(nrow(df_null)!=0){
       name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
       #name_df$CAS[as.numeric(k)] = df_null$CAS[1]
-      name_df$MIR[as.numeric(k)] = df_null$New[1]
+      name_df$koh[as.numeric(k)] = df_null$koh[1]
       name_df$Source[as.numeric(k)] = "CAS is found in NIST. But it only has name in Carter paper 2010"
       name_df$MW[as.numeric(k)] = df_null$MWt[1]
 	  name_df$Group[as.numeric(k)] = df_null$Group[1]
@@ -128,7 +122,7 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, 
     if(nrow(df_null)!=0){
       name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
       name_df$CAS[as.numeric(k)] = df_null$CAS[1]
-      name_df$MIR[as.numeric(k)] = df_null$New[1]
+      name_df$koh[as.numeric(k)] = df_null$koh[1]
       name_df$Source[as.numeric(k)] = "Carter paper 2010"
       name_df$MW[as.numeric(k)] = df_null$MWt[1]
 	  name_df$Group[as.numeric(k)] = df_null$Group[1]
@@ -148,24 +142,27 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, 
   if(sortd==TRUE){
 	  #order by 2 columns
 	  name_df$Group <- factor(name_df$Group, levels = c("Alkanes", "Alkenes", "BVOC", "Alkynes", "Aromatic_Hydrocarbons", "Oxygenated_Organics", "Other_Organic_Compounds", "Unknown"))
-	  name_df = name_df[with(name_df, order(Group, MW, MIR)), ]
+	  name_df = name_df[with(name_df, order(Group, MW, koh)), ]
 	  df[,2:ncol(df)]=df[,name_df$raw_order+1]
 	  colnames(df)[2:ncol(df)]=colnames(df)[name_df$raw_order+1]
   }
 
-  #set concentration df, multiple df with MIR in name_df
-  ofp_df = df
+  #set concentration df, multiple df with koh in name_df
+  loh_df = df
+  t = 25
+  p = 101.325
   r = 22.4*(273.15+t)*101.325/(273.15*p)
+  Avogadro = 6.022e23
   if(unit=="ugm"){
     Con_ugm = df
 	Con_ppbv = Con_ugm
 	Con_ppbv[,2:ncol(Con_ugm)] = data.frame(sapply(2:ncol(Con_ugm),function(x) Con_ugm[,x]*as.numeric(r/name_df$MW)[x-1]))
-	ofp_df[,2:ncol(ofp_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$MIR)[x-1]))
+	loh_df[,2:ncol(loh_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$koh*Avogadro*1e-12/name_df$MW)[x-1]))
   }else if(unit=="ppbv"){
     Con_ppbv = df
 	Con_ugm = Con_ppbv
 	Con_ugm[,2:ncol(Con_ppbv)] = data.frame(sapply(2:ncol(Con_ppbv),function(x) Con_ppbv[,x]*as.numeric(name_df$MW/r)[x-1]))
-    ofp_df[,2:ncol(ofp_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$MIR*name_df$MW/r)[x-1]))
+    loh_df[,2:ncol(loh_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$koh*Avogadro*1e-12/r)[x-1]))
   }else{
     print("unit error")
   }
@@ -176,7 +173,7 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, 
   #generate group df
   Con_ppbv_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
   Con_ugm_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
-  ofp_df_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
+  loh_df_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
 
   #sum up columns
   for(gn in 1:length(gn_list)){
@@ -185,11 +182,11 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, 
 		if(length(gn_sub_index)==1){
 			Con_ppbv_group[,gn+1]=Con_ppbv[,gn_sub_index+1]
 			Con_ugm_group[,gn+1]=Con_ugm[,gn_sub_index+1]
-			ofp_df_group[,gn+1]=ofp_df[,gn_sub_index+1]
+			loh_df_group[,gn+1]=loh_df[,gn_sub_index+1]
 		}else{
 			Con_ppbv_group[,gn+1]=rowSums(Con_ppbv[,gn_sub_index+1], na.rm=TRUE) *NA^!rowSums(!is.na(Con_ppbv[,gn_sub_index+1]))
 			Con_ugm_group[,gn+1]=rowSums(Con_ugm[,gn_sub_index+1], na.rm=TRUE) *NA^!rowSums(!is.na(Con_ugm[,gn_sub_index+1]))
-			ofp_df_group[,gn+1]=rowSums(ofp_df[,gn_sub_index+1], na.rm=TRUE) *NA^!rowSums(!is.na(ofp_df[,gn_sub_index+1]))
+			loh_df_group[,gn+1]=rowSums(loh_df[,gn_sub_index+1], na.rm=TRUE) *NA^!rowSums(!is.na(loh_df[,gn_sub_index+1]))
 		}
 	}
   }
@@ -206,11 +203,11 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, 
   Con_ppbv_mean$Proportion=round(Con_ppbv_mean$Proportion,4)
   Con_ppbv_mean=Con_ppbv_mean[with(Con_ppbv_mean, order(-mean)), ]
 
-  #ofp_df_mean
-  ofp_df_mean=data.frame(species=row.names(statdf(ofp_df)[-1,]),mean=as.numeric(as.character(statdf(ofp_df,n = 6)[-1,1])))
-  ofp_df_mean$Proportion=ofp_df_mean$mean/sum(as.numeric(as.character(statdf(ofp_df,n = 6)[-1,1])),na.rm = TRUE)
-  ofp_df_mean$Proportion=round(ofp_df_mean$Proportion,4)
-  ofp_df_mean=ofp_df_mean[with(ofp_df_mean, order(-mean)), ]
+  #loh_df_mean
+  loh_df_mean=data.frame(species=row.names(statdf(loh_df)[-1,]),mean=as.numeric(as.character(statdf(loh_df,n = 6)[-1,1])))
+  loh_df_mean$Proportion=loh_df_mean$mean/sum(as.numeric(as.character(statdf(loh_df,n = 6)[-1,1])),na.rm = TRUE)
+  loh_df_mean$Proportion=round(loh_df_mean$Proportion,4)
+  loh_df_mean=loh_df_mean[with(loh_df_mean, order(-mean)), ]
 
   #Con_ugm_group_mean
   Con_ugm_group_mean=data.frame(species=row.names(statdf(Con_ugm_group)[-1,]),mean=as.numeric(as.character(statdf(Con_ugm_group,n = 6)[-1,1])))
@@ -224,11 +221,11 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, 
   Con_ppbv_group_mean$Proportion=round(Con_ppbv_group_mean$Proportion,4)
   Con_ppbv_group_mean=Con_ppbv_group_mean[with(Con_ppbv_group_mean, order(-mean)), ]
 
-  #ofp_df_group_mean
-  ofp_df_group_mean=data.frame(species=row.names(statdf(ofp_df_group)[-1,]),mean=as.numeric(as.character(statdf(ofp_df_group,n = 6)[-1,1])))
-  ofp_df_group_mean$Proportion=ofp_df_group_mean$mean/sum(as.numeric(as.character(statdf(ofp_df_group,n = 6)[-1,1])),na.rm = TRUE)
-  ofp_df_group_mean$Proportion=round(ofp_df_group_mean$Proportion,4)
-  ofp_df_group_mean=ofp_df_group_mean[with(ofp_df_group_mean, order(-mean)), ]
+  #loh_df_group_mean
+  loh_df_group_mean=data.frame(species=row.names(statdf(loh_df_group)[-1,]),mean=as.numeric(as.character(statdf(loh_df_group,n = 6)[-1,1])))
+  loh_df_group_mean$Proportion=loh_df_group_mean$mean/sum(as.numeric(as.character(statdf(loh_df_group,n = 6)[-1,1])),na.rm = TRUE)
+  loh_df_group_mean$Proportion=round(loh_df_group_mean$Proportion,4)
+  loh_df_group_mean=loh_df_group_mean[with(loh_df_group_mean, order(-mean)), ]
 
   #suppress warnings temporarily?
   if(wamg==FALSE){options(warn=0)}
@@ -243,11 +240,11 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, sortd =TRUE, colid = 1, 
 	Con_ppbv_mean = Con_ppbv_mean,
 	Con_ppbv_group = Con_ppbv_group,
 	Con_ppbv_group_mean = Con_ppbv_group_mean,
-	MIR_Result = name_df,
-	OFP_Result = ofp_df,
-	OFP_Result_mean = ofp_df_mean,
-	OFP_Result_group = ofp_df_group,
-	OFP_Result_group_mean = ofp_df_group_mean
+	KOH_Result = name_df,
+	LOH_Result = loh_df,
+	LOH_Result_mean = loh_df_mean,
+	LOH_Result_group = loh_df_group,
+	LOH_Result_group_mean = loh_df_group_mean
   )
   return(results)
 }
