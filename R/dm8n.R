@@ -6,31 +6,35 @@
 #'
 #' @param df dataframe of time series for ozone.
 #' @param colid column index for date-time. By default, it equals to 1.
+#' @param colio column index for ozone. By default, it equals to 2.
 #' @param starthour numeric, start hour for calculating 8-hour ozone. By default, it equals to 0.
 #' @param endhour numeric, end hour for calculating 8-hour ozone. By default, it equals to 16 which means averaging ozone between 16~23.
 #' @param na.rm logical. Should missing values (including NaN) be omitted from the calculations?
 #' @param outputmode numeric, the format of the output, possible value: 1 or 2. See 'value' for the results of filling in 1 or 2.
-#' @return a dataframe depends on the value of 'outputMode'. Value 1 will output 1 #' table: maximum-8-hour ozone. Value 1 will output 1 list, which contains 3
-#' tables: 8-hour ozone, statistics of number of valid items within each
-#' calculation interval, and maximum-8-hour ozone.
+#' @param nh numeric. The number of effective hourly concentrations per 8-hour period.
+#' @param nc numeric. The number of effective 8-hour average concentrations per day.
+#' @return a dataframe depends on the value of 'outputMode'. Value 1 will output 1 
+#' table: maximum-8-hour ozone. Value 2 will output 1 list, which contains 4
+#' tables: 8-hour ozone, statistics of the number of effective hourly concentrations in each 8-hour average concentration, 
+#' statistics of the number of effective 8-hour average concentrations in each day, maximum-8-hour ozone.
 #' @export
 #' @examples
-#' dm8n(aqi[,c(1,6)], colid = 1, starthour = 0, endhour = 16, na.rm = TRUE, outputmode = 2)
+#' dm8n(aqi[,c(1,6)], colid = 1, starthour = 0, endhour = 16, nh=6, 
+#' nc=14, na.rm = TRUE, outputmode = 2)
 #' @import lubridate
 #' @importFrom stats aggregate
 #' @importFrom utils stack unstack
 
 
-dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmode = 1){
-	#move datetime to first column
-	  if(colid != 1){
-		df[,c(1,colid)] = df[,c(colid,1)]
-		colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
-	  }
+dm8n<-function(df, colid = 1, colio = 2, starthour = 0, endhour=16, nh=6, nc=14, na.rm = TRUE, outputmode = 1){
 
 	#In case df is not a dataframe.
+	df_names <- colnames(df) 
 	df <- data.frame(df,stringsAsFactors = FALSE)
-
+	colnames(df) <- df_names
+	
+	#only need first 2 columns (datetime and ozone)
+	df <- df[,c(colid, colio)]
 	
 	df <- trs(df, bkip="1 hour", na.rm = na.rm)
 	
@@ -65,27 +69,32 @@ dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmod
 		#select day
 		df_tar=df[as.Date(df[,1])==datelist[j],]
 		print(datelist[j])
-		for (i in seq(starthour,endhour,1)){
-			#D8
+		for (i in seq(starthour,endhour,1)){			
 			st=i
 			en=i+7
+			#count
+			count_col=colSums(!is.na(df_tar[hour(df_tar[,1])>=st&hour(df_tar[,1])<=en,-1]), na.rm = na.rm)
+			count_col_nh=count_col
+			count_col=data.frame(t(count_col))
+			colnames(count_col)=colnames(df_tar)[-1]
+			D8_count_sam=data.frame(date=datelist[j],start_hour=st,end_hour=en,count_col)
+			D8_count=rbind(D8_count,D8_count_sam)
+			#D8
 			D8_sam=colMeans(df_tar[hour(df_tar[,1])>=st&hour(df_tar[,1])<=en,-1], na.rm = na.rm)
 			D8_sam=stack(D8_sam)
 			D8_sam=unstack(D8_sam)
 			D8_sam=data.frame(t(D8_sam))
 			D8_sam=data.frame(date=datelist[j],start_hour=st,end_hour=en,D8_sam)
-			D8=rbind(D8,D8_sam)
-			#count
-			count_col=colSums(!is.na(df_tar[hour(df_tar[,1])>=st&hour(df_tar[,1])<=en,-1]), na.rm = na.rm)
-			count_col=data.frame(t(count_col))
-			colnames(count_col)=colnames(df_tar)[-1]
-			D8_count_sam=data.frame(date=datelist[j],start_hour=st,end_hour=en,count_col)
-			D8_count=rbind(D8_count,D8_count_sam)
+			D8=rbind(D8,D8_sam)			
 		}
 	}
 	#remove first row
 	D8=D8[-1,]
-
+	D8_count=D8_count[-1,]
+	
+	#filter by 6/8 for 8-hour
+	D8[D8_count[,4]<nh,4]=NA
+	
 	#remove start & end hour columns
 	D8_sub=D8[,c(1,4)]
 	DMAX8=data.frame(aggregate(D8_sub[,2], by = list(D8_sub[,1]), max, na.rm=na.rm))
@@ -105,10 +114,22 @@ dm8n<-function(df, colid = 1, starthour = 0, endhour=16, na.rm = TRUE, outputmod
 		D8_count = D8_count[,-ncol(D8_count)]
 		DMAX8 = DMAX8[,-ncol(DMAX8)]
 	}
-
+	
+	#filter by 14/16 for 1-day
+	D8_count[D8_count[,4]<nh,5]=0
+	D8_count[D8_count[,4]>=nh,5]=1
+	D8_count_by_day=D8_count[,c(1,5)]
+	D8_count=D8_count[,-5]
+	D8_count_by_day=data.frame(aggregate(D8_count_by_day[,2], by = list(as.Date(D8_count_by_day[,1])), sum, na.rm=TRUE))
+	DMAX8[D8_count_by_day[,2]<nc,2]=NA
+	
+	#update columns
+	names(D8_count)[c(1,4)] = c("date", "count")
+	names(D8_count_by_day)[c(1,2)] = c("date", "count")
+	
 	#set output
 	if(outputmode==2){
-		results = list(D8=D8, D8_count=D8_count, DMAX8= DMAX8)
+		results = list(D8=D8, D8_count=D8_count, D8_count_by_day=D8_count_by_day, DMAX8= DMAX8)
 	}else{
 		results = DMAX8
 	}
