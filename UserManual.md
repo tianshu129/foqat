@@ -395,11 +395,11 @@ koh("propane")
 ----------
 * #### Description
 
-Calculate OH radical reactivity (LOH) of VOC time series.
-CAS number corresponding to VOC species name was matched, and the VALUE of "OH reaction constant" (kOH) was matched by CAS number and used for time series calculation.
-Note: Missing values are automatically ignored when calculating (for example, summation).
-Note: By groups, biogenic VOC (BVOC) is listed separately from olefins. Biogenic species include: isoprene, alpha-pinene, beta-pinene.
-The kOH value comes from the US Environmental Protection Agency’s EPISuite "AOPWIN".  , which provides a theoretical reaction constant at 25 degrees Celsius.
+Calculate OH radical reactivity (LOH) of VOC time series.  
+CAS number corresponding to VOC species name was matched, and the VALUE of "OH reaction constant" (kOH) was matched by CAS number and used for time series calculation.  
+Note: Missing values are automatically ignored when calculating (for example, summation).  
+Note: By groups, biogenic VOC (BVOC) is listed separately from olefins. Biogenic species include: isoprene, alpha-pinene, beta-pinene.  
+The kOH value comes from the US Environmental Protection Agency’s EPISuite "AOPWIN".  , which provides a theoretical reaction constant at 25 degrees Celsius.  
 
 * #### Usage
 ``` r
