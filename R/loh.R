@@ -9,10 +9,12 @@
 #' @param df dataframe contains time series.
 #' @param colid column index for date-time. The default value is 1.
 #' @param unit unit for VOC concentration. A character vector from these options: "ugm" or "ppbv". "ugm" means ug/m3. "ppbv" means part per billion volumn.
-#' @param t Temperature, in units Degrees Celsius, for conversion from ppbv to micrograms per
-#' cubic meter. By default, t equals to 25 Degrees Celsius.
-#' @param p Pressure, in kPa, for converting from ppbv to micrograms per cubic
-#' meter. By default, p equals to 101.325 kPa.
+#' @param t Temperature, in Degrees Celsius, used to convert data in 
+#' micrograms per cubic meter to standard conditions 
+#' (25 Degrees Celsius, 101.325 kPa). By default, t equals to 25 Degrees Celsius.
+#' @param p Pressure, in kPa, used to convert data in micrograms per cubic meter 
+#' to standard conditions (25 Degrees Celsius, 101.325 kPa). 
+#' By default, p equals to 101.325 kPa.
 #' @param sortd logical value. It determines whether the VOC species
 #' are sorted or not. By default, sortd has value "TRUE".
 #' If TRUE, VOC species in time series will be arranged according to VOC group,
