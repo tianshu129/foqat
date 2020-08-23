@@ -345,9 +345,10 @@ ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series          |                            |                                      |
 | `unit`            | unit for VOC data (micrograms per cubic meter or PPB).Please fill in "UGM" or "PPB" in quotation marks.| "ugm"                     |  |
-| `t`               | Temperature, in units Degrees Celsius, for conversion from PPB to micrograms per cubic meter.| 25|                  |
-| `p`               | Pressure, in kPa, for converting from PPB to micrograms per cubic meter.| 101.325|                    |
+| `t`               | Temperature, in Degrees Celsius, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 25|                  |
+| `p`               |Pressure, in kPa, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 101.325|                         |
 | `colid`           | column index for date-time        |1                           |                                      |
+| `wamg`           | Should warnings be presented?      |FALSE                       |                                      |
 
 * #### Output
 
@@ -393,22 +394,27 @@ koh("propane")
 ### Calculate OH reactivity (loh)
 ----------
 * #### Description
-Calculate Ozone Formation Potential (OFP) of VOC time series.  
-The CAS number was matched for each VOC speices (from column name), and the Maximum Incremental Reactivity (MIR) value was matched through the CAS number and used for time series calculation.  
-The MIR value comes from “Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339” (revised January 28, 2010).  
+
+Calculate OH radical reactivity (LOH) of VOC time series.
+CAS number corresponding to VOC species name was matched, and the VALUE of "OH reaction constant" (kOH) was matched by CAS number and used for time series calculation.
+Note: Missing values are automatically ignored when calculating (for example, summation).
+Note: By groups, biogenic VOC (BVOC) is listed separately from olefins. Biogenic species include: isoprene, alpha-pinene, beta-pinene.
+The kOH value comes from the EPA software 'AOPWIN', which provides a theoretical reaction constant at 25 degrees Celsius.
+
 * #### Usage
 ``` r
-ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
+loh(df, unit = "ppbv", t = 25, p = 101.325, sortd=TRUE, colid = 1)
 ```
 * #### Arguments
 
 | Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series          |                            |                                      |
-| `unit`            | unit for VOC data (micrograms per cubic meter or PPB).Please fill in "UGM" or "PPB" in quotation marks.| "ugm"                     |  |
-| `t`               | Temperature, in units Degrees Celsius, for conversion from PPB to micrograms per cubic meter.| 25|                  |
-| `p`               | Pressure, in kPa, for converting from PPB to micrograms per cubic meter.| 101.325|                    |
+| `unit`            | unit for VOC data (micrograms per cubic meter or ppbv).Please fill in "ugm" or "ppbv" in quotation marks.| "ugm"                     |  |
+| `t`               | Temperature, in Degrees Celsius, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 25|                  |
+| `p`               |Pressure, in kPa, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 101.325|                         |
 | `colid`           | column index for date-time        |1                           |                                      |
+| `wamg`           | Should warnings be presented?      |FALSE                       | 
 
 * #### Output
 
@@ -417,10 +423,10 @@ Output is a list containing 2 tables: results for matched MIR values and OFP tim
 * #### Examples
 
 ``` r
-x = loh(voc, unit = "ppb", t = 25, p = 101.325, colid = 1)
+x = loh(voc, unit = "ppbv")
 View(x)
-View(x[["MIR_Result"]])
-View(x[["OFP_Result"]])
+View(x[["KOH_Result"]])
+View(x[["LOH_Result"]])
 ```
 
 
@@ -430,6 +436,7 @@ View(x[["OFP_Result"]])
 
 Format the historical data from openaq.org retrieved by AWS Athena.
 How to download data? Please read https://medium.com/@openaq/how-in-the-world-do-you-access-air-quality-data-older-than-90-days-on-the-openaq-platform-8562df519ecd.
+
 * #### Usage
 ``` r
 openaq(df)
