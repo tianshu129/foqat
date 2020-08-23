@@ -19,11 +19,13 @@ ofp(
 
 \item{unit}{unit for VOC concentration. A character vector from these options: "ugm" or "ppbv". "ugm" means ug/m3. "ppbv" means part per billion volumn.}
 
-\item{t}{Temperature, in units Degrees Celsius, for conversion from ppbv to micrograms per
-cubic meter. By default, t equals to 25 Degrees Celsius.}
+\item{t}{Temperature, in Degrees Celsius, used to convert data in 
+micrograms per cubic meter to standard conditions 
+(25 Degrees Celsius, 101.325 kPa). By default, t equals to 25 Degrees Celsius.}
 
-\item{p}{Pressure, in kPa, for converting from ppbv to micrograms per cubic
-meter. By default, p equals to 101.325 kPa.}
+\item{p}{Pressure, in kPa, used to convert data in micrograms per cubic meter 
+to standard conditions (25 Degrees Celsius, 101.325 kPa). 
+By default, p equals to 101.325 kPa.}
 
 \item{sortd}{logical value. It determines whether the VOC species
 are sorted or not. By default, sortd has value "TRUE".
