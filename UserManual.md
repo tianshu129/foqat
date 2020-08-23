@@ -337,7 +337,7 @@ The CAS number was matched for each VOC speices (from column name), and the Maxi
 The MIR value comes from “Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339” (revised January 28, 2010).  
 * #### Usage
 ``` r
-ofp(df, unit = "ppbv", t = 25, p = 101.325, colid = 1)
+ofp(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE)
 ```
 * #### Arguments
 
@@ -347,8 +347,10 @@ ofp(df, unit = "ppbv", t = 25, p = 101.325, colid = 1)
 | `unit`            | unit for VOC data (micrograms per cubic meter or ppbv).Please fill in "ugm" or "ppbv" in quotation marks.| "ppbv"                     |  |
 | `t`               | Temperature, in Degrees Celsius, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 25|                  |
 | `p`               |Pressure, in kPa, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 101.325|                         |
-| `colid`           | column index for date-time        |1                           |                                      |
-| `wamg`           | Should warnings be presented?      |FALSE                       |                                      |
+| `stcd`           | Does it output results in standard conditions?                |FALSE      |                              |
+| 'sortd`           | It determines whether the VOC species are sorted or not.      |TRUE       |                              |
+| `colid`          | column index for date-time        |1                           |                                         |
+| `wamg`           | Should warnings be presented?      |FALSE                       |                                        |
 
 * #### Output
 
@@ -403,7 +405,7 @@ The kOH value comes from the US Environmental Protection Agency’s EPISuite "AO
 
 * #### Usage
 ``` r
-loh(df, unit = "ppbv", t = 25, p = 101.325, sortd=TRUE, colid = 1)
+loh(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE)
 ```
 * #### Arguments
 
@@ -413,6 +415,8 @@ loh(df, unit = "ppbv", t = 25, p = 101.325, sortd=TRUE, colid = 1)
 | `unit`            | unit for VOC data (micrograms per cubic meter or ppbv).Please fill in "ugm" or "ppbv" in quotation marks.| "ppbv"                     |  |
 | `t`               | Temperature, in Degrees Celsius, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 25|                  |
 | `p`               |Pressure, in kPa, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 101.325|                         |
+| `stcd`           | Does it output results of mass concentrations in standard conditions?        |FALSE      |                |
+| 'sortd`           | It determines whether the VOC species are sorted or not.      |TRUE       |                              |
 | `colid`           | column index for date-time        |1                           |                                      |
 | `wamg`           | Should warnings be presented?      |FALSE                       | 
 
