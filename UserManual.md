@@ -27,13 +27,15 @@ Features currently included:
 
 * [Batch linear regression analysis (anylm)](#batch-linear-regression-analysis-anylm)
 
-* [Calculate Ozone Formation Potential (ofp)](#calculate-ozone-formation-potential-ofp)
-
-* [Format the historical data from OpenAQ (openaq)](#format-the-historical-data-from-openaq-openaq)
-
 * [Calculate daily maximum-8-hour ozone (dm8n)](#calculate-daily-maximum-8-hour-ozone-dm8n)
 
+* [Calculate Ozone Formation Potential (ofp)](#calculate-ozone-formation-potential-ofp)
+
 * [Get OH Reactivity (koh)](#oh-reactivity-koh)
+
+* [Calculate OH reactivity (loh))](#calculate-oh-reactivity-loh)
+
+* [Format the historical data from OpenAQ (openaq)](#format-the-historical-data-from-openaq-openaq)
 
 * [Calculate TUV in batch (tuv)](#calculate-tuv-in-batch-tuv)
 
@@ -289,76 +291,6 @@ View(x)
 ```
 
 
-### Calculate Ozone Formation Potential (ofp)
-----------
-* #### Description
-Calculate Ozone Formation Potential (OFP) of VOC time series.  
-The CAS number was matched for each VOC speices (from column name), and the Maximum Incremental Reactivity (MIR) value was matched through the CAS number and used for time series calculation.  
-The MIR value comes from “Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339” (revised January 28, 2010).  
-* #### Usage
-``` r
-ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
-```
-* #### Arguments
-
-| Variable name     |  Definition                       | Default                    | Example values/remarks               |
-| ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `df`              | dataframe of time series          |                            |                                      |
-| `unit`            | unit for VOC data (micrograms per cubic meter or PPB).Please fill in "UGM" or "PPB" in quotation marks.| "ugm"                     |  |
-| `t`               | Temperature, in units Degrees Celsius, for conversion from PPB to micrograms per cubic meter.| 25|                  |
-| `p`               | Pressure, in kPa, for converting from PPB to micrograms per cubic meter.| 101.325|                    |
-| `colid`           | column index for date-time        |1                           |                                      |
-
-* #### Output
-
-Output is a list containing 2 tables: results for matched MIR values and OFP time series.
-
-* #### Examples
-
-``` r
-x = ofp(voc, unit = "ppb", t = 25, p = 101.325, colid = 1)
-View(x)
-View(x[["MIR_Result"]])
-View(x[["OFP_Result"]])
-```
-
-### Format the historical data from OpenAQ (openaq)
-----------
-* #### Description
-
-Format the historical data from openaq.org retrieved by AWS Athena.
-How to download data? Please read https://medium.com/@openaq/how-in-the-world-do-you-access-air-quality-data-older-than-90-days-on-the-openaq-platform-8562df519ecd.
-* #### Usage
-``` r
-openaq(df)
-```
-* #### Arguments
-
-| Variable name     |  Definition                       | Default                    | Example values/remarks               |
-| ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `df`              | dataframe of historical data from openaq.org with certain format|  |Need to have 5 species: "o3", "no2", "co", "pm25", "pm10".|
-
-* #### Output
-
-A list which contain a dataframe of formated OpenAQ data and a dataframe for time series of OpenAQ data.
-
-* #### Examples
-
-``` r 
-#read data into R by using 'read_xlsx' function in 'readxl' pacakage
-library(readxl)
-#please use your path
-path_for_file="xx.xlsx", col_types=c(rep("text",3), "numeric", rep("text",9))
-aqidata<- read_xlsx(path_for_file,col_types = col_types)
-#process data by using 'openaq' function in 'foqat' pacakage
-x=openaq(aqidata)
-#view results
-View(x)
-View(x[["aqidata"]])
-View(x[["aqits"]])
-```
-
-
 ### Calculate daily maximum-8-hour ozone (dm8n)
 ----------
 * #### Description
@@ -395,6 +327,40 @@ View(x[["DMAX8"]])
 ```
 
 
+### Calculate Ozone Formation Potential (ofp)
+----------
+* #### Description
+Calculate Ozone Formation Potential (OFP) of VOC time series.  
+The CAS number was matched for each VOC speices (from column name), and the Maximum Incremental Reactivity (MIR) value was matched through the CAS number and used for time series calculation.  
+The MIR value comes from “Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339” (revised January 28, 2010).  
+* #### Usage
+``` r
+ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
+```
+* #### Arguments
+
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
+| ------------------| ----------------------------------|----------------------------|--------------------------------------|
+| `df`              | dataframe of time series          |                            |                                      |
+| `unit`            | unit for VOC data (micrograms per cubic meter or PPB).Please fill in "UGM" or "PPB" in quotation marks.| "ugm"                     |  |
+| `t`               | Temperature, in units Degrees Celsius, for conversion from PPB to micrograms per cubic meter.| 25|                  |
+| `p`               | Pressure, in kPa, for converting from PPB to micrograms per cubic meter.| 101.325|                    |
+| `colid`           | column index for date-time        |1                           |                                      |
+
+* #### Output
+
+Output is a list containing 2 tables: results for matched MIR values and OFP time series.
+
+* #### Examples
+
+``` r
+x = ofp(voc, unit = "ppb", t = 25, p = 101.325, colid = 1)
+View(x)
+View(x[["MIR_Result"]])
+View(x[["OFP_Result"]])
+```
+
+
 ### Get OH Reactivity (koh)
 ----------
 * #### Description
@@ -419,6 +385,77 @@ Output is the theoretical value of the species' OH reaction constant kOH at 25 d
 
 ``` r
 koh("propane")
+```
+
+
+### Calculate OH reactivity (loh)
+----------
+* #### Description
+Calculate Ozone Formation Potential (OFP) of VOC time series.  
+The CAS number was matched for each VOC speices (from column name), and the Maximum Incremental Reactivity (MIR) value was matched through the CAS number and used for time series calculation.  
+The MIR value comes from “Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339” (revised January 28, 2010).  
+* #### Usage
+``` r
+ofp(df, unit = "ugm", t = 25, p = 101.325, colid = 1)
+```
+* #### Arguments
+
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
+| ------------------| ----------------------------------|----------------------------|--------------------------------------|
+| `df`              | dataframe of time series          |                            |                                      |
+| `unit`            | unit for VOC data (micrograms per cubic meter or PPB).Please fill in "UGM" or "PPB" in quotation marks.| "ugm"                     |  |
+| `t`               | Temperature, in units Degrees Celsius, for conversion from PPB to micrograms per cubic meter.| 25|                  |
+| `p`               | Pressure, in kPa, for converting from PPB to micrograms per cubic meter.| 101.325|                    |
+| `colid`           | column index for date-time        |1                           |                                      |
+
+* #### Output
+
+Output is a list containing 2 tables: results for matched MIR values and OFP time series.
+
+* #### Examples
+
+``` r
+x = loh(voc, unit = "ppb", t = 25, p = 101.325, colid = 1)
+View(x)
+View(x[["MIR_Result"]])
+View(x[["OFP_Result"]])
+```
+
+
+### Format the historical data from OpenAQ (openaq)
+----------
+* #### Description
+
+Format the historical data from openaq.org retrieved by AWS Athena.
+How to download data? Please read https://medium.com/@openaq/how-in-the-world-do-you-access-air-quality-data-older-than-90-days-on-the-openaq-platform-8562df519ecd.
+* #### Usage
+``` r
+openaq(df)
+```
+* #### Arguments
+
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
+| ------------------| ----------------------------------|----------------------------|--------------------------------------|
+| `df`              | dataframe of historical data from openaq.org with certain format|  |Need to have 5 species: "o3", "no2", "co", "pm25", "pm10".|
+
+* #### Output
+
+A list which contain a dataframe of formated OpenAQ data and a dataframe for time series of OpenAQ data.
+
+* #### Examples
+
+``` r 
+#read data into R by using 'read_xlsx' function in 'readxl' pacakage
+library(readxl)
+#please use your path
+path_for_file="xx.xlsx", col_types=c(rep("text",3), "numeric", rep("text",9))
+aqidata<- read_xlsx(path_for_file,col_types = col_types)
+#process data by using 'openaq' function in 'foqat' pacakage
+x=openaq(aqidata)
+#view results
+View(x)
+View(x[["aqidata"]])
+View(x[["aqits"]])
 ```
 
 
