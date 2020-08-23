@@ -15,6 +15,7 @@
 #' @param p Pressure, in kPa, used to convert data in micrograms per cubic meter 
 #' to standard conditions (25 Degrees Celsius, 101.325 kPa). 
 #' By default, p equals to 101.325 kPa.
+#' @param stcd logical. Does it output results of mass concentrations in standard conditions? The default vaule is FALSE.
 #' @param sortd logical value. It determines whether the VOC species
 #' are sorted or not. By default, sortd has value "TRUE".
 #' If TRUE, VOC species in time series will be arranged according to VOC group,
