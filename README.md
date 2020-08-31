@@ -62,9 +62,9 @@ library(foqat)
 ?dm8n
 ```
 
-## Getting help
-
-Please contact: tianshu129@163.com
+## QUESTION OR FEEDBACK
+Click the link to ask questions and give feedback: ☛ https://github.com/tianshu129/foqat/issues/new ☚   
+Please send email to: tianshu129@163.com  
 
 ## Link
 [![ResearchGate](https://img.shields.io/badge/ResearchGate-Tianshu%20Chen-00CCBB)](https://www.researchgate.net/profile/Tianshu_Chen)   
