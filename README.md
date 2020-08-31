@@ -1,4 +1,4 @@
-# FOQAT <img src="img/logo.png" align="right" width="120" />
+# FOQAT <img src="https://i.loli.net/2020/08/31/nmW3PCxLRIMYugD.png" align="right" width="120" />
 
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-success.svg)](http://perso.crans.org/besson/LICENSE.html)
 ![Version](https://img.shields.io/badge/Version-1.5.4-important) 
