@@ -10,7 +10,7 @@ FOQAT is an R package designed for quick analysis of atmospheric (especially for
 
 FOQAT stands for "Filed observation quick analysis toolkit".
 
-The R package is developed and maintained by Chen Tianshu from Professor Xue Likun's research group of Environmental Research Institute of Shandong University.  
+FOQAT package is developed and maintained by Chen Tianshu from Professor Xue Likun's research group of Environmental Research Institute of Shandong University.  
 
 Regular users are encouraged to enlist in the [FOQAT users email group](https://groups.google.com/d/forum/foqat), a combo email list and Q/A forum.  
 
