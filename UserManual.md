@@ -510,7 +510,7 @@ x=tuv(pathtuv, setup_tuv, colid = 1)
 View(x)
 ```
 
-## QUESTION OR FEEDNACK
+## QUESTION OR FEEDBACK
 Click the link to ask questions and give feedback: ☛ https://github.com/tianshu129/foqat/issues/new ☚   
 Please send email to: tianshu129@163.com  
 
