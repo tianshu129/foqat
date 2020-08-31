@@ -10,7 +10,7 @@
 * [BREIF KNOWLEDGE OF R](#breif-knowledge-of-r)
 * [INSTALLATION OF FOQAT](#installation-of-foqat)
 * [FUNCTIONS AND EXAMPLES](#functions-and-examples)
-* [GETTING HELP](#getting-help)
+* [QUESTION OR FEEDBACK](#question-or-feedback)
 * [DONATION](#DONATION)
 
 ## GENERAL OVERVIEW
