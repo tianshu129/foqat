@@ -520,4 +520,4 @@ Please send email to: tianshu129@163.com
 ## DONATION
 
 The project took a lot of time and effort.If this project is helpful to you, you are welcome to donate. Thank you very much:
-<img src="./img/donation.jpg" width="200" height="200" alt="支付" align=center>
+<img src="./img/donation.png" width="200" height="200" alt="支付" align=center>
