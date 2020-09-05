@@ -60,6 +60,15 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   temp_col_name <- colnames(df)
   df <- data.frame(df,stringsAsFactors = FALSE)
   colnames(df) <- temp_col_name
+  
+  #In case df includes m,p-Xylene
+  colnames_short = gsub("\\,|\\-| ", "", tolower(colnames(df)))
+  if("mpxylene" %in% colnames_short){
+	  xyleneid=which(colnames_short %in% "mpxylene")
+	  df=df[,c(1:xyleneid,xyleneid:ncol(df))]
+	  df[,c(xyleneid,(xyleneid+1))]=df[,c(xyleneid,(xyleneid+1))]/2
+	  colnames(df)[c(xyleneid,(xyleneid+1))]=c("m-Xylene","p-Xylene")
+  }
 
   #get VOC name by colnames of df
   #if read from xlsx, replace "X" and "."
