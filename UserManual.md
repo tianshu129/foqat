@@ -16,7 +16,8 @@
 ## GENERAL OVERVIEW
 The FOQAT is developed and maintained by Chen Tianshu from Professor Xue Likun's research group of Environmental Research Institute of Shandong University.  
 
-Click the link to ask questions and give feedback (recommended) : ☛ https://github.com/tianshu129/foqat/issues/new ☚ 
+Click the link to ask questions and give feedback (recommended) :  
+☛ https://github.com/tianshu129/foqat/issues/new ☚ 
 
 The FOQAT package is a toolkit for rapid processing and analysis of atmospheric field observations and air pollution data based on R.  
 
