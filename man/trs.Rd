@@ -13,7 +13,8 @@ trs(
   na.rm = TRUE,
   wind = FALSE,
   coliws = 2,
-  coliwd = 3
+  coliwd = 3,
+  cpms = TRUE
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ trs(
 \item{coliws}{numeric value, column index of wind speed in dataframe.}
 
 \item{coliwd}{numeric value, column index of wind direction (degree) in dataframe.}
+
+\item{cpms}{logical value. Compensate the insufficient amount of the millisecond bit for datetime column.}
 }
 \value{
 a dataframe which contains a time series with a new time resolution.
