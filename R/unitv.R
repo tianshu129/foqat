@@ -1,9 +1,10 @@
-#' Calculate ozone formation potential
+#' convert unit of VOCs between ugm and ppbv
 #'
-#' Calculate Ozone Formation Potential (OFP) of VOC time series.
+#' convert unit of VOCs between micrograms per cubic meter (ugm) and parts
+#' per billion by volume (ppbv).
 #'
-#' The CAS number is matched for each VOC speices (from column name), and the
-#' Maximum Incremental Reactivity (MIR) value is matched through the CAS number and used for time series calculation. \cr
+#' The CAS number was matched for each VOC speices (from column name), and the
+#' Molecular Weight (MW) value and Maximum Incremental Reactivity (MIR) value are matched through the CAS number and used for time series calculation. \cr
 #' The MIR value comes from "Carter, W. P. (2009). Updated maximum incremental
 #' reactivity scale and hydrocarbon bin reactivities for regulatory applications.
 #' California Air Resources Board Contract, 2009, 339" (revised January 28, 2010).
@@ -24,20 +25,23 @@
 #'  relative molecular weight, and MIR value.
 #' @param colid column index for date-time. The default value is 1.
 #' @param wamg logical. Should warnings be presented? The default vaule is FALSE.
-#' @return  a list contains 5 tables:
-#' MIR_Result: matched MIR value result;
-#' OFP_Result: OFP time series of VOC by species;
-#' OFP_Result_mean: the average value and proportion of OFP of VOC by species (sorted from large to small);
-#' OFP_Result_group: OFP time series of VOC classified by groups;
-#' OFP_Result_group_mean: the average value and proportion of OFP of VOC according to major groups (sorted from large to small).
+#' @return  a list contains 8 tables:
+#' Con_ugm: time series of VOC mass concentration by species;
+#' Con_ugm_mean: the average mass concentration and proportion of VOC by species (sorted from large to small);
+#' Con_ugm_group: time series of VOC mass concentration classified by groups;
+#' Con_ugm_group_mean: the average value and proportion of VOC mass concentration (sorted from large to small) according to major groups;
+#' Con_ppbv: time series of VOC volume concentration by species;
+#' Con_ppbv_mean: the average volume concentration and proportion of VOC by species (sorted from large to small);
+#' Con_ppbv_group: time series of VOC volume concentration according to major groups;
+#' Con_ppbv_group_mean: VOC volume concentration average and proportion (sorted from large to small) according to major groups;
 #'
 #' @export
 #' @examples
-#' ofp(voc)
+#' unitv(voc)
 #' @importFrom utils URLencode
 #' @importFrom xml2 read_html
 
-ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE){
+unitv <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE){
 
   #suppress warnings temporarily?
   if(wamg==FALSE){options(warn=-1)}
@@ -110,7 +114,7 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 
 
   #if it is matched by CAS in NIST and matched by name in Carter paper, but it doesn't have CAS in Carter paper.
-  for(k in which(!is.na(name_df$Source)&is.na(name_df$MIR))){
+  for(k in which(!is.na(name_df$Source)&is.na(name_df$MW))){ ##different with LOH and OFP
     tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
     tar=tolower(name_df$name[k])
     df_null=data.frame(datacas[tarlist %in% tar,])
@@ -158,7 +162,6 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   }
 
   #set concentration df, multiple df with MIR in name_df
-  ofp_df = df
   r = 22.4*(273.15+t)*101.325/(273.15*p)
   r2 = (298.15*p)/((273.15+t)*101.325)
   if(unit=="ugm"){
@@ -167,7 +170,6 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 	if(stcd==TRUE){
 		Con_ugm[,2:ncol(df)] = Con_ugm[,2:ncol(df)]/r2	
 	}
-	ofp_df[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) Con_ugm[,x] * as.numeric(name_df$MIR)[x-1]),ncol = ncol(df)-1))	
 	Con_ppbv[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x]*as.numeric(r/name_df$MW)[x-1]),ncol = ncol(df)-1))
   }else if(unit=="ppbv"){
     Con_ppbv = df
@@ -177,7 +179,6 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 	}else{
 		Con_ugm[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x]*as.numeric(name_df$MW/24.45016)[x-1]),ncol = ncol(df)-1))		
 	}
-	ofp_df[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) Con_ugm[,x] * as.numeric(name_df$MIR*name_df$MW)[x-1]),ncol = ncol(df)-1))
   }else{
     print("unit error")
   }
@@ -188,7 +189,6 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   #generate group df
   Con_ppbv_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
   Con_ugm_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
-  ofp_df_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
 
   #sum up columns
   for(gn in 1:length(gn_list)){
@@ -197,11 +197,9 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 		if(length(gn_sub_index)==1){
 			Con_ppbv_group[,gn+1]=Con_ppbv[,gn_sub_index+1]
 			Con_ugm_group[,gn+1]=Con_ugm[,gn_sub_index+1]
-			ofp_df_group[,gn+1]=ofp_df[,gn_sub_index+1]
 		}else{
 			Con_ppbv_group[,gn+1]=rowSums(Con_ppbv[,gn_sub_index+1], na.rm=TRUE) *NA^!rowSums(!is.na(Con_ppbv[,gn_sub_index+1]))
 			Con_ugm_group[,gn+1]=rowSums(Con_ugm[,gn_sub_index+1], na.rm=TRUE) *NA^!rowSums(!is.na(Con_ugm[,gn_sub_index+1]))
-			ofp_df_group[,gn+1]=rowSums(ofp_df[,gn_sub_index+1], na.rm=TRUE) *NA^!rowSums(!is.na(ofp_df[,gn_sub_index+1]))
 		}
 	}
   }
@@ -218,12 +216,6 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   Con_ppbv_mean$Proportion=round(Con_ppbv_mean$Proportion,4)
   Con_ppbv_mean=Con_ppbv_mean[with(Con_ppbv_mean, order(-mean)), ]
 
-  #ofp_df_mean
-  ofp_df_mean=data.frame(species=row.names(statdf(ofp_df)[-1,]),mean=as.numeric(as.character(statdf(ofp_df,n = 6)[-1,1])))
-  ofp_df_mean$Proportion=ofp_df_mean$mean/sum(as.numeric(as.character(statdf(ofp_df,n = 6)[-1,1])),na.rm = TRUE)
-  ofp_df_mean$Proportion=round(ofp_df_mean$Proportion,4)
-  ofp_df_mean=ofp_df_mean[with(ofp_df_mean, order(-mean)), ]
-
   #Con_ugm_group_mean
   Con_ugm_group_mean=data.frame(species=row.names(statdf(Con_ugm_group)[-1,]),mean=as.numeric(as.character(statdf(Con_ugm_group,n = 6)[-1,1])))
   Con_ugm_group_mean$Proportion=Con_ugm_group_mean$mean/sum(as.numeric(as.character(statdf(Con_ugm_group,n = 6)[-1,1])),na.rm = TRUE)
@@ -236,22 +228,19 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   Con_ppbv_group_mean$Proportion=round(Con_ppbv_group_mean$Proportion,4)
   Con_ppbv_group_mean=Con_ppbv_group_mean[with(Con_ppbv_group_mean, order(-mean)), ]
 
-  #ofp_df_group_mean
-  ofp_df_group_mean=data.frame(species=row.names(statdf(ofp_df_group)[-1,]),mean=as.numeric(as.character(statdf(ofp_df_group,n = 6)[-1,1])))
-  ofp_df_group_mean$Proportion=ofp_df_group_mean$mean/sum(as.numeric(as.character(statdf(ofp_df_group,n = 6)[-1,1])),na.rm = TRUE)
-  ofp_df_group_mean$Proportion=round(ofp_df_group_mean$Proportion,4)
-  ofp_df_group_mean=ofp_df_group_mean[with(ofp_df_group_mean, order(-mean)), ]
-
   #suppress warnings temporarily?
   if(wamg==FALSE){options(warn=0)}
 
   #results
   results <- list(
-	MIR_Result = name_df,
-	OFP_Result = ofp_df,
-	OFP_Result_mean = ofp_df_mean,
-	OFP_Result_group = ofp_df_group,
-	OFP_Result_group_mean = ofp_df_group_mean
+	Con_ugm = Con_ugm,
+	Con_ugm_mean = Con_ugm_mean,
+	Con_ugm_group = Con_ugm_group,
+	Con_ugm_group_mean = Con_ugm_group_mean,
+	Con_ppbv = Con_ppbv,
+	Con_ppbv_mean = Con_ppbv_mean,
+	Con_ppbv_group = Con_ppbv_group,
+	Con_ppbv_group_mean = Con_ppbv_group_mean
   )
   return(results)
 }
