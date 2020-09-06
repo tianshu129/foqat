@@ -1,7 +1,7 @@
-#' convert unit of VOCs between ugm and ppbv
+#' Convertion and analysis of VOC concentrations
 #'
 #' convert unit of VOCs between micrograms per cubic meter (ugm) and parts
-#' per billion by volume (ppbv).
+#' per billion by volume (ppbv); conduct statistics of VOC concentrations.
 #'
 #' The CAS number was matched for each VOC speices (from column name), and the
 #' Molecular Weight (MW) value and Maximum Incremental Reactivity (MIR) value are matched through the CAS number and used for time series calculation. \cr
@@ -37,11 +37,11 @@
 #'
 #' @export
 #' @examples
-#' unitv(voc)
+#' vocct(voc)
 #' @importFrom utils URLencode
 #' @importFrom xml2 read_html
 
-unitv <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE){
+vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE){
 
   #suppress warnings temporarily?
   if(wamg==FALSE){options(warn=-1)}
