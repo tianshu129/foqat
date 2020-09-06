@@ -33,6 +33,8 @@ Features currently included:
 
 * [Calculate daily maximum-8-hour ozone (dm8n)](#calculate-daily-maximum-8-hour-ozone-dm8n)
 
+* [Convert unit of VOCs between ugm and ppbv](#convert-unit-of-VOCs-between-ugm-and-ppbv-unitv)
+
 * [Calculate Ozone Formation Potential (ofp)](#calculate-ozone-formation-potential-ofp)
 
 * [Get OH Reactivity (koh)](#oh-reactivity-koh)
@@ -333,6 +335,51 @@ View(x[["DMAX8"]])
 ```
 
 
+### Convert unit of VOCs between ugm and ppbv (unitv)
+----------
+* #### Description
+Convert unit of VOCs between ugm and ppbv for VOC time series.  
+The CAS number was matched for each VOC speices (from column name), and the Molecular Weight (MW) and Maximum Incremental Reactivity (MIR) value are matched through the CAS number and used for time series calculation.  
+The MIR value comes from “Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339” (revised January 28, 2010).  
+* #### Usage
+``` r
+unitv(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE)
+```
+* #### Arguments
+
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
+| ------------------| ----------------------------------|----------------------------|--------------------------------------|
+| `df`              | dataframe of time series          |                            |                                      |
+| `unit`            | unit for VOC data (micrograms per cubic meter or ppbv).Please fill in "ugm" or "ppbv" in quotation marks.| "ppbv"                     |  |
+| `t`               | Temperature, in Degrees Celsius, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 25|                  |
+| `p`               |Pressure, in kPa, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 101.325|                         |
+| `stcd`          | Does it output results in standard conditions?                |FALSE      |                              |
+| `sortd`           | It determines whether the VOC species are sorted or not.      |TRUE       |Sequencing priority is: VOC groups, molecular mass, MIR value.Vocs include C ("Alkanes", "Alkenes", "BVOC", "Alkynes", "Aromatic_organics ", "Other_Organic_Compounds", "Unknown").Among them, "Alkenes" does not include biogenic "BVOC".                                |
+| `colid`          | column index for date-time        |1                           |                                         |
+| `wamg`           | Should warnings be presented?      |FALSE                       |                                        |
+
+* #### Output
+
+Output is a list containing 8 tables: 
+Con_ugm: time series of VOC mass concentration by species;
+Con_ugm_mean: the average mass concentration and proportion of VOC by species (sorted from large to small);
+Con_ugm_group: time series of VOC mass concentration classified by groups;
+Con_ugm_group_mean: the average value and proportion of VOC mass concentration (sorted from large to small) according to major groups;
+Con_ppbv: time series of VOC volume concentration by species;
+Con_ppbv_mean: the average volume concentration and proportion of VOC by species (sorted from large to small);
+Con_ppbv_group: time series of VOC volume concentration according to major groups;
+Con_ppbv_group_mean: VOC volume concentration average and proportion (sorted from large to small) according to major groups;
+
+* #### Examples
+
+``` r
+x = ofp(voc, unit = "ppbv")
+View(x)
+View(x[["MIR_Result"]])
+View(x[["OFP_Result"]])
+```
+
+
 ### Calculate Ozone Formation Potential (ofp)
 ----------
 * #### Description
@@ -358,9 +405,12 @@ ofp(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, 
 
 * #### Output
 
-Output is a list containing 2 tables: results for matched MIR values and OFP time series.
-
-* #### Examples
+Output is a list containing 5 tables: 
+MIR_Result: matched MIR value result;
+OFP_Result: OFP time series of VOC by species;
+OFP_Result_mean: the average value and proportion of OFP of VOC by species (sorted from large to small);
+OFP_Result_group: OFP time series of VOC classified by groups;
+OFP_Result_group_mean: the average value and proportion of OFP of VOC according to major groups (sorted from large to small).
 
 ``` r
 x = ofp(voc, unit = "ppbv")
@@ -426,7 +476,12 @@ loh(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, 
 
 * #### Output
 
-Output is a list containing 2 tables: results for matched MIR values and OFP time series.
+Output is a list containing 5 tables: 
+KOH_Result: matched KOH value result;
+LOH_Result: LOH time series of VOC by species;
+LOH_Result_mean: the average value and proportion of LOH of VOC by species (sorted from large to small);
+LOH_Result_group: LOH time series of VOC classified by groups;
+LOH_Result_group_mean: the average value and proportion of LOH of VOC according to major groups (sorted from large to small).
 
 * #### Examples
 
