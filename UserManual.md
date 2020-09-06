@@ -342,6 +342,8 @@ View(x[["DMAX8"]])
 Convert unit of VOCs between ugm and ppbv for VOC time series. Conduct statistics of VOC concentrations. 
 The CAS number was matched for each VOC speices (from column name), and the Molecular Weight (MW) and Maximum Incremental Reactivity (MIR) value are matched through the CAS number and used for time series calculation.  
 The MIR value comes from “Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339” (revised January 28, 2010).  
+Note: If input VOC species contain M,P-xylene, it will be automatically divided into m-xylene and P-xylene evenly.  
+
 * #### Usage
 ``` r
 vocct(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE)
@@ -387,6 +389,8 @@ View(x[["OFP_Result"]])
 Calculate Ozone Formation Potential (OFP) of VOC time series.  
 The CAS number was matched for each VOC speices (from column name), and the Maximum Incremental Reactivity (MIR) value was matched through the CAS number and used for time series calculation.  
 The MIR value comes from “Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339” (revised January 28, 2010).  
+Note: If input VOC species contain M,P-xylene, it will be automatically divided into m-xylene and P-xylene evenly.  
+
 * #### Usage
 ``` r
 ofp(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE)
@@ -456,7 +460,8 @@ Calculate OH radical reactivity (LOH) of VOC time series.
 CAS number corresponding to VOC species name was matched, and the VALUE of "OH reaction constant" (kOH) was matched by CAS number and used for time series calculation.  
 Note: Missing values are automatically ignored when calculating (for example, summation).  
 Note: By groups, biogenic VOC (BVOC) is listed separately from olefins. Biogenic species include: isoprene, alpha-pinene, beta-pinene.  
-The kOH value comes from the US Environmental Protection Agency’s EPISuite "AOPWIN".  , which provides a theoretical reaction constant at 25 degrees Celsius.  
+The kOH value comes from the US Environmental Protection Agency’s EPISuite "AOPWIN".  , which provides a theoretical reaction constant at 25 degrees Celsius.   
+Note: If input VOC species contain M,P-xylene, it will be automatically divided into m-xylene and P-xylene evenly.  
 
 * #### Usage
 ``` r
