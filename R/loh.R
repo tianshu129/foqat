@@ -2,8 +2,8 @@
 #'
 #' Calculate OH reactivity of VOC time series in 25 degree celsius.
 #'
-#' The CAS number was matched for each VOC speices (from column name), and the
-#' OH Rate Constant was matched through the CAS number and used for time series calculation. \cr
+#' The CAS number is matched for each VOC speices (from column name), and the
+#' OH Rate Constant is matched through the CAS number and used for time series calculation. \cr
 #' The OH Rate Constant comes from 'AopWin v1.92' in 25 degree celsius.
 #'
 #' @param df dataframe contains time series.
@@ -24,15 +24,7 @@
 #' The default vaule is FALSE.
 #' @param colid column index for date-time. The default value is 1.
 #' @param wamg logical. Should warnings be presented? The default vaule is FALSE.
-#' @return  a list contains 13 tables:
-#' Con_ugm: time series of VOC mass concentration by species;
-#' Con_ugm_mean: the average mass concentration and proportion of VOC by species (sorted from large to small);
-#' Con_ugm_group: time series of VOC mass concentration classified by groups;
-#' Con_ugm_group_mean: the average value and proportion of VOC mass concentration (sorted from large to small) according to major groups;
-#' Con_ppbv: time series of VOC volume concentration by species;
-#' Con_ppbv_mean: the average volume concentration and proportion of VOC by species (sorted from large to small);
-#' Con_ppbv_group: time series of VOC volume concentration according to major groups;
-#' Con_ppbv_group_mean: VOC volume concentration average and proportion (sorted from large to small) according to major groups;
+#' @return  a list contains 5 tables:
 #' KOH_Result: matched KOH value result;
 #' LOH_Result: LOH time series of VOC by species;
 #' LOH_Result_mean: the average value and proportion of LOH of VOC by species (sorted from large to small);
@@ -171,25 +163,23 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   r2 = (298.15*p)/((273.15+t)*101.325)
   Avogadro = 6.022e23
   if(unit=="ugm"){
-	if(stcd==FALSE){
-		Con_ugm = df					
-	}else{
-		Con_ugm = df
-		Con_ugm[,2:ncol(Con_ugm)] = Con_ugm[,2:ncol(Con_ugm)]/r2	
-	}
 	Con_ppbv = df
-	Con_ppbv[,2:ncol(df)] = data.frame(sapply(2:ncol(df),function(x) df[,x]*as.numeric(r/name_df$MW)[x-1]))
-	loh_df[,2:ncol(loh_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$koh*Avogadro*1e-12/(name_df$MW*r2))[x-1]))
+	Con_ugm = df
+	if(stcd==TRUE){
+		Con_ugm[,2:ncol(df)] = Con_ugm[,2:ncol(df)]/r2	
+	}	
+	Con_ppbv[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x]*as.numeric(r/name_df$MW)[x-1]),ncol = ncol(df)-1))
+	loh_df[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$koh*Avogadro*1e-12/(name_df$MW*r2))[x-1]),ncol = ncol(df)-1))
   }else if(unit=="ppbv"){
 	Con_ppbv = df
-	Con_ugm = Con_ppbv
+	Con_ugm = df
 	if(stcd==FALSE){
-		Con_ugm[,2:ncol(df)] = data.frame(sapply(2:ncol(df),function(x) Con_ppbv[,x]*as.numeric(name_df$MW/r)[x-1]))		
+		Con_ugm[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x]*as.numeric(name_df$MW/r)[x-1]),ncol = ncol(df)-1))		
 	}else{
-		Con_ugm[,2:ncol(df)] = data.frame(sapply(2:ncol(df),function(x) Con_ppbv[,x]*as.numeric(name_df$MW/24.45016)[x-1]))	
+		Con_ugm[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x]*as.numeric(name_df$MW/24.45016)[x-1]),ncol = ncol(df)-1))	
 	}
-	loh_df[,2:ncol(loh_df)] = data.frame(sapply(2:ncol(df),function(x) df[,x] * 
-		as.numeric(name_df$koh*Avogadro*1e-12/24.45016)[x-1]))
+	loh_df[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x] * 
+		as.numeric(name_df$koh*Avogadro*1e-12/24.45016)[x-1]),ncol = ncol(df)-1))
   }else{
     print("unit error")
   }
@@ -259,14 +249,6 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 
   #results
   results <- list(
-	Con_ugm = Con_ugm,
-	Con_ugm_mean = Con_ugm_mean,
-	Con_ugm_group = Con_ugm_group,
-	Con_ugm_group_mean = Con_ugm_group_mean,
-	Con_ppbv = Con_ppbv,
-	Con_ppbv_mean = Con_ppbv_mean,
-	Con_ppbv_group = Con_ppbv_group,
-	Con_ppbv_group_mean = Con_ppbv_group_mean,
 	KOH_Result = name_df,
 	LOH_Result = loh_df,
 	LOH_Result_mean = loh_df_mean,

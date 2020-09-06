@@ -41,15 +41,7 @@ If TRUE, VOC species in time series will be arranged according to VOC group,
 \item{wamg}{logical. Should warnings be presented? The default vaule is FALSE.}
 }
 \value{
-a list contains 13 tables:
-Con_ugm: time series of VOC mass concentration by species;
-Con_ugm_mean: the average mass concentration and proportion of VOC by species (sorted from large to small);
-Con_ugm_group: time series of VOC mass concentration classified by groups;
-Con_ugm_group_mean: the average value and proportion of VOC mass concentration (sorted from large to small) according to major groups;
-Con_ppbv: time series of VOC volume concentration by species;
-Con_ppbv_mean: the average volume concentration and proportion of VOC by species (sorted from large to small);
-Con_ppbv_group: time series of VOC volume concentration according to major groups;
-Con_ppbv_group_mean: VOC volume concentration average and proportion (sorted from large to small) according to major groups;
+a list contains 5 tables:
 KOH_Result: matched KOH value result;
 LOH_Result: LOH time series of VOC by species;
 LOH_Result_mean: the average value and proportion of LOH of VOC by species (sorted from large to small);
@@ -60,8 +52,8 @@ LOH_Result_group_mean: the average value and proportion of LOH of VOC according 
 Calculate OH reactivity of VOC time series in 25 degree celsius.
 }
 \details{
-The CAS number was matched for each VOC speices (from column name), and the
-OH Rate Constant was matched through the CAS number and used for time series calculation. \cr
+The CAS number is matched for each VOC speices (from column name), and the
+OH Rate Constant is matched through the CAS number and used for time series calculation. \cr
 The OH Rate Constant comes from 'AopWin v1.92' in 25 degree celsius.
 }
 \examples{
