@@ -33,7 +33,7 @@ Features currently included:
 
 * [Calculate daily maximum-8-hour ozone (dm8n)](#calculate-daily-maximum-8-hour-ozone-dm8n)
 
-* [Convert unit of VOCs between ugm and ppbv](#convert-unit-of-VOCs-between-ugm-and-ppbv-unitv)
+* [Convertion and analysis of VOC concentrations](#convertion-and-analysis-of-voc-concentrations-vocct)
 
 * [Calculate Ozone Formation Potential (ofp)](#calculate-ozone-formation-potential-ofp)
 
@@ -335,15 +335,15 @@ View(x[["DMAX8"]])
 ```
 
 
-### Convert unit of VOCs between ugm and ppbv (unitv)
+### Convertion and analysis of VOC concentrations (vocct)
 ----------
 * #### Description
-Convert unit of VOCs between ugm and ppbv for VOC time series.  
+Convert unit of VOCs between ugm and ppbv for VOC time series. Conduct statistics of VOC concentrations. 
 The CAS number was matched for each VOC speices (from column name), and the Molecular Weight (MW) and Maximum Incremental Reactivity (MIR) value are matched through the CAS number and used for time series calculation.  
 The MIR value comes from “Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339” (revised January 28, 2010).  
 * #### Usage
 ``` r
-unitv(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE)
+vocct(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE)
 ```
 * #### Arguments
 
@@ -373,7 +373,7 @@ Con_ppbv_group_mean: VOC volume concentration average and proportion (sorted fro
 * #### Examples
 
 ``` r
-x = ofp(voc, unit = "ppbv")
+x = vocct(voc, unit = "ppbv")
 View(x)
 View(x[["MIR_Result"]])
 View(x[["OFP_Result"]])
