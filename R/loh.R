@@ -5,6 +5,7 @@
 #' The CAS number is matched for each VOC speices (from column name), and the
 #' OH Rate Constant is matched through the CAS number and used for time series calculation. \cr
 #' The OH Rate Constant comes from 'AopWin v1.92' in 25 degree celsius.
+#' Note: If input VOC species contain M,P-xylene, it will be automatically divided into m-xylene and P-xylene evenly.
 #'
 #' @param df dataframe contains time series.
 #' @param colid column index for date-time. The default value is 1.

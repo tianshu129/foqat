@@ -56,6 +56,7 @@ Maximum Incremental Reactivity (MIR) value is matched through the CAS number and
 The MIR value comes from "Carter, W. P. (2009). Updated maximum incremental
 reactivity scale and hydrocarbon bin reactivities for regulatory applications.
 California Air Resources Board Contract, 2009, 339" (revised January 28, 2010).
+Note: If input VOC species contain M,P-xylene, it will be automatically divided into m-xylene and P-xylene evenly.
 }
 \examples{
 ofp(voc)

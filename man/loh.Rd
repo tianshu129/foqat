@@ -55,6 +55,7 @@ Calculate OH reactivity of VOC time series in 25 degree celsius.
 The CAS number is matched for each VOC speices (from column name), and the
 OH Rate Constant is matched through the CAS number and used for time series calculation. \cr
 The OH Rate Constant comes from 'AopWin v1.92' in 25 degree celsius.
+Note: If input VOC species contain M,P-xylene, it will be automatically divided into m-xylene and P-xylene evenly.
 }
 \examples{
 loh(voc)
