@@ -170,7 +170,7 @@ If you have wind data (wind speed, and wind direction in dgree), please set 'win
 
 * #### Usage
 ``` r
-trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3)
+trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3, cpms = TRUE)
 ```
 * #### Arguments
 
@@ -185,6 +185,7 @@ trs(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliw
 | `wind`            | logical value. if TRUE, please set coliwd, coliws. | FALSE     |                                      |
 | `coliws`          | numeric value, column index of wind speed in dataframe. | 2        |                                      |
 | `coliwd`          | numeric value, column index of wind direction (degree) in dataframe. | 3 | Unit for wind is degree.        |
+| `cpms`          |  logical value. Compensate the insufficient amount of the millisecond bit for datetime column. | TRUE |   |
 
 * #### Output
 
@@ -193,7 +194,7 @@ Output is a dataframe which contains a time series with a new time resolution.
 * #### Examples
 
 ``` r
-x = trs(met, bkip = "1 hour", colid = 1, st = "2017-05-01 00:00:00", et = NULL, na.rm = TRUE, wind = TRUE, coliws = 4, coliwd = 5)
+x = trs(met, bkip = "1 hour", st = "2017-05-01 00:00:00", wind = TRUE, coliws = 4, coliwd = 5)
 View(x)
 ```
 
@@ -232,7 +233,7 @@ The output is a dataframe. The first column is the serial number within the peri
 * #### Examples
 
 ``` r
-x = avri(met, bkip = "1 hour", mode = "recipes", value = "day", colid = 1, st = "2017-05-01 00:00:00", et = NULL, na.rm = TRUE, wind = TRUE, coliws = 4, coliwd = 5)
+x = avri(met, bkip = "1 hour", mode = "recipes", value = "day", colid = 1, st = "2017-05-01 00:00:00", wind = TRUE, coliws = 4, coliwd = 5)
 View(x)
 View(x[["df_average"]])
 View(x[["df_sd"]])
