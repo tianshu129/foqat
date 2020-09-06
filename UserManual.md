@@ -33,7 +33,7 @@ Features currently included:
 
 * [Calculate daily maximum-8-hour ozone (dm8n)](#calculate-daily-maximum-8-hour-ozone-dm8n)
 
-* [Convertion and analysis of VOC concentrations](#convertion-and-analysis-of-voc-concentrations-vocct)
+* [Convertion and analysis of VOC concentrations (vocct)](#convertion-and-analysis-of-voc-concentrations-vocct)
 
 * [Calculate Ozone Formation Potential (ofp)](#calculate-ozone-formation-potential-ofp)
 
