@@ -45,6 +45,7 @@ Functions in foqat are listed below:
 **avri**: calculate average of variation of time series.   
 **anylm**: analyse linear regression for time series in batch.  
 **dm8n**: calculate daily maximum-8-hour ozone.    
+**unitv**: convert unit of VOCs between ugm and ppbv. 
 **ofp**: calculate ozone formation potential (OFP) of VOC time series.  
 MIR values are refered from "Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339" (Revised January 28, 2010).  
 **koh**: search kOH value from 'chemspider.com'. Predicted data is generated using the US Environmental Protection Agency’s EPISuite.  
