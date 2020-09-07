@@ -26,7 +26,8 @@
 #'  relative molecular weight, and MIR value.
 #' @param colid column index for date-time. The default value is 1.
 #' @param wamg logical. Should warnings be presented? The default vaule is FALSE.
-#' @return  a list contains 8 tables:
+#' @return  a list contains 9 tables:
+#' MW_Result: matched Molecular Weight (MW) value result;
 #' Con_ugm: time series of VOC mass concentration by species;
 #' Con_ugm_mean: the average mass concentration and proportion of VOC by species (sorted from large to small);
 #' Con_ugm_group: time series of VOC mass concentration classified by groups;
@@ -234,6 +235,7 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
 
   #results
   results <- list(
+	MW_Result = name_df,
 	Con_ugm = Con_ugm,
 	Con_ugm_mean = Con_ugm_mean,
 	Con_ugm_group = Con_ugm_group,

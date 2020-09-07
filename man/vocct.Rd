@@ -40,7 +40,8 @@ If TRUE, VOC species in time series will be arranged according to VOC group,
 \item{wamg}{logical. Should warnings be presented? The default vaule is FALSE.}
 }
 \value{
-a list contains 8 tables:
+a list contains 9 tables:
+MW_Result: matched Molecular Weight (MW) value result;
 Con_ugm: time series of VOC mass concentration by species;
 Con_ugm_mean: the average mass concentration and proportion of VOC by species (sorted from large to small);
 Con_ugm_group: time series of VOC mass concentration classified by groups;
