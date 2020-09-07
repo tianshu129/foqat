@@ -1,7 +1,7 @@
 # FOQAT <img src="https://s1.ax1x.com/2020/08/31/dLqtdf.png" align="right" width="120" />
 
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-success.svg)](http://perso.crans.org/besson/LICENSE.html)
-![Version](https://img.shields.io/badge/Version-1.5.9-important) 
+![Version](https://img.shields.io/badge/Version-1.5.10-important) 
 ![Clones](https://img.shields.io/badge/Clones-531-Red)  
  
 ## Tableof Contents
@@ -363,7 +363,8 @@ vocct(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1
 
 * #### Output
 
-Output is a list containing 8 tables: 
+Output is a list containing 9 tables: 
+MW_Result: matched Molecular Weight (MW) value result;
 Con_ugm: time series of VOC mass concentration by species;
 Con_ugm_mean: the average mass concentration and proportion of VOC by species (sorted from large to small);
 Con_ugm_group: time series of VOC mass concentration classified by groups;
@@ -378,8 +379,6 @@ Con_ppbv_group_mean: VOC volume concentration average and proportion (sorted fro
 ``` r
 x = vocct(voc, unit = "ppbv")
 View(x)
-View(x[["MIR_Result"]])
-View(x[["OFP_Result"]])
 ```
 
 
