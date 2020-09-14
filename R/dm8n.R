@@ -2,9 +2,9 @@
 #'
 #' Calculates daily maximum-8-hour ozone from ozone observation data.
 #'
-#' This function can calculate multiple columns of ozone observation data in 1 dataframe with 1 datetime columm (such as ozone concentration in different sites).
+#' This function can calculate daily maximum-8-hour ozone and other parameters corresponding to it.
 #'
-#' @param df dataframe of time series for ozone.
+#' @param df dataframe of time series for ozone and other related parameters.
 #' @param colid column index for date-time. By default, it equals to 1.
 #' @param colio column index for ozone. By default, it equals to 2.
 #' @param starthour numeric, start hour for calculating 8-hour ozone. By default, it equals to 0.
@@ -19,12 +19,12 @@
 #' statistics of the number of effective 8-hour average concentrations in each day, maximum-8-hour ozone.
 #' @export
 #' @examples
-#' dm8n(aqi[,c(1,6)], colid = 1, starthour = 0, endhour = 16, nh=6, 
-#' nc=14, na.rm = TRUE, outputmode = 2)
+#' dm8n(aqi, outputmode = 2)
 #' @import lubridate
 #' @importFrom stats aggregate
 #' @importFrom utils stack unstack
-
+#' @importFrom plyr ddply
+#' @importFrom dplyr left_join
 
 dm8n<-function(df, colid = 1, colio = 2, starthour = 0, endhour=16, nh=6, nc=14, na.rm = TRUE, outputmode = 1){
 
@@ -33,8 +33,18 @@ dm8n<-function(df, colid = 1, colio = 2, starthour = 0, endhour=16, nh=6, nc=14,
 	df <- data.frame(df,stringsAsFactors = FALSE)
 	colnames(df) <- df_names
 	
-	#only need first 2 columns (datetime and ozone)
-	df <- df[,c(colid, colio)]
+	#move datetime to first column
+	if(colid != 1){
+		df[,c(1,colid)] = df[,c(colid,1)]
+		colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
+	}
+	
+	#move ozone to second column
+	if(colio != 2){
+		df[,c(2,colio)] = df[,c(colio,2)]
+		colnames(df)[c(2,colio)] = colnames(df)[c(colio,2)]
+	}
+	
 	
 	df <- trs(df, bkip="1 hour", na.rm = na.rm)
 	
@@ -96,15 +106,13 @@ dm8n<-function(df, colid = 1, colio = 2, starthour = 0, endhour=16, nh=6, nc=14,
 	D8[D8_count[,4]<nh,4]=NA
 	
 	#remove start & end hour columns
-	D8_sub=D8[,c(1,4)]
-	DMAX8=data.frame(aggregate(D8_sub[,2], by = list(D8_sub[,1]), max, na.rm=na.rm))
-	colnames(DMAX8)[1]="date"
+	D8_sub=D8[,-c(2,3)]
+	
 	#calculate DMAX8
-	for (p in 5:ncol(D8)){
-		D8_sub=D8[,c(1,p)]
-		DMAX8_sub=data.frame(aggregate(D8_sub[,2], by = list(D8_sub[,1]), max, na.rm=na.rm))
-		DMAX8=cbind(DMAX8,DMAX8_sub[2])
-	}
+	D8_sub2=D8_sub[!is.na(D8_sub[,2]),]
+	DMAX8=ddply(D8_sub2[-1], .(D8_sub2[,1]), function(x)x[x[,1]==max(x[,1]), ])
+	colnames(DMAX8)[1]="date"
+
 	#set colnames
 	colnames(DMAX8)[2:ncol(DMAX8)]=colnames(D8)[4:ncol(D8)]
 
@@ -121,7 +129,13 @@ dm8n<-function(df, colid = 1, colio = 2, starthour = 0, endhour=16, nh=6, nc=14,
 	D8_count_by_day=D8_count[,c(1,5)]
 	D8_count=D8_count[,-5]
 	D8_count_by_day=data.frame(aggregate(D8_count_by_day[,2], by = list(as.Date(D8_count_by_day[,1])), sum, na.rm=TRUE))
+	colnames(D8_count_by_day)[1]="date"
+	DMAX8=left_join(D8_count_by_day,DMAX8)
+	DMAX8=DMAX8[,-2]
 	DMAX8[D8_count_by_day[,2]<nc,2]=NA
+	
+	#replace value to NA for rows which O3 is NA.
+	DMAX8[is.na(DMAX8[,2]),2:ncol(DMAX8)]=NA
 	
 	#update columns
 	names(D8_count)[c(1,4)] = c("date", "count")
