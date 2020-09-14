@@ -13,7 +13,8 @@ dm8n(
   nh = 6,
   nc = 14,
   na.rm = TRUE,
-  outputmode = 1
+  outputmode = 1,
+  unitlb = NA
 )
 }
 \arguments{
@@ -34,12 +35,14 @@ dm8n(
 \item{na.rm}{logical. Should missing values (including NaN) be omitted from the calculations?}
 
 \item{outputmode}{numeric, the format of the output, possible value: 1 or 2. See 'value' for the results of filling in 1 or 2.}
+
+\item{unitlb}{labels for y axis of dma8 plot. By default, it equals to NA.}
 }
 \value{
-a dataframe depends on the value of 'outputMode'. Value 1 will output 1 
-table: maximum-8-hour ozone. Value 2 will output 1 list, which contains 4
-tables: 8-hour ozone, statistics of the number of effective hourly concentrations in each 8-hour average concentration, 
-statistics of the number of effective 8-hour average concentrations in each day, maximum-8-hour ozone.
+a dataframe depends on the value of 'outputMode'. Value 1 will output 1 list which incudes
+1 table (maximum-8-hour ozone) and 1 plot (dma8 plot). Value 2 will output 1 list which contains 4
+tables (8-hour ozone, statistics of the number of effective hourly concentrations in each 8-hour average concentration, 
+statistics of the number of effective 8-hour average concentrations in each day, maximum-8-hour ozone) and 1 plot (dma8 plot).
 }
 \description{
 Calculates daily maximum-8-hour ozone from ozone observation data.
@@ -48,5 +51,5 @@ Calculates daily maximum-8-hour ozone from ozone observation data.
 This function can calculate daily maximum-8-hour ozone and other parameters corresponding to it.
 }
 \examples{
-dm8n(aqi, outputmode = 2)
+dm8n(aqi,colio=6,unitlb=c("NO (ppbv)", "NO2 (ppbv)", "CO (ppbv)", "SO2 (ppbv)", "O3 (ppbv)"))
 }
