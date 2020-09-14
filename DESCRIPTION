@@ -12,6 +12,7 @@ Imports:
   xml2,
   rvest,
   dplyr,
+  plyr,
   stats,
   stringr,
   utils,
