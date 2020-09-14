@@ -17,7 +17,7 @@ dm8n(
 )
 }
 \arguments{
-\item{df}{dataframe of time series for ozone.}
+\item{df}{dataframe of time series for ozone and other related parameters.}
 
 \item{colid}{column index for date-time. By default, it equals to 1.}
 
@@ -45,9 +45,8 @@ statistics of the number of effective 8-hour average concentrations in each day,
 Calculates daily maximum-8-hour ozone from ozone observation data.
 }
 \details{
-This function can calculate multiple columns of ozone observation data in 1 dataframe with 1 datetime columm (such as ozone concentration in different sites).
+This function can calculate daily maximum-8-hour ozone and other parameters corresponding to it.
 }
 \examples{
-dm8n(aqi[,c(1,6)], colid = 1, starthour = 0, endhour = 16, nh=6, 
-nc=14, na.rm = TRUE, outputmode = 2)
+dm8n(aqi, outputmode = 2)
 }
