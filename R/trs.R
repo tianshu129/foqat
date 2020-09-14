@@ -77,7 +77,7 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
   }
   if(is.null(et)){
     #if not input et, set last timestamp as et
-    et<-as.POSIXct(as.character(df[length(df[,1]),1]),'%Y-%m-%d %H:%M',tz= tzlc)
+    et<-as.POSIXct(df[length(df[,1]),1],'%Y-%m-%d %H:%M',tz= tzlc)
   }else{
     #if input et, cut df by et
     et=as.POSIXct(et,format="%Y-%m-%d %H:%M",tz= tzlc)
