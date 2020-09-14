@@ -302,7 +302,7 @@ View(x)
 ----------
 * #### Description
 
-Calculates daily maximum-8-hour ozone from ozone observation data.
+Calculates daily maximum-8-hour/8-hour ozone from ozone observation data and other parameters corresponding to it.
 
 * #### Usage
 ``` r
@@ -312,7 +312,7 @@ dm8n(df, colid = 1, colio = 2, starthour = 0, endhour = 16, nh=6, nc=14, na.rm =
 
 | Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `df`              | dataframe of time series for ozone|                            |                                      |
+| `df`              | dataframe of time series includes ozone|                            |It automatically calculates the mean of other species for the time period corresponding to the 8-hour average and maximum 8-hour average of ozone.                  |
 | `colid`           | column index for date-time        |1                           |                                      |
 | `starthour`       | start hour for calculating 8-hour ozone | 0                    |                                      |
 | `endhour`         | end hour for calculating 8-hour ozone   | 16     |16 is the average of 8-hour ozone between 16 and 23.|
@@ -328,7 +328,7 @@ Depends on the value of 'outputMode'. Value 1 will output 1 table: maximum-8-hou
 * #### Examples
 
 ``` r 
-x = dm8n(aqi[,c(1,6)], outputmode = 2)
+x = dm8n(aqi, colio = 6, outputmode = 2)
 View(x)
 View(x[["D8"]])
 View(x[["D8_count"]])
