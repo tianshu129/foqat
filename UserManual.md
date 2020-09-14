@@ -314,6 +314,7 @@ dm8n(df, colid = 1, colio = 2, starthour = 0, endhour = 16, nh=6, nc=14, na.rm =
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series includes ozone|                            |It automatically calculates the mean of other species for the time period corresponding to the 8-hour average and maximum 8-hour average of ozone.                  |
 | `colid`           | column index for date-time        |1                           |                                      |
+| `colio`           | column index for ozone            |2                           |                                      |
 | `starthour`       | start hour for calculating 8-hour ozone | 0                    |                                      |
 | `endhour`         | end hour for calculating 8-hour ozone   | 16     |16 is the average of 8-hour ozone between 16 and 23.|
 | `nh`              | The number of effective hourly concentrations per 8-hour period.| 6   |                               |
