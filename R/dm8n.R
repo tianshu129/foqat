@@ -23,7 +23,7 @@
 #' @import lubridate
 #' @importFrom stats aggregate
 #' @importFrom utils stack unstack
-#' @importFrom plyr ddply
+#' @importFrom plyr ddply .
 #' @importFrom dplyr left_join
 
 dm8n<-function(df, colid = 1, colio = 2, starthour = 0, endhour=16, nh=6, nc=14, na.rm = TRUE, outputmode = 1){
