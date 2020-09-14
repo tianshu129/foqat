@@ -1,7 +1,7 @@
 Package: foqat
 Type: Package
 Title: Field observation quick analysis tookit
-Version: 1.5.12
+Version: 1.5.11
 Author: Tianshu Chen
 Maintainer: Tianshu Chen <tianshu129@163.com>
 Description: A quick analysis toolkits for atmospheric field observation.
