@@ -36,7 +36,7 @@ dm8n(
 
 \item{outputmode}{numeric, the format of the output, possible value: 1 or 2. See 'value' for the results of filling in 1 or 2.}
 
-\item{unitlb}{labels for y axis of dma8 plot. By default, it equals to NA.}
+\item{unitlb}{labels for y axis of dma8 plot. By default, it equals to NA. If set this parameter, the order of species should same as that in the dataframe.}
 }
 \value{
 a dataframe depends on the value of 'outputMode'. Value 1 will output 1 list which incudes
