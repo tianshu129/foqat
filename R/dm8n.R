@@ -13,7 +13,7 @@
 #' @param nc numeric. The number of effective 8-hour average concentrations per day.
 #' @param na.rm logical. Should missing values (including NaN) be omitted from the calculations?
 #' @param outputmode numeric, the format of the output, possible value: 1 or 2. See 'value' for the results of filling in 1 or 2.
-#' @param unitlb labels for y axis of dma8 plot. By default, it equals to NA.
+#' @param unitlb labels for y axis of dma8 plot. By default, it equals to NA. If set this parameter, the order of species should same as that in the dataframe.
 #' @return a dataframe depends on the value of 'outputMode'. Value 1 will output 1 list which incudes
 #' 1 table (maximum-8-hour ozone) and 1 plot (dma8 plot). Value 2 will output 1 list which contains 4
 #' tables (8-hour ozone, statistics of the number of effective hourly concentrations in each 8-hour average concentration, 
