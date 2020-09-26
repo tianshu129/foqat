@@ -65,7 +65,7 @@ Click the link to ask questions and give feedback: ☛ https://github.com/tiansh
 Please send email to: tianshu129@163.com  
 
 ## Link
-[![Personal Academic Site](https://img.shields.io/badge/PersonalAcademicSite-Tianshu%20Chen-00CCBB)](https://tianshu129.github.io/)  
+[![Personal Academic Site](https://img.shields.io/badge/AcademicSite-Tianshu%20Chen-00CCBB)](https://tianshu129.github.io/)  
 [![ResearchGate](https://img.shields.io/badge/ResearchGate-Tianshu%20Chen-00CCBB)](https://www.researchgate.net/profile/Tianshu_Chen)   
 [![Google Scholar](https://img.shields.io/badge/GoogleScholar-Tianshu%20Chen-red)](https://scholar.google.com/citations?user=VfnzOQgAAAAJ&hl=en)  
 [![Twitter](https://img.shields.io/twitter/follow/tichpi.svg?style=social&label=@tichpi)](https://twitter.com/tichpi)  
