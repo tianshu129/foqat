@@ -113,7 +113,7 @@ dm8n<-function(df, colid = 1, colio = 2, starthour = 0, endhour=16, nh=6, nc=14,
   
   #calculate DMAX8
   D8_sub2=D8_sub[!is.na(D8_sub[,2]),]
-  DMAX8=ddply(D8_sub2[-1], .(D8_sub2[,1]), function(x)x[x[,1]==max(x[,1]), ])
+  DMAX8=ddply(D8_sub2[-1], .(D8_sub2[,1]), function(x)x[which.max(x[,1]), ])
   colnames(DMAX8)[1]="date"
   
   #set colnames
