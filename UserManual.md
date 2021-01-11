@@ -1,8 +1,7 @@
 # FOQAT <img src="https://s1.ax1x.com/2020/08/31/dLqtdf.png" align="right" width="120" />
 
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-success.svg)](http://perso.crans.org/besson/LICENSE.html)
-![Version](https://img.shields.io/badge/Version-1.5.13-important) 
-![Clones](https://img.shields.io/badge/Clones-531-Red)  
+![Version](https://img.shields.io/badge/Version-1.5.18-important) 
  
 ## Tableof Contents
 * [GENERAL OVERVIEW](#general-overview)
@@ -306,7 +305,7 @@ Calculates daily maximum-8-hour/8-hour ozone from ozone observation data and oth
 
 * #### Usage
 ``` r
-dm8n(df, colid = 1, colio = 2, starthour = 0, endhour = 16, nh=6, nc=14, na.rm = TRUE, outputmode = 1)
+dm8n(df, colid = 1, colio = 2, starthour = 0, endhour=16, nh=6, nc=14, na.rm = TRUE, outputmode = 1, unitlb = NA)
 ```
 * #### Arguments
 
@@ -321,19 +320,17 @@ dm8n(df, colid = 1, colio = 2, starthour = 0, endhour = 16, nh=6, nc=14, na.rm =
 | `nc`              | The number of effective 8-hour average concentrations per day.  | 14  |                               |
 | `na.rm`           | logical value. Remove NA value or not? | TRUE                  |                                      |
 | `outputmode`      | the format of the output, possible value: 1 or 2.| 1 |See output for the results of filling in 1 or 2.|
+| `unitlb`      | labels for y axis of dma8 plot.| NA |By default, it equals to NA. If set this parameter, the order of species should same as that in the dataframe.|
 
 * #### Output
 
-Depends on the value of 'outputMode'. Value 1 will output 1 table: maximum-8-hour ozone. Value 1 will output 1 list, which contains 4 tables: 8-hour ozone, statistics of the number of effective hourly concentrations in each 8-hour average concentration, statistics of the number of effective 8-hour average concentrations in each day, maximum-8-hour ozone.
+Depends on the value of 'outputMode'. Value 1 will output 1 list which incudes 1 table (maximum-8-hour ozone) and 1 plot (dma8 plot). Value 2 will output 1 list which contains 4 tables (8-hour ozone, statistics of the number of effective hourly concentrations in each 8-hour average concentration, statistics of the number of effective 8-hour average concentrations in each day, maximum-8-hour ozone) and 1 plot (dma8 plot).
 
 * #### Examples
 
 ``` r 
-x = dm8n(aqi, colio = 6, outputmode = 2)
+x = dm8n(aqi,colio=6,unitlb=c("NO (ppbv)", "NO2 (ppbv)", "CO (ppbv)", "SO2 (ppbv)", "O3 (ppbv)"))
 View(x)
-View(x[["D8"]])
-View(x[["D8_count"]])
-View(x[["DMAX8"]])
 ```
 
 

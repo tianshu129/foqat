@@ -1,8 +1,7 @@
 # FOQAT <img src="https://s1.ax1x.com/2020/08/31/dLqtdf.png" align="right" width="120" />
 
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-success.svg)](http://perso.crans.org/besson/LICENSE.html)
-![Version](https://img.shields.io/badge/Version-1.5.13-important) 
-![Clones](https://img.shields.io/badge/Clones-531-Red)  
+![Version](https://img.shields.io/badge/Version-1.5.18-important) 
  
 ## Overview
 
@@ -65,6 +64,7 @@ Click the link to ask questions and give feedback: ☛ https://github.com/tiansh
 Please send email to: tianshu129@163.com  
 
 ## Link
+[![Personal Academic Site](https://img.shields.io/badge/AcademicSite-Tianshu%20Chen-00CCBB)](https://tianshu129.github.io/)  
 [![ResearchGate](https://img.shields.io/badge/ResearchGate-Tianshu%20Chen-00CCBB)](https://www.researchgate.net/profile/Tianshu_Chen)   
 [![Google Scholar](https://img.shields.io/badge/GoogleScholar-Tianshu%20Chen-red)](https://scholar.google.com/citations?user=VfnzOQgAAAAJ&hl=en)  
 [![Twitter](https://img.shields.io/twitter/follow/tichpi.svg?style=social&label=@tichpi)](https://twitter.com/tichpi)  

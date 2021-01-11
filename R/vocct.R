@@ -118,7 +118,7 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
   #if it is matched by CAS in NIST and matched by name in Carter paper, but it doesn't have CAS in Carter paper.
   for(k in which(!is.na(name_df$Source)&is.na(name_df$MW))){ ##different with LOH and OFP
     tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
-    tar=tolower(name_df$name[k])
+    tar=gsub(" ", "", tolower(name_df$name[k]), fixed = TRUE)
     df_null=data.frame(datacas[tarlist %in% tar,])
     if(nrow(df_null)!=0){
       name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
@@ -133,7 +133,7 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
   #if it isn't found in NIST, but its name is matched by Carter paper.
   for(k in which(is.na(name_df$Source))){
     tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
-    tar=tolower(name_df$name[k])
+    tar=gsub(" ", "", tolower(name_df$name[k]), fixed = TRUE)
     df_null=data.frame(datacas[tarlist %in% tar,])
     if(nrow(df_null)!=0){
       name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
