@@ -11,7 +11,10 @@
 #'
 #' @param df dataframe contains time series.
 #' @param colid column index for date-time. The default value is 1.
-#' @param unit unit for VOC concentration. A character vector from these options: "ugm" or "ppbv". "ugm" means ug/m3. "ppbv" means part per billion volumn.
+#' @param inunit input's unit for VOC concentration. A character vector from these options: "ugm" or "ppbv". 
+#' "ugm" means ug/m3. "ppbv" means part per billion volumn. The default vaule is "ppbv".
+#' @param outunit output's unit for VOC concentration. A character from these options: "ugm" or "ppbv". 
+#' "ugm" means ug/m3. "ppbv" means part per billion volumn. The default vaule is "ppbv".
 #' @param t Temperature, in Degrees Celsius, used to convert data in 
 #' micrograms per cubic meter to standard conditions 
 #' (25 Degrees Celsius, 101.325 kPa). By default, t equals to 25 Degrees Celsius.
@@ -39,7 +42,7 @@
 #' @importFrom utils URLencode
 #' @importFrom xml2 read_html
 
-ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE, chn=FALSE){
+ofp <- function(df, inunit = "ppbv", outuint = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE, chn=FALSE){
 
   #suppress warnings temporarily?
   if(wamg==FALSE){options(warn=-1)}
@@ -186,7 +189,7 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   ofp_df = df
   r = 22.4*(273.15+t)*101.325/(273.15*p)
   r2 = (298.15*p)/((273.15+t)*101.325)
-  if(unit=="ugm"){
+  if(inunit=="ugm"){
   	Con_ppbv = df
 	Con_ugm = df
 	if(stcd==TRUE){
@@ -194,7 +197,7 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 	}
 	ofp_df[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) Con_ugm[,x] * as.numeric(name_df$MIR)[x-1]),ncol = ncol(df)-1))	
 	Con_ppbv[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x]*as.numeric(r/name_df$MW)[x-1]),ncol = ncol(df)-1))
-  }else if(unit=="ppbv"){
+  }else if(inunit=="ppbv"){
     Con_ppbv = df
 	Con_ugm = df
 	if(stcd==FALSE){
@@ -204,7 +207,7 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 	}
 	ofp_df[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) Con_ugm[,x] * as.numeric(name_df$MIR)[x-1]),ncol = ncol(df)-1))
   }else{
-    print("unit error")
+    print("input-unit error")
   }
 
   #vector of group names
@@ -266,9 +269,16 @@ ofp <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   ofp_df_group_mean$Proportion=ofp_df_group_mean$mean/sum(as.numeric(as.character(statdf(ofp_df_group,n = 6)[-1,1])),na.rm = TRUE)
   ofp_df_group_mean$Proportion=round(ofp_df_group_mean$Proportion,4)
   ofp_df_group_mean=ofp_df_group_mean[with(ofp_df_group_mean, order(-mean)), ]
-
+	
   #suppress warnings temporarily?
   if(wamg==FALSE){options(warn=0)}
+
+  if(outuint == "ppbv"){
+	ofp_df[,-1]=ofp_df[,-1]/48*24.45
+	ofp_df_mean[,2]=ofp_df_mean[,2]/48*24.45
+	ofp_df_group[,-1]=ofp_df_group[,-1]/48*24.45
+	ofp_df_group_mean[,2]=ofp_df_group_mean[,2]/48*24.45
+  }
 
   #results
   results <- list(
