@@ -12,7 +12,9 @@ loh(
   stcd = FALSE,
   sortd = TRUE,
   colid = 1,
-  wamg = FALSE
+  wamg = FALSE,
+  atk = TRUE,
+  chn = FALSE
 )
 }
 \arguments{
@@ -39,6 +41,10 @@ If TRUE, VOC species in time series will be arranged according to VOC group,
 \item{colid}{column index for date-time. The default value is 1.}
 
 \item{wamg}{logical. Should warnings be presented? The default vaule is FALSE.}
+
+\item{atk}{logical. use kOH value from atk or not? If not, kOH comes from 'AopWin v1.92' will be used. The default vaule is TRUE.}
+
+\item{chn}{logical. Dose colnames present as Chinese? The default vaule is FALSE.}
 }
 \value{
 a list contains 5 tables:

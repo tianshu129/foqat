@@ -25,6 +25,8 @@
 #' The default vaule is FALSE.
 #' @param colid column index for date-time. The default value is 1.
 #' @param wamg logical. Should warnings be presented? The default vaule is FALSE.
+#' @param atk logical. use kOH value from atk or not? If not, kOH comes from 'AopWin v1.92' will be used. The default vaule is TRUE.
+#' @param chn logical. Dose colnames present as Chinese? The default vaule is FALSE.
 #' @return  a list contains 5 tables:
 #' KOH_Result: matched KOH value result;
 #' LOH_Result: LOH time series of VOC by species;
@@ -37,9 +39,23 @@
 #' loh(voc)
 #' @importFrom utils URLencode
 #' @importFrom xml2 read_html
+#' @importFrom stringr str_split_fixed
 
-loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE){
+loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE, atk=TRUE, chn=FALSE){
 
+    #generate datacasv2 according to datacas
+  datacasv2=datacas
+  if(atk==TRUE){
+	datacasv2$koh=datacasv2$koh_atk
+	datacasv2$koh_type=NA
+	datacasv2$koh_type[which(!is.na(datacasv2$koh))]="Atkinson"
+	datacasv2$koh_type[which(is.na(datacasv2$koh)&!is.na(datacasv2$koh_aop))]="AopWin"
+	datacasv2$koh[which(is.na(datacasv2$koh)&!is.na(datacasv2$koh_aop))]=datacasv2$koh_aop[which(is.na(datacasv2$koh)&!is.na(datacasv2$koh_aop))]
+  }else{
+	datacasv2$koh=datacasv2$koh_aop
+	datacasv2$koh_type[which(!is.na(datacasv2$koh))]="AopWin"
+  }
+  
   #suppress warnings temporarily?
   if(wamg==FALSE){options(warn=-1)}
 
@@ -54,91 +70,90 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   df <- data.frame(df,stringsAsFactors = FALSE)
   colnames(df) <- temp_col_name
   
-  #In case df includes m,p-Xylene
-  colnames_short = gsub("\\,|\\-| ", "", tolower(colnames(df)))
-  if("mpxylene" %in% colnames_short){
-	  xyleneid=which(colnames_short %in% "mpxylene")
-	  df=df[,c(1:xyleneid,xyleneid:ncol(df))]
-	  df[,c(xyleneid,(xyleneid+1))]=df[,c(xyleneid,(xyleneid+1))]/2
-	  colnames(df)[c(xyleneid,(xyleneid+1))]=c("m-Xylene","p-Xylene")
-  }
+  if(chn==FALSE){
+	  #In case df includes m,p-Xylene
+	  colnames_short = gsub("\\,|\\-| ", "", tolower(colnames(df)))
+	  if("mpxylene" %in% colnames_short){
+		  xyleneid=which(colnames_short %in% "mpxylene")
+		  df=df[,c(1:xyleneid,xyleneid:ncol(df))]
+		  df[,c(xyleneid,(xyleneid+1))]=df[,c(xyleneid,(xyleneid+1))]/2
+		  colnames(df)[c(xyleneid,(xyleneid+1))]=c("m-Xylene","p-Xylene")
+	  }
 
-  #get VOC name by colnames of df
-  #if read from xlsx, replace "X" and "."
-  colnm_df = colnames(df)[2:ncol(df)]
-  chemicalnames = ifelse(substr(colnm_df, 1, 1) == "X", sub("^.", "", colnm_df), colnm_df)
-  chemicalnames = gsub("\\.", "-", chemicalnames)
-  #if i-
-  chemicalnames = gsub("\\i-", "iso-", chemicalnames)
+	  #get VOC name by colnames of df
+	  #if read from xlsx, replace "X" and "."
+	  colnm_df = colnames(df)[2:ncol(df)]
+	  chemicalnames = ifelse(substr(colnm_df, 1, 1) == "X", sub("^.", "", colnm_df), colnm_df)
+	  chemicalnames = gsub("\\.", "-", chemicalnames)
+	  #if i-
+	  chemicalnames = gsub("\\i-", "iso-", chemicalnames)
 
-  #build name_df
-  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, koh = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
+	  #build name_df
+	  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, koh = NA, koh_type = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
 
-  #search VOC name to get CAS Number from different sources, add cas, sources, mathed_name to name_df
-  ##firstly by NIST
-  for( i in 1:nrow(name_df)){
-    str <- name_df[i,1]
-    str <- URLencode(str)
-    url=paste(c("https://webbook.nist.gov/cgi/cbook.cgi?Name=", str,"&Units=SI"), collapse='')
-    download.file(url, destfile = "scrapedpage.html", quiet=TRUE)
-    web <- read_html("scrapedpage.html")
-    result_test<-web%>%html_nodes("h1")%>%html_text()
-    if(result_test[2] == "Name Not Found"){
-      name_df[i,2]="Name Not Found"
-      name_df[i,3]=NA
-    }else if(result_test[2] == "Search Results"){
-      name_df[i,2]="More than 1 result"
-      name_df[i,3]=NA
-	}else if(grepl("structure unspecified",result_test[2])){
-	  name_df[i,2]="structure unspecified in NIST"
-	  name_df[i,3]=NA
-    }else{
-      result_test<-web%>%html_nodes("li")%>%html_text()
-      result_test<-strsplit(result_test[21], ": ")
-      name_df[i,2]=result_test[[1]][2]
-      name_df[i,3]="NIST"
-    }
-  }
+	  #search VOC name to get CAS Number from different sources, add cas, sources, mathed_name to name_df
+	  ##firstly by NIST
+	  for( i in 1:nrow(name_df)){
+		str <- name_df[i,1]
+		str <- URLencode(str)
+		url=paste(c("https://webbook.nist.gov/cgi/cbook.cgi?Name=", str,"&Units=SI"), collapse='')
+		download.file(url, destfile = "scrapedpage.html", quiet=TRUE)
+		web <- read_html("scrapedpage.html")
+		result_test<-web%>%html_nodes("h1")%>%html_text()
+		if(result_test[2] == "Name Not Found"){
+		  name_df[i,2]="Name Not Found"
+		  name_df[i,3]=NA
+		}else if(result_test[2] == "Search Results"){
+		  name_df[i,2]="More than 1 result"
+		  name_df[i,3]=NA
+		}else if(grepl("structure unspecified",result_test[2])){
+		  name_df[i,2]="structure unspecified in NIST"
+		  name_df[i,3]=NA
+		}else{
+		  result_test<-web%>%html_nodes("li")%>%html_text()
+		  result_test<-strsplit(result_test[21], ": ")
+		  name_df[i,2]=result_test[[1]][2]
+		  name_df[i,3]="NIST"
+		}
+	  }
 
-  #match koh by different sources
-  ##get CAS from NIST, match name by CAS
-  a=lapply(name_df$CAS[which(name_df$Source=="NIST"&!is.na(name_df$CAS))], function(i) grep(i, datacas$CAS))
-  a=unlist(lapply(a,function(x) if(identical(x,integer(0))) ' ' else x))
-  name_df$koh[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$koh[as.numeric(a)]
-  name_df$Matched_Name[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$Description[as.numeric(a)]
-  name_df$MW[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$MWt[as.numeric(a)]
-  name_df$Group[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$Group[as.numeric(a)]
+	  #match koh by different sources
+	  ##get CAS from NIST, match name by CAS
+	  a=lapply(name_df$CAS[which(name_df$Source=="NIST"&!is.na(name_df$CAS))], function(i) grep(i, datacasv2$CAS))
+	  a=unlist(lapply(a,function(x) if(identical(x,integer(0))) ' ' else x))
+	  name_df$koh[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacasv2$koh[as.numeric(a)]
+	  name_df$koh_type[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacasv2$koh_type[as.numeric(a)]
+	  name_df$Matched_Name[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacasv2$Description[as.numeric(a)]
+	  name_df$MW[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacasv2$MWt[as.numeric(a)]
+	  name_df$Group[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacasv2$Group[as.numeric(a)]
 
+ 
+	}else{
+	  #build name_df
+	  colnm_df = colnames(df)[2:ncol(df)]
+	  chemicalnames = ifelse(substr(colnm_df, 1, 1) == "X", sub("^.", "", colnm_df), colnm_df)
+	  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, koh = NA, koh_type = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
 
-  #if it is matched by CAS in NIST and matched by name in Carter paper, but it doesn't have CAS in Carter paper.
-  for(k in which(!is.na(name_df$Source)&is.na(name_df$koh))){
-    tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
-    tar=gsub(" ", "", tolower(name_df$name[k]), fixed = TRUE)
-    df_null=data.frame(datacas[tarlist %in% tar,])
-    if(nrow(df_null)!=0){
-      name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
-      #name_df$CAS[as.numeric(k)] = df_null$CAS[1]
-      name_df$koh[as.numeric(k)] = df_null$koh[1]
-      name_df$Source[as.numeric(k)] = "CAS is found in NIST. But it only has name in Carter paper 2010"
-      name_df$MW[as.numeric(k)] = df_null$MWt[1]
-	  name_df$Group[as.numeric(k)] = df_null$Group[1]
-    }
-  }
+	  #match table by chinese name
 
-  #if it isn't found in NIST, but its name is matched by Carter paper.
-  for(k in which(is.na(name_df$Source))){
-    tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
-    tar=gsub(" ", "", tolower(name_df$name[k]), fixed = TRUE)
-    df_null=data.frame(datacas[tarlist %in% tar,])
-    if(nrow(df_null)!=0){
-      name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
-      name_df$CAS[as.numeric(k)] = df_null$CAS[1]
-      name_df$koh[as.numeric(k)] = df_null$koh[1]
-      name_df$Source[as.numeric(k)] = "Carter paper 2010"
-      name_df$MW[as.numeric(k)] = df_null$MWt[1]
-	  name_df$Group[as.numeric(k)] = df_null$Group[1]
-    }
-  }
+	  chn_name_db<-data.frame(str_split_fixed(gsub("\\/|\\,|\\-| ", "", datacasv2$chn), '；', 3))#change according to max chinese name vector
+	  for(k in 1:nrow(name_df)){
+		chn_df<-data.frame(str_split_fixed(gsub("\\,|\\-| ", "", datacasv2$chn), '；', 2))
+		x=which(chn_df == gsub("\\，|\\,|\\-| ", "", name_df$name[k]), arr.ind = TRUE)[1]
+		df_null=data.frame(datacasv2[x,])
+		if(nrow(df_null)!=0){
+		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
+		  name_df$CAS[as.numeric(k)] = df_null$CAS[1]
+		  name_df$koh[as.numeric(k)] = df_null$koh[1]
+		  name_df$koh_type[as.numeric(k)] = df_null$koh_type[1]
+		  name_df$Source[as.numeric(k)] = "Chinese"
+		  name_df$MW[as.numeric(k)] = df_null$MWt[1]
+		  name_df$Group[as.numeric(k)] = df_null$Group[1]
+		}
+	  }
+	}
+	
+
 
   #set GROUP to Unknown for NA group
   name_df$Group[is.na(name_df$Group)] = "Unknown"

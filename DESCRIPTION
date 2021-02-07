@@ -1,7 +1,7 @@
 Package: foqat
 Type: Package
 Title: Field observation quick analysis tookit
-Version: 1.5.18
+Version: 1.6.0
 Author: Tianshu Chen
 Maintainer: Tianshu Chen <tianshu129@163.com>
 Description: A quick analysis toolkits for atmospheric field observation.
@@ -24,4 +24,4 @@ Imports:
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
