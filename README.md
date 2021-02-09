@@ -70,7 +70,7 @@ Please send email to: tianshu129@163.com
 [![Twitter](https://img.shields.io/twitter/follow/tichpi.svg?style=social&label=@tichpi)](https://twitter.com/tichpi)  
 [![zhihu-shield]][zhihu]  
 --------------------------------
-[zhihu]:https://www.zhihu.com/people/chen-xiao-tian-92-92 "我的知乎，欢迎关注"
+[zhihu]:https://www.zhihu.com/people/tichpi "我的知乎，欢迎关注"
 [zhihu-shield]:https://img.shields.io/badge/dynamic/json?color=0084ff&logo=zhihu&label=TichPi&query=%24.data.totalSubs&url=https%3A%2F%2Fapi.spencerwoo.com%2Fsubstats%2F%3Fsource%3Dzhihu%26queryKey%3Dtichpi
 
 ## Donation
