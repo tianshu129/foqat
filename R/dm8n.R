@@ -29,7 +29,7 @@
 #' @importFrom ggplot2 ggplot geom_point geom_line facet_wrap theme_bw theme as_labeller element_blank
 #' @importFrom reshape2 melt
 
-dm8n<-function(df, colid = 1, colio = 2, starthour = 0, endhour=16, nh=6, nc=14, na.rm = TRUE, outputmode = 1, unitlb = NA){
+dm8n <- function(df, colid = 1, colio = 2, starthour = 0, endhour=16, nh=6, nc=14, na.rm = TRUE, outputmode = 1, unitlb = NA){
   
   #In case df is not a dataframe.
   df_names <- colnames(df) 
