@@ -50,7 +50,7 @@
 #' @examples
 #' anylm(aqi, xd=c(2,3), yd=6, zd=4, td=NULL, dign=3)
 
-anylm<-function(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", range.x="interval", nperm=99, showpage=TRUE, scint=FALSE, dign=1, zfill="lightgray", ppsize=2, showinfo=TRUE, ptsize=12, pncol=NULL){
+anylm <- function(df, xd=2, yd=3, zd=NULL, td=NULL, mi=1, range.y="interval", range.x="interval", nperm=99, showpage=TRUE, scint=FALSE, dign=1, zfill="lightgray", ppsize=2, showinfo=TRUE, ptsize=12, pncol=NULL){
 
   #function start################################
   #In case df is not a dataframe.
