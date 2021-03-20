@@ -119,10 +119,13 @@ write.csv(result,"E:/Users/Chen/Desktop/tuv_result.csv",row.names=F)
 ## INSTALLATION OF FOQAT
 This package is not currently collected by CRAN, you need to install the CARN package 'Remotes'.Then install this package using the 'install_github' function in "remotes".
 ``` r
-#Install the CRAN package ‘remotes’
-install.packages("remotes")
-#Call the 'install_github' function to install this package
+# install the stable version:
+install.packages("foqat")
+
+# Or the development version from GitHub:
+# install.packages("remotes")
 remotes::install_github("tianshu129/foqat")
+```
 ```
 
 ## FUNCTIONS AND EXAMPLES
