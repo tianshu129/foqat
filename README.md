@@ -32,8 +32,11 @@ As far as I know, FOQAT has users from:
 ## Installation 
 
 ``` r
-# Install from GitHub:
-install.packages("remotes")
+# install the stable version:
+install.packages("foqat")
+
+# Or the development version from GitHub:
+# install.packages("remotes")
 remotes::install_github("tianshu129/foqat")
 ```
 
