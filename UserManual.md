@@ -1,7 +1,7 @@
 # FOQAT <img src="https://s1.ax1x.com/2020/08/31/dLqtdf.png" align="right" width="120" />
 
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-success.svg)](http://perso.crans.org/besson/LICENSE.html)
-![Version](https://img.shields.io/badge/Version-1.5.18-important) 
+![Version](https://img.shields.io/badge/Version-1.6.2-important) 
  
 ## Tableof Contents
 * [GENERAL OVERVIEW](#general-overview)
@@ -36,11 +36,7 @@ Features currently included:
 
 * [Calculate Ozone Formation Potential (ofp)](#calculate-ozone-formation-potential-ofp)
 
-* [Get OH Reactivity (koh)](#oh-reactivity-koh)
-
 * [Calculate OH reactivity (loh)](#calculate-oh-reactivity-loh)
-
-* [Format the historical data from OpenAQ (openaq)](#format-the-historical-data-from-openaq-openaq)
 
 * [Calculate TUV in batch (tuv)](#calculate-tuv-in-batch-tuv)
 
@@ -397,7 +393,8 @@ ofp(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, 
 | Variable name     |  Definition                       | Default                    | Example values/remarks               |
 | ------------------| ----------------------------------|----------------------------|--------------------------------------|
 | `df`              | dataframe of time series          |                            |                                      |
-| `unit`            | unit for VOC data (micrograms per cubic meter or ppbv).Please fill in "ugm" or "ppbv" in quotation marks.| "ppbv"                     |  |
+| `inunit`            | unit for input VOC data (micrograms per cubic meter or ppbv).Please fill in "ugm" or "ppbv" in quotation marks.| "ppbv"                     |  |
+| `outunit`            | unit for output OFP value (micrograms per cubic meter or ppbv).Please fill in "ugm" or "ppbv" in quotation marks.| "ppbv"                     |  |
 | `t`               | Temperature, in Degrees Celsius, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 25|                  |
 | `p`               |Pressure, in kPa, used to convert data in micrograms per cubic meter to standard conditions (25 Degrees Celsius, 101.325 kPa).| 101.325|                         |
 | `stcd`          | Does it output results in standard conditions?                |FALSE      |                              |
@@ -419,33 +416,6 @@ x = ofp(voc, unit = "ppbv")
 View(x)
 View(x[["MIR_Result"]])
 View(x[["OFP_Result"]])
-```
-
-
-### Get OH Reactivity (koh)
-----------
-* #### Description
-
-Theoretical values of the species' OH reaction constant kOH at 25 degrees were obtained from' Chemspider.com '. Value source: US Environmental Protection Agency’s EPISuite.
-
-* #### Usage
-``` r
-koh(spec)
-```
-* #### Arguments
-
-| Variable name     |  Definition                       | Default                    | Example values/remarks               |
-| ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `spec`            |  species                          |          |The name of the species or CAS number are both acceptable.|
-
-* #### Output
-
-Output is the theoretical value of the species' OH reaction constant kOH at 25 degrees.
-
-* #### Examples
-
-``` r
-koh("propane")
 ```
 
 
@@ -493,44 +463,6 @@ x = loh(voc, unit = "ppbv")
 View(x)
 View(x[["KOH_Result"]])
 View(x[["LOH_Result"]])
-```
-
-
-### Format the historical data from OpenAQ (openaq)
-----------
-* #### Description
-
-Format the historical data from openaq.org retrieved by AWS Athena.
-How to download data? Please read https://medium.com/@openaq/how-in-the-world-do-you-access-air-quality-data-older-than-90-days-on-the-openaq-platform-8562df519ecd.
-
-* #### Usage
-``` r
-openaq(df)
-```
-* #### Arguments
-
-| Variable name     |  Definition                       | Default                    | Example values/remarks               |
-| ------------------| ----------------------------------|----------------------------|--------------------------------------|
-| `df`              | dataframe of historical data from openaq.org with certain format|  |Need to have 5 species: "o3", "no2", "co", "pm25", "pm10".|
-
-* #### Output
-
-A list which contain a dataframe of formated OpenAQ data and a dataframe for time series of OpenAQ data.
-
-* #### Examples
-
-``` r 
-#read data into R by using 'read_xlsx' function in 'readxl' pacakage
-library(readxl)
-#please use your path
-path_for_file="xx.xlsx", col_types=c(rep("text",3), "numeric", rep("text",9))
-aqidata<- read_xlsx(path_for_file,col_types = col_types)
-#process data by using 'openaq' function in 'foqat' pacakage
-x=openaq(aqidata)
-#view results
-View(x)
-View(x[["aqidata"]])
-View(x[["aqits"]])
 ```
 
 
