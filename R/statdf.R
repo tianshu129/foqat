@@ -13,7 +13,7 @@
 #' statdf(aqi)
 #' @importFrom stats quantile sd
 
-statdf = function(x, n = 2) {
+statdf <- function(x, n = 2) {
   mean_df <- function(x) {if (is.numeric(x)) round(mean(x, na.rm=TRUE), digits=n) else "Not numeric type"}
   sd_df <- function(x) {if (is.numeric(x)) round(sd(x, na.rm=TRUE), digits=n) else "Not numeric type"}
   min_df <- function(x) {if (is.numeric(x)) round(min(x, na.rm=TRUE), digits=n) else "Not numeric type"}
