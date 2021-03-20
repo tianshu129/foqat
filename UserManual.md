@@ -117,7 +117,6 @@ write.csv(result,"E:/Users/Chen/Desktop/tuv_result.csv",row.names=F)
 ```
 
 ## INSTALLATION OF FOQAT
-This package is not currently collected by CRAN, you need to install the CARN package 'Remotes'.Then install this package using the 'install_github' function in "remotes".
 ``` r
 # install the stable version:
 install.packages("foqat")
