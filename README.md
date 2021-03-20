@@ -68,7 +68,7 @@ Please send email to: tianshu129@163.com
 [![Personal Academic Site](https://img.shields.io/badge/AcademicSite-Tianshu%20Chen-00CCBB)](https://tianshu129.github.io/)  
 [![ResearchGate](https://img.shields.io/badge/ResearchGate-Tianshu%20Chen-00CCBB)](https://www.researchgate.net/profile/Tianshu_Chen)   
 [![Google Scholar](https://img.shields.io/badge/GoogleScholar-Tianshu%20Chen-red)](https://scholar.google.com/citations?user=VfnzOQgAAAAJ&hl=en)  
-[![Twitter](https://img.shields.io/twitter/follow/tichpi.svg?style=social&label=@tichpi)](https://twitter.com/tichpi)  
+[![Twitter](https://img.shields.io/twitter/follow/tichpi.svg?style=social&label=@tichpi)](https://twitter.com/tichpi) [![Join the chat at https://gitter.im/foqater/community](https://badges.gitter.im/foqater/community.svg)](https://gitter.im/foqater/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
 [![zhihu-shield]][zhihu]  
 --------------------------------
 [zhihu]:https://www.zhihu.com/people/tichpi "我的知乎，欢迎关注"
