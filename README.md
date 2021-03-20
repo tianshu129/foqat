@@ -32,7 +32,7 @@ As far as I know, FOQAT has users from:
 ## Installation 
 
 ``` r
-# install the stable version:
+# install the stable version from CRAN:
 install.packages("foqat")
 
 # Or the development version from GitHub:
