@@ -1,8 +1,8 @@
 # FOQAT <img src="https://s1.ax1x.com/2020/08/31/dLqtdf.png" align="right" width="120" />
 
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-success.svg)](http://perso.crans.org/besson/LICENSE.html)
-![Version](https://img.shields.io/badge/Version-1.6.1-important) 
- 
+![Version](https://img.shields.io/badge/Version-1.6.1-important) [![](https://cranlogs.r-pkg.org/badges/grand-total/foqat)](https://cran.r-project.org/package=foqat)
+
 ## Overview
 
 The FOQAT is an R package designed for quick processing and analysis of atmospheric data measured from field observation and air pollution. And the functions for time series analysis could also applied to time serires of any other fileds.  

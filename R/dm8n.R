@@ -152,7 +152,11 @@ dm8n<-function(df, colid = 1, colio = 2, starthour = 0, endhour=16, nh=6, nc=14,
   }
   
   #melt
-  x <- melt(DMAX8_p, id.vars = c("date")) 
+  x <- melt(DMAX8_p, id.vars = c("date"))
+  #colnames(x)[2]="xvalue"
+  #colnames(x)[3]="xvariable"  
+  variable=NULL
+  value=NULL
   
   #unitlb
   if(all(!is.na(unitlb))){

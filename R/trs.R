@@ -24,7 +24,7 @@
 #' @importFrom lubridate duration
 
 trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3, cpms=TRUE){
-  options(warn = -1)
+  
   #move datetime to first column
   if(colid != 1){
     df[,c(1,colid)] = df[,c(colid,1)]
@@ -134,6 +134,5 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
   df[,1] = as.POSIXct(df[,1], '%Y-%m-%d %H:%M', tz = tzlc)
   
   #output
-  options(warn = 0)
   return(df)
 }

@@ -7,13 +7,12 @@
 ofp(
   df,
   inunit = "ppbv",
-  outuint = "ppbv",
+  outunit = "ppbv",
   t = 25,
   p = 101.325,
   stcd = FALSE,
   sortd = TRUE,
   colid = 1,
-  wamg = FALSE,
   chn = FALSE
 )
 }
@@ -21,6 +20,9 @@ ofp(
 \item{df}{dataframe contains time series.}
 
 \item{inunit}{input's unit for VOC concentration. A character vector from these options: "ugm" or "ppbv". 
+"ugm" means ug/m3. "ppbv" means part per billion volumn. The default vaule is "ppbv".}
+
+\item{outunit}{output's unit for VOC concentration. A character from these options: "ugm" or "ppbv". 
 "ugm" means ug/m3. "ppbv" means part per billion volumn. The default vaule is "ppbv".}
 
 \item{t}{Temperature, in Degrees Celsius, used to convert data in 
@@ -40,12 +42,7 @@ If TRUE, VOC species in time series will be arranged according to VOC group,
 
 \item{colid}{column index for date-time. The default value is 1.}
 
-\item{wamg}{logical. Should warnings be presented? The default vaule is FALSE.}
-
 \item{chn}{logical. Dose colnames present as Chinese? The default vaule is FALSE.}
-
-\item{outunit}{output's unit for VOC concentration. A character from these options: "ugm" or "ppbv". 
-"ugm" means ug/m3. "ppbv" means part per billion volumn. The default vaule is "ppbv".}
 }
 \value{
 a list contains 5 tables:
@@ -57,6 +54,7 @@ OFP_Result_group_mean: the average value and proportion of OFP of VOC according 
 }
 \description{
 Calculate Ozone Formation Potential (OFP) of VOC time series.
+Note: for Chinese VOC name, please also use English punctuation.
 }
 \details{
 The CAS number is matched for each VOC speices (from column name), and the

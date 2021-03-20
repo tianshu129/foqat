@@ -2,6 +2,7 @@
 #'
 #' convert unit of VOCs between micrograms per cubic meter (ugm) and parts
 #' per billion by volume (ppbv); conduct statistics of VOC concentrations.
+#' Note: for Chinese VOC name, please also use English punctuation.
 #'
 #' The CAS number was matched for each VOC speices (from column name), and the
 #' Molecular Weight (MW) value and Maximum Incremental Reactivity (MIR) value are matched through the CAS number and used for time series calculation. \cr
@@ -25,7 +26,6 @@
 #' If TRUE, VOC species in time series will be arranged according to VOC group,
 #'  relative molecular weight, and MIR value.
 #' @param colid column index for date-time. The default value is 1.
-#' @param wamg logical. Should warnings be presented? The default vaule is FALSE.
 #' @param chn logical. Dose colnames present as Chinese? The default vaule is FALSE.
 #' @return  a list contains 9 tables:
 #' MW_Result: matched Molecular Weight (MW) value result;
@@ -42,13 +42,13 @@
 #' @examples
 #' vocct(voc)
 #' @importFrom utils URLencode
+#' @importFrom utils download.file
 #' @importFrom xml2 read_html
+#' @importFrom rvest html_nodes html_text
+#' @import magrittr
 #' @importFrom stringr str_split_fixed
 
-vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE, chn=FALSE){
-
-  #suppress warnings temporarily?
-  if(wamg==FALSE){options(warn=-1)}
+vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, chn=FALSE){
 
   #set colid
   if(colid != 1){
@@ -107,6 +107,7 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
 		  name_df[i,3]="NIST"
 		}
 	  }
+	  file.remove("scrapedpage.html")
 
 	  #match mir by different sources
 	  ##get CAS from NIST, match name by CAS
@@ -154,10 +155,10 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
 	  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, MIR = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
 	  #match table by chinese name
 
-	  chn_name_db<-data.frame(str_split_fixed(gsub("\\/|\\,|\\-| ", "", datacas$chn), '；', 3))#change according to max chinese name vector
+	  chn_name_db<-data.frame(str_split_fixed(gsub("\\/|\\,|\\-| ", "", datacas$chn), ';', 3))#change according to max chinese name vector
 	  for(k in 1:nrow(name_df)){
-		chn_df<-data.frame(str_split_fixed(gsub("\\,|\\-| ", "", datacas$chn), '；', 2))
-		x=which(chn_df == gsub("\\，|\\,|\\-| ", "", name_df$name[k]), arr.ind = TRUE)[1]
+		chn_df<-data.frame(str_split_fixed(gsub("\\,|\\-| ", "", datacas$chn), ';', 2))
+		x=which(chn_df == gsub("\\,|\\,|\\-| ", "", name_df$name[k]), arr.ind = TRUE)[1]
 		df_null=data.frame(datacas[x,])
 		if(nrow(df_null)!=0){
 		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
@@ -254,9 +255,6 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
   Con_ppbv_group_mean$Proportion=Con_ppbv_group_mean$mean/sum(as.numeric(as.character(statdf(Con_ppbv_group,n = 6)[-1,1])),na.rm = TRUE)
   Con_ppbv_group_mean$Proportion=round(Con_ppbv_group_mean$Proportion,4)
   Con_ppbv_group_mean=Con_ppbv_group_mean[with(Con_ppbv_group_mean, order(-mean)), ]
-
-  #suppress warnings temporarily?
-  if(wamg==FALSE){options(warn=0)}
 
   #results
   results <- list(

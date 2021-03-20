@@ -33,6 +33,7 @@ tuv <- function(pathtuv, df, colid = 1){
 outfile="usrout.txt"
 #Store the original work path
 oldwd=getwd()
+on.exit(setwd(oldwd))
 #Set the TUV directory to the current working path
 setwd(paste(c(pathtuv,"/tuv"),collapse =""))
 #In case df is not a dataframe.

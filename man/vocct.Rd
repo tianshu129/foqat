@@ -12,7 +12,6 @@ vocct(
   stcd = FALSE,
   sortd = TRUE,
   colid = 1,
-  wamg = FALSE,
   chn = FALSE
 )
 }
@@ -38,8 +37,6 @@ If TRUE, VOC species in time series will be arranged according to VOC group,
 
 \item{colid}{column index for date-time. The default value is 1.}
 
-\item{wamg}{logical. Should warnings be presented? The default vaule is FALSE.}
-
 \item{chn}{logical. Dose colnames present as Chinese? The default vaule is FALSE.}
 }
 \value{
@@ -57,6 +54,7 @@ Con_ppbv_group_mean: VOC volume concentration average and proportion (sorted fro
 \description{
 convert unit of VOCs between micrograms per cubic meter (ugm) and parts
 per billion by volume (ppbv); conduct statistics of VOC concentrations.
+Note: for Chinese VOC name, please also use English punctuation.
 }
 \details{
 The CAS number was matched for each VOC speices (from column name), and the

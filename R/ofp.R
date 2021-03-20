@@ -1,6 +1,7 @@
 #' Calculate ozone formation potential
 #'
 #' Calculate Ozone Formation Potential (OFP) of VOC time series.
+#' Note: for Chinese VOC name, please also use English punctuation.
 #'
 #' The CAS number is matched for each VOC speices (from column name), and the
 #' Maximum Incremental Reactivity (MIR) value is matched through the CAS number and used for time series calculation. \cr
@@ -27,7 +28,6 @@
 #' If TRUE, VOC species in time series will be arranged according to VOC group,
 #'  relative molecular weight, and MIR value.
 #' @param colid column index for date-time. The default value is 1.
-#' @param wamg logical. Should warnings be presented? The default vaule is FALSE.
 #' @param chn logical. Dose colnames present as Chinese? The default vaule is FALSE.
 #' @return  a list contains 5 tables:
 #' MIR_Result: matched MIR value result;
@@ -40,12 +40,13 @@
 #' @examples
 #' ofp(voc)
 #' @importFrom utils URLencode
+#' @importFrom utils download.file
 #' @importFrom xml2 read_html
+#' @importFrom rvest html_nodes html_text
+#' @import magrittr
+#' @importFrom stringr str_split_fixed
 
-ofp <- function(df, inunit = "ppbv", outuint = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE, chn=FALSE){
-
-  #suppress warnings temporarily?
-  if(wamg==FALSE){options(warn=-1)}
+ofp <- function(df, inunit = "ppbv", outunit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, chn=FALSE){
 
   #set colid
   if(colid != 1){
@@ -104,6 +105,7 @@ ofp <- function(df, inunit = "ppbv", outuint = "ppbv", t = 25, p = 101.325, stcd
 		  name_df[i,3]="NIST"
 		}
 	  }
+	  file.remove("scrapedpage.html")
 
 	  #match mir by different sources
 	  ##get CAS from NIST, match name by CAS
@@ -151,10 +153,10 @@ ofp <- function(df, inunit = "ppbv", outuint = "ppbv", t = 25, p = 101.325, stcd
 	  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, MIR = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
 	  #match table by chinese name
 
-	  chn_name_db<-data.frame(str_split_fixed(gsub("\\/|\\,|\\-| ", "", datacas$chn), '；', 3))#change according to max chinese name vector
+	  chn_name_db<-data.frame(str_split_fixed(gsub("\\/|\\,|\\-| ", "", datacas$chn), ';', 3))#change according to max chinese name vector
 	  for(k in 1:nrow(name_df)){
-		chn_df<-data.frame(str_split_fixed(gsub("\\,|\\-| ", "", datacas$chn), '；', 2))
-		x=which(chn_df == gsub("\\，|\\,|\\-| ", "", name_df$name[k]), arr.ind = TRUE)[1]
+		chn_df<-data.frame(str_split_fixed(gsub("\\,|\\-| ", "", datacas$chn), ';', 2))
+		x=which(chn_df == gsub("\\,|\\,|\\-| ", "", name_df$name[k]), arr.ind = TRUE)[1]
 		df_null=data.frame(datacas[x,])
 		if(nrow(df_null)!=0){
 		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
@@ -269,11 +271,8 @@ ofp <- function(df, inunit = "ppbv", outuint = "ppbv", t = 25, p = 101.325, stcd
   ofp_df_group_mean$Proportion=ofp_df_group_mean$mean/sum(as.numeric(as.character(statdf(ofp_df_group,n = 6)[-1,1])),na.rm = TRUE)
   ofp_df_group_mean$Proportion=round(ofp_df_group_mean$Proportion,4)
   ofp_df_group_mean=ofp_df_group_mean[with(ofp_df_group_mean, order(-mean)), ]
-	
-  #suppress warnings temporarily?
-  if(wamg==FALSE){options(warn=0)}
 
-  if(outuint == "ppbv"){
+  if(outunit == "ppbv"){
 	ofp_df[,-1]=ofp_df[,-1]/48*24.45
 	ofp_df_mean[,2]=ofp_df_mean[,2]/48*24.45
 	ofp_df_group[,-1]=ofp_df_group[,-1]/48*24.45

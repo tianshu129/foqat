@@ -1,6 +1,7 @@
 #' Calculate OH reactivity
 #'
-#' Calculate OH reactivity of VOC time series in 25 degree celsius.
+#' Calculate OH reactivity of VOC time series in 25 degree celsius. 
+#' Note: for Chinese VOC name, please also use English punctuation.
 #'
 #' The CAS number is matched for each VOC speices (from column name), and the
 #' OH Rate Constant is matched through the CAS number and used for time series calculation. \cr
@@ -24,7 +25,6 @@
 #' @param stcd logical. Does it output the concentration in standard condition? 
 #' The default vaule is FALSE.
 #' @param colid column index for date-time. The default value is 1.
-#' @param wamg logical. Should warnings be presented? The default vaule is FALSE.
 #' @param atk logical. use kOH value from atk or not? If not, kOH comes from 'AopWin v1.92' will be used. The default vaule is TRUE.
 #' @param chn logical. Dose colnames present as Chinese? The default vaule is FALSE.
 #' @return  a list contains 5 tables:
@@ -38,10 +38,14 @@
 #' @examples
 #' loh(voc)
 #' @importFrom utils URLencode
+#' @importFrom utils download.file
 #' @importFrom xml2 read_html
+#' @importFrom rvest html_nodes html_text
+#' @import magrittr
 #' @importFrom stringr str_split_fixed
 
-loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, wamg=FALSE, atk=TRUE, chn=FALSE){
+
+loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, atk=TRUE, chn=FALSE){
 
     #generate datacasv2 according to datacas
   datacasv2=datacas
@@ -55,9 +59,6 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 	datacasv2$koh=datacasv2$koh_aop
 	datacasv2$koh_type[which(!is.na(datacasv2$koh))]="AopWin"
   }
-  
-  #suppress warnings temporarily?
-  if(wamg==FALSE){options(warn=-1)}
 
   #set colid
   if(colid != 1){
@@ -116,6 +117,7 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 		  name_df[i,3]="NIST"
 		}
 	  }
+	  file.remove("scrapedpage.html")
 
 	  #match koh by different sources
 	  ##get CAS from NIST, match name by CAS
@@ -136,10 +138,10 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 
 	  #match table by chinese name
 
-	  chn_name_db<-data.frame(str_split_fixed(gsub("\\/|\\,|\\-| ", "", datacasv2$chn), '；', 3))#change according to max chinese name vector
+	  chn_name_db<-data.frame(str_split_fixed(gsub("\\/|\\,|\\-| ", "", datacasv2$chn), ';', 3))#change according to max chinese name vector
 	  for(k in 1:nrow(name_df)){
-		chn_df<-data.frame(str_split_fixed(gsub("\\,|\\-| ", "", datacasv2$chn), '；', 2))
-		x=which(chn_df == gsub("\\，|\\,|\\-| ", "", name_df$name[k]), arr.ind = TRUE)[1]
+		chn_df<-data.frame(str_split_fixed(gsub("\\,|\\-| ", "", datacasv2$chn), ';', 2))
+		x=which(chn_df == gsub("\\,|\\,|\\-| ", "", name_df$name[k]), arr.ind = TRUE)[1]
 		df_null=data.frame(datacasv2[x,])
 		if(nrow(df_null)!=0){
 		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
@@ -259,9 +261,6 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   loh_df_group_mean$Proportion=loh_df_group_mean$mean/sum(as.numeric(as.character(statdf(loh_df_group,n = 6)[-1,1])),na.rm = TRUE)
   loh_df_group_mean$Proportion=round(loh_df_group_mean$Proportion,4)
   loh_df_group_mean=loh_df_group_mean[with(loh_df_group_mean, order(-mean)), ]
-
-  #suppress warnings temporarily?
-  if(wamg==FALSE){options(warn=0)}
 
   #results
   results <- list(
