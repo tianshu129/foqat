@@ -5,12 +5,12 @@
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) 
 [![CRAN
 version](http://www.r-pkg.org/badges/version/foqat)](http://www.r-pkg.org/pkg/foqat)
-[![Development
-version](https://img.shields.io/badge/devel-1.6.2-orange.svg)]
 [![](https://cranlogs.r-pkg.org/badges/grand-total/foqat)](https://cran.r-project.org/package=foqat)
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Development
+version](https://img.shields.io/badge/devel-1.6.2-orange.svg)](https://github.com/tianshu129/foqat)
 [![Gitter
 chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/foqater/community)
 
