@@ -126,7 +126,6 @@ install.packages("foqat")
 # install.packages("remotes")
 remotes::install_github("tianshu129/foqat")
 ```
-```
 
 ## FUNCTIONS AND EXAMPLES
 
