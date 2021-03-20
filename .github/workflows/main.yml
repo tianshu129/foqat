@@ -1,0 +1,9 @@
+- name: R-actions
+  # You may pin to the exact commit or the version.
+  # uses: Swechhya/R-actions@772117ee961f81f5e2b00c2406e84456dd62f7a4
+  uses: Swechhya/R-actions@v1.2
+  with:
+    # What should be run? One of: ["all", "build"]
+    action: # optional, default is all
+    # Is Bioconductor package needed? One of [true, false]
+    needsBioc: # optional
