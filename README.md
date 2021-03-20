@@ -1,6 +1,6 @@
 # FOQAT <img src="https://s1.ax1x.com/2020/08/31/dLqtdf.png" align="right" width="120" />
 
-> Field observation quick analysis toolkit
+> Field observation quick analysis toolkits
 
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) 
 [![CRAN
