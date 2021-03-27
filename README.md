@@ -39,6 +39,8 @@ If FOQAT is used to support a scientific publication, please cite the following 
 
 In addition, please send an email to [me](mailto:tianshu129@163.com) so that the paper may be added to my 'List of Publications Using FOQAT'.  
 
+Buy me a coffee: https://www.buymeacoffee.com/tianshu  
+
 As far as I know, FOQAT has users from: 
 * Chinese Research Academy of Environmental Sciences (CRAES)
 * Chinese Academy of Meteorological Sciences (CAMS)
