@@ -16,7 +16,7 @@ the theoretical value of the species' OH reaction constant kOH at 25 degrees.
 Searches kOH value from 'chemspider.com'.
 }
 \details{
-Theoretical values of the species' OH reaction constant kOH at 25 degrees were obtained from 'Chemspider.com'. Value source: US Environmental Protection Agency’s EPISuite.\cr
+Theoretical values of the species' OH reaction constant kOH at 25 degrees were obtained from 'Chemspider.com'. Value source: US Environmental Protection Agency's EPISuite.\cr
 Unit is cm3/molecule-sec.\cr
 Condition is 25 deg C.
 }

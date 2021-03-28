@@ -14,7 +14,7 @@
 #' @importFrom rvest html_nodes html_text
 #' @importFrom utils download.file read.table
 #' @examples
-#' koh("Benzene")
+#' koh("CH4")
 
 koh <- function(spec){
   url <- paste0(c("http://www.chemspider.com/Search.aspx?q=", spec), collapse='')
