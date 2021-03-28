@@ -10,7 +10,7 @@ version](http://www.r-pkg.org/badges/version/foqat)](http://www.r-pkg.org/pkg/fo
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Development
-version](https://img.shields.io/badge/devel-1.6.2-orange.svg)](https://github.com/tianshu129/foqat)
+version](https://img.shields.io/badge/devel-1.6.3-orange.svg)](https://github.com/tianshu129/foqat)
 [![Gitter
 chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/foqater/community)
 
@@ -72,6 +72,7 @@ Functions in foqat are listed below:
 **vocct**: convert and analyse VOC concentrations   
 **ofp**: calculate ozone formation potential (OFP) of VOC time series.  
 MIR values are refered from "Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339" (Revised January 28, 2010).  
+**koh**: search kOH value from 'chemspider.com'. Predicted data is generated using the US Environmental Protection Agency’s EPISuite.  
 **loh**: calculate OH reactivity (LOH) of VOC time series. kOH value is generated using the US Environmental Protection Agency’s EPISuite "AOPWIN".  
 **tuv**: run offline batch calculation of [TROPOSPHERIC ULTRAVIOLET AND VISIBLE (TUV) RADIATION MODEL](https://www2.acom.ucar.edu/modeling/tropospheric-ultraviolet-and-visible-tuv-radiation-model).  
 Currently, this function only support output of photolysis rate coefficients (J-values). 
