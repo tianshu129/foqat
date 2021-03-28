@@ -45,6 +45,8 @@ Features currently included:
 
 * [Calculate Ozone Formation Potential (ofp)](#calculate-ozone-formation-potential-ofp)
 
+* [Get OH Reactivity (koh)](#oh-reactivity-koh)
+
 * [Calculate OH reactivity (loh)](#calculate-oh-reactivity-loh)
 
 * [Calculate TUV in batch (tuv)](#calculate-tuv-in-batch-tuv)
@@ -429,6 +431,33 @@ View(x[["OFP_Result"]])
 ```
 
 
+### Get OH Reactivity (koh)
+----------
+* #### Description
+
+Theoretical values of the species' OH reaction constant kOH at 25 degrees were obtained from' Chemspider.com '. Value source: US Environmental Protection Agency’s EPISuite.
+
+* #### Usage
+``` r
+koh(spec)
+```
+* #### Arguments
+
+| Variable name     |  Definition                       | Default                    | Example values/remarks               |
+| ------------------| ----------------------------------|----------------------------|--------------------------------------|
+| `spec`            |  species                          |          |The name of the species or CAS number are both acceptable.|
+
+* #### Output
+
+Output is the theoretical value of the species' OH reaction constant kOH at 25 degrees.
+
+* #### Examples
+
+``` r
+koh("propane")
+```
+
+
 ### Calculate OH reactivity (loh)
 ----------
 * #### Description
@@ -481,7 +510,7 @@ View(x[["LOH_Result"]])
 * #### Description
 
 There are online and offline versions of the TUV model, but both need to run on a daily basis (that means manually reset parameters for each day's simulation). This function runs TUV in batch by reading the time series for the parameters to be entered, and summarizes the results to the new dataframe.
-Currently only mode 2 (mode that outputs the photolysis rate) is supported.
+Currently only mode 2 (mode that outputs the photolysis rate) is supported. Logical variables are not supported currently.
 Before you use this function, please download [TUV executable for Windows](https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip).
 * #### Usage
 ``` r
