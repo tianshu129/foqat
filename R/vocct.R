@@ -153,8 +153,8 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
 	  colnm_df = colnames(df)[2:ncol(df)]
 	  chemicalnames = ifelse(substr(colnm_df, 1, 1) == "X", sub("^.", "", colnm_df), colnm_df)
 	  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, MIR = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
-	  #match table by chinese name
 
+	  #match table by chinese name
 	  chn_name_db<-data.frame(str_split_fixed(gsub("\\/|\\,|\\-| ", "", datacas$chn), ';', 3))#change according to max chinese name vector
 	  for(k in 1:nrow(name_df)){
 		chn_df<-data.frame(str_split_fixed(gsub("\\,|\\-| ", "", datacas$chn), ';', 2))
@@ -175,7 +175,7 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
   name_df$Group[is.na(name_df$Group)] = "Unknown"
 
   #set GROUP to BVOC for BVOC group
-  name_df$Group[name_df$CAS %in% c('80-56-8','127-91-3','78-79-5')] = "BVOC"
+  name_df$Group[name_df$CAS %in% c('80-56-8','127-91-3','78-79-5','138-86-3')] = "BVOC"
 
   #raw_order
   name_df$raw_order = seq.int(nrow(name_df))

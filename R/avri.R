@@ -42,7 +42,7 @@
 #' @importFrom stats aggregate
 #' @importFrom lubridate duration
 
-avri <- function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL, na.rm = TRUE, digits = 2, wind = FALSE, coliws = 2, coliwd = 3){
+avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL, na.rm = TRUE, digits = 2, wind = FALSE, coliws = 2, coliwd = 3){
 
   #time resampling
   rs_df <- trs(df, bkip, colid = colid, st = st, et = et, na.rm = na.rm, wind = wind, coliws = coliws, coliwd = coliwd)

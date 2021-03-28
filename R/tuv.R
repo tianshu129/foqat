@@ -8,6 +8,7 @@
 #' This function runs TUV in batch by reading the time series for the
 #' parameters to be entered, and summarizes the results to the new dataframe. \cr
 #' Currently only mode 2 (mode that outputs the photolysis rates) is supported. \cr
+#' Logical variables are not supported currently!!! \cr
 #' Please download \href{https://www2.acom.ucar.edu/sites/default/files/modeling/tuv5.3.1.exe_.zip}{TUV executable for Windows} before you use this function.
 #'
 #' Columns of photolysis rate coefficients (s-1): \cr

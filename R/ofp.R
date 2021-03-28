@@ -173,7 +173,7 @@ ofp <- function(df, inunit = "ppbv", outunit = "ppbv", t = 25, p = 101.325, stcd
   name_df$Group[is.na(name_df$Group)] = "Unknown"
 
   #set GROUP to BVOC for BVOC group
-  name_df$Group[name_df$CAS %in% c('80-56-8','127-91-3','78-79-5')] = "BVOC"
+  name_df$Group[name_df$CAS %in% c('80-56-8','127-91-3','78-79-5','138-86-3')] = "BVOC"
 
   #raw_order
   name_df$raw_order = seq.int(nrow(name_df))

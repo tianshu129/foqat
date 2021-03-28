@@ -129,7 +129,37 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 	  name_df$MW[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacasv2$MWt[as.numeric(a)]
 	  name_df$Group[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacasv2$Group[as.numeric(a)]
 
- 
+	  #if it is matched by CAS in NIST and matched by name in Carter paper, but it doesn't have CAS in Carter paper.
+	  for(k in which(!is.na(name_df$Source)&is.na(name_df$koh))){
+		tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
+		tar=gsub(" ", "", tolower(name_df$name[k]), fixed = TRUE)
+		df_null=data.frame(datacasv2[tarlist %in% tar,])
+		if(nrow(df_null)!=0){
+		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
+		  #name_df$CAS[as.numeric(k)] = df_null$CAS[1]
+		  name_df$koh[as.numeric(k)] = df_null$koh[1]
+		  name_df$koh_type[as.numeric(k)] = df_null$koh_type[1]
+		  name_df$Source[as.numeric(k)] = "CAS is found in NIST. But it only has name in Carter paper 2010"
+		  name_df$MW[as.numeric(k)] = df_null$MWt[1]
+		  name_df$Group[as.numeric(k)] = df_null$Group[1]
+		}
+	  }
+
+	  #if it isn't found in NIST, but its name is matched by Carter paper.
+	  for(k in which(is.na(name_df$Source))){
+		tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
+		tar=gsub(" ", "", tolower(name_df$name[k]), fixed = TRUE)
+		df_null=data.frame(datacasv2[tarlist %in% tar,])
+		if(nrow(df_null)!=0){
+		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
+		  name_df$CAS[as.numeric(k)] = df_null$CAS[1]
+		  name_df$koh[as.numeric(k)] = df_null$koh[1]
+		  name_df$koh_type[as.numeric(k)] = df_null$koh_type[1]
+		  name_df$Source[as.numeric(k)] = "Carter paper 2010"
+		  name_df$MW[as.numeric(k)] = df_null$MWt[1]
+		  name_df$Group[as.numeric(k)] = df_null$Group[1]
+		}
+	  }
 	}else{
 	  #build name_df
 	  colnm_df = colnames(df)[2:ncol(df)]
@@ -137,7 +167,6 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 	  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, koh = NA, koh_type = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
 
 	  #match table by chinese name
-
 	  chn_name_db<-data.frame(str_split_fixed(gsub("\\/|\\,|\\-| ", "", datacasv2$chn), ';', 3))#change according to max chinese name vector
 	  for(k in 1:nrow(name_df)){
 		chn_df<-data.frame(str_split_fixed(gsub("\\,|\\-| ", "", datacasv2$chn), ';', 2))
@@ -161,7 +190,7 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   name_df$Group[is.na(name_df$Group)] = "Unknown"
 
   #set GROUP to BVOC for BVOC group
-  name_df$Group[name_df$CAS %in% c('80-56-8','127-91-3','78-79-5')] = "BVOC"
+  name_df$Group[name_df$CAS %in% c('80-56-8','127-91-3','78-79-5','138-86-3')] = "BVOC"
 
   #raw_order
   name_df$raw_order = seq.int(nrow(name_df))
