@@ -1,5 +1,7 @@
 # FOQAT <img src="https://s1.ax1x.com/2020/08/31/dLqtdf.png" align="right" width="120" />
 
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4735828.svg)](https://doi.org/10.5281/zenodo.4735828)
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) 
 [![CRAN
 version](http://www.r-pkg.org/badges/version/foqat)](http://www.r-pkg.org/pkg/foqat)
