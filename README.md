@@ -36,7 +36,7 @@ For getting start or detail usage, please visit: [user manual](https://github.co
 
 If FOQAT is used to support a scientific publication, please cite the following reference:
 
->*Tianshu Chen: Field Observation Quick Analysis Toolkit (FOQAT), available at: https://github.com/tianshu129/foqat (last access: 28 March 2021), https://doi.org/10.5281/zenodo.4735824, 2021. 
+>Tianshu Chen, 2021. foqat: Field Observation Quick Analysis Toolkit. doi:10.5281/zenodo.4735828
 
 In addition, please send an email to [me](mailto:tianshu129@163.com) so that the paper may be added to my 'List of Publications Using FOQAT'.  
 
