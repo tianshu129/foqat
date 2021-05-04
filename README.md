@@ -2,6 +2,7 @@
 
 > Field observation quick analysis toolkit
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4735825.svg)](https://doi.org/10.5281/zenodo.4735825)
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) 
 [![CRAN
 version](http://www.r-pkg.org/badges/version/foqat)](http://www.r-pkg.org/pkg/foqat)
@@ -35,7 +36,7 @@ For getting start or detail usage, please visit: [user manual](https://github.co
 
 If FOQAT is used to support a scientific publication, please cite the following reference:
 
->*Tianshu Chen: Field Observation Quick Analysis Toolkit (FOQAT), available at: https://github.com/tianshu129/foqat (last access: 12 July 2020), 2020.* 
+>*Tianshu Chen: Field Observation Quick Analysis Toolkit (FOQAT), available at: https://github.com/tianshu129/foqat (last access: 12 July 2020), 2020. https://doi.org/10.5281/zenodo.4735824* 
 
 In addition, please send an email to [me](mailto:tianshu129@163.com) so that the paper may be added to my 'List of Publications Using FOQAT'.  
 
