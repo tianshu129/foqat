@@ -2,7 +2,7 @@
 
 > Field observation quick analysis toolkit
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4735824.svg)](https://doi.org/10.5281/zenodo.4735824)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4735828.svg)](https://doi.org/10.5281/zenodo.4735828)
 ![Language](https://img.shields.io/badge/Language-R-blue.svg) 
 [![CRAN
 version](http://www.r-pkg.org/badges/version/foqat)](http://www.r-pkg.org/pkg/foqat)
