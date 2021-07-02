@@ -15,7 +15,7 @@ version](https://img.shields.io/badge/devel-1.6.4-orange.svg)](https://github.co
 chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/foqater/community)  
 [![](https://cranlogs.r-pkg.org/badges/grand-total/foqat)](https://cran.r-project.org/package=foqat)
 [![](http://cranlogs.r-pkg.org/badges/last-month/foqat)](https://cran.r-project.org/package=foqat)
-[![](http://cranlogs.r-pkg.org/badges/last-day/foqat)](https://cran.r-project.org/package=foqat)  
+[![](http://cranlogs.r-pkg.org/badges/last-day/foqat)](http://cranlogs.r-pkg.org/downloads/daily/last-month/foqat)  
 
 <!--
 [![CRAN RStudio mirror
