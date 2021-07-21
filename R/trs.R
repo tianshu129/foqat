@@ -90,7 +90,7 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
   bkip_str = gsub("[^a-zA-Z]", "", bkip)
   bkip_str = tolower(bkip_str)
   bkip_str = gsub("[s]", "", bkip_str)
-  if(bkip_str == "sec"|bkip_str == "min"|bkip_str == "hour"){
+  if(bkip_str == ""|bkip_str == "ec"|bkip_str == "min"|bkip_str == "hour"){
 	datat[,1] = as.POSIXct(datat[,1], "%Y-%m-%d %H:%M", tz = tzlc)
   }else{
 	datat[,1] = as.Date(datat[,1])
@@ -111,7 +111,7 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
   bkip_str = gsub("[^a-zA-Z]", "", bkip)
   bkip_str = tolower(bkip_str)
   bkip_str = gsub("[s]", "", bkip_str)
-  if(bkip_str == "ec"|bkip_str == "min"|bkip_str == "hour"){
+  if(bkip_str == ""|bkip_str == "ec"|bkip_str == "min"|bkip_str == "hour"){
 	ts <- seq.POSIXt(st, et, by = bkip)
 	eval(parse(text = paste(c("df <- data.frame(", colnames(datat)[1], " = ts)"),collapse = "")))
   }else{
