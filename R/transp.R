@@ -35,12 +35,23 @@ transp <- function(df, prplot=TRUE, logy=TRUE, ybk=c(10,100,500,1000), nlmt=2000
 	
 	#plot
 	if(prplot==TRUE){
+		fm2= theme_bw()
+		afont_size=13
+		family="Helvetica"
+		fm3= theme(axis.text.x = element_text(size=afont_size,family=family), axis.text.y = element_text(size=afont_size,family=family), text = element_text(size=afont_size,family=family), legend.text = element_text(size=afont_size,family=family), panel.border = element_rect(fill=NA,color="black", size=0.4, linetype="solid"), axis.line = element_line(colour = "black", size = 0.4),legend.box.margin=margin(-10,-10,-10,-10))
+
+		fm=function(p){
+			p=p+fm2+fm3
+			return(p)
+		}
 		df=listp
 		colors <- colorRampPalette(c("purple","royalblue","seagreen","orange","red"))(500)
 		if(logy==TRUE){		
-			p=eval(parse(text = paste(c("ggplot() + geom_point(data=df, aes(x=", colnames(df)[1], ", y=", colnames(df)[2], ", fill=ifelse(", colnames(df)[3], "<nlmt,", colnames(df)[3], ",ifelse(", colnames(df)[3], ">=nlmt,nlmt,", colnames(df)[3], "))),shape=22, color='transparent',size=colsz) + scale_y_log10(breaks = ybk, labels = ybk) + scale_fill_gradientn(limits = c(0,nlmt),colors= colors,name='dn/dlogdp',guide = guide_colorbar(frame.colour = 'black', ticks.colour = 'black'),na.value='transparent') + annotation_logticks(sides = 'lr') + labs(x = 'Datetime', y = 'Midrange')"),collapse = "")))
+			p=eval(parse(text = paste(c("ggplot() + geom_point(data=df, aes(x=", colnames(df)[1], ", y=", colnames(df)[2], ", fill=ifelse(", colnames(df)[3], "<nlmt,", colnames(df)[3], ",ifelse(", colnames(df)[3], ">=nlmt,nlmt,", colnames(df)[3], "))),shape=22, color='transparent',size=colsz) + scale_y_log10(breaks = ybk, labels = ybk, expand = c(0, 0)) + scale_x_datetime(expand = c(0, 0)) + scale_fill_gradientn(limits = c(0,nlmt),colors= colors,name='dn/dlogdp',guide = guide_colorbar(frame.colour = 'black', ticks.colour = 'black'),na.value='transparent') + annotation_logticks(sides = 'lr') + labs(x = 'Datetime', y = 'Midrange')"),collapse = "")))
+			p=fm(p)
 		}else{
-			p=eval(parse(text = paste(c("ggplot() + geom_point(data=df, aes(x=", colnames(df)[1], ", y=", colnames(df)[2], ", fill=ifelse(", colnames(df)[3], "<nlmt,", colnames(df)[3], ",ifelse(", colnames(df)[3], ">=nlmt,nlmt,", colnames(df)[3], "))),shape=22, color='transparent',size=colsz) + scale_y_continuous(breaks = ybk, labels = ybk) + scale_fill_gradientn(limits = c(0,nlmt),colors= colors,name='dn/dlogdp',guide = guide_colorbar(frame.colour = 'black', ticks.colour = 'black'),na.value='transparent') + annotation_ticks(sides = 'lr') + labs(x = 'Datetime', y = 'Midrange')"),collapse = "")))
+			p=eval(parse(text = paste(c("ggplot() + geom_point(data=df, aes(x=", colnames(df)[1], ", y=", colnames(df)[2], ", fill=ifelse(", colnames(df)[3], "<nlmt,", colnames(df)[3], ",ifelse(", colnames(df)[3], ">=nlmt,nlmt,", colnames(df)[3], "))),shape=22, color='transparent',size=colsz) + scale_y_continuous(breaks = ybk, labels = ybk, expand = c(0, 0)) + scale_x_datetime(expand = c(0, 0)) + scale_fill_gradientn(limits = c(0,nlmt),colors= colors,name='dn/dlogdp',guide = guide_colorbar(frame.colour = 'black', ticks.colour = 'black'),na.value='transparent') + annotation_ticks(sides = 'lr') + labs(x = 'Datetime', y = 'Midrange')"),collapse = "")))
+			p=fm(p)
 		}
 		plot(p)
 	}
