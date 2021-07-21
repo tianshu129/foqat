@@ -1,41 +1,37 @@
-#' Resample time series
+#' Resample time series of particle number concentration
 #'
-#' Resamples time series, and returns complete time series with new time resolution.
-#'   (wind data is acceptable)
+#' Resamples time series, and returns complete time series of of particle number concentration with new time resolution. 
+#' The first column of input is datetime. The second column of input is for middle ranges of channels. 
+#' The third column of input is for particle number concentration of each channel at each timepoint.
 #'
-#' If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
 #'
-#' @param df dataframe of time series.
+#' @param df dataframe of time series.  The first column of input is datetime. 
+#' The second column of input is for middle ranges of channels. 
+#' The third column of input is for particle number concentration of each channel at each timepoint.
 #' @param bkip new resolution breaking input of time series, such as '1 hour'.
-#' @param colid column index for date-time. The default value is 1.
 #' @param st start time of resampling. The default value is the fisrt value of datetime column.
 #' @param et end time of resampling. The default value is the last value of datetime column.
 #' @param na.rm logical value. Remove NA value or not?
-#' @param wind logical value. if TRUE, please set coliwd, coliws.
-#' @param coliws numeric value, column index of wind speed in dataframe.
-#' @param coliwd numeric value, column index of wind direction (degree) in dataframe.
 #' @param cpms logical value. Compensate the insufficient amount of the millisecond bit for datetime column.
-#' @return a dataframe which contains a time series with a new time resolution.
+#' @param ybk numeric vector, log breaks of y axis of plot.
+#' @param nlmt numeric value, uplimit of dNdlogdp colorscales of plot.
+#' @param colsz numeric value, size of columns in plot.
+#' @return a list with 1 dataframe and 1 plot. The dataframe contains a time series with a new time resolution.
 #' @export
-#' @examples
-#' trs(met, bkip = "1 hour", st = "2017-05-01 00:00:00", wind = TRUE, coliws = 4, coliwd = 5)
 #' @importFrom dplyr full_join
 #' @importFrom stats aggregate
-#' @importFrom lubridate duration
+#' @importFrom ggplot2 ggplot geom_point scale_y_log10 scale_fill_gradientn guide_colorbar annotation_logticks labs
+#' @importFrom graphics plot
+#' @importFrom grDevices colorRampPalette
 
-trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3, cpms=TRUE){
+trsp <- function(df, bkip, st=NULL, et=NULL, na.rm = TRUE, cpms=TRUE, ybk=c(10,100,500,1000), nlmt=20000, colsz=10){
   
-  #move datetime to first column
-  if(colid != 1){
-    df[,c(1,colid)] = df[,c(colid,1)]
-    colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
-  }
-
   #In case df is not a dataframe.
   df <- data.frame(df,stringsAsFactors = FALSE)
-
+  ori_df=df
   #get colnames of df
   cona_df <- colnames(df)
+  #colnames(df)=c("Datetime", "Midrange", "dN_dlogdp")
   
   #get time zone of datetime
   tzlc=attr(df[,1],"tzone")
@@ -46,11 +42,6 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
 	  df[msid,1]=df[msid,1]-(as.numeric(format(df[msid,1], "%OS1"))-as.numeric(format(df[msid,1], "%OS")))+1
   }
   
-  #if wind mode TURE, generate u, v
-  if(wind == TRUE){
-    df$u<-sin(pi/180*df[,coliwd])*df[,coliws]
-    df$v<-cos(pi/180*df[,coliwd])*df[,coliws]
-  }
 
   #aggregate, seq need space
   if(!grepl("\\s", bkip)){
@@ -84,7 +75,7 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
     #not need to insert et, just need to trunck by et (">=").
     df <- df[df[,1] <= et,]
   }
-  eval(parse(text = paste(c("datat <- aggregate(df[,-1], list(", colnames(df)[1], " = cut(df[,1], breaks = bkip)), mean, na.rm = na.rm)"),collapse = "")))
+  eval(parse(text = paste(c("datat <- aggregate(df[,3], list(", colnames(df)[1], " = cut(df[,1], breaks = bkip),", colnames(df)[2], "=df[,2]), mean, na.rm = na.rm)"),collapse = "")))
 
   #convert ts according to type of bkip
   bkip_str = gsub("[^a-zA-Z]", "", bkip)
@@ -96,33 +87,27 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
 	datat[,1] = as.Date(datat[,1])
   }
 
-  if(wind == TRUE){
-    datat$fake_degree<-(atan(datat$u/datat$v)/pi*180)
-    datat$ws<-sqrt((datat$u)^2+(datat$v)^2)
-    datat <- within(datat, {
-      true_degree = ifelse(datat$v<0,datat$fake_degree+180,ifelse(datat$u<0,datat$fake_degree+360,datat$fake_degree))
-    })
-    datat <- datat[ ,-which(names(datat) %in% c("u", "v", "fake_degree"))]
-    datat[ ,c(coliws,coliwd)] <- datat[ ,c((length(datat)-1),length(datat))]
-    datat <- datat[,-c((length(datat)-1),length(datat))]
-  }
 
   #gnerate timeseries according to type of bkip
   bkip_str = gsub("[^a-zA-Z]", "", bkip)
   bkip_str = tolower(bkip_str)
   bkip_str = gsub("[s]", "", bkip_str)
-  if(bkip_str == "ec"|bkip_str == "min"|bkip_str == "hour"){
+  if(bkip_str == "sec"|bkip_str == "min"|bkip_str == "hour"){
 	ts <- seq.POSIXt(st, et, by = bkip)
-	eval(parse(text = paste(c("df <- data.frame(", colnames(datat)[1], " = ts)"),collapse = "")))
+	df=expand.grid(ts,unique(ori_df[,2]))
+	df=data.frame(df)
+	names(df)=c(names(ori_df)[1:2])
   }else{
 	st <- as.Date(st)
 	et <- as.Date(et)
 	ts <- seq(st, et, by = bkip)
-	eval(parse(text = paste(c("df <- data.frame(", colnames(datat)[1], " = ts)"),collapse = "")))
+	df=expand.grid(ts,unique(ori_df[,2]))
+	df=data.frame(df)
+	names(df)=c(names(ori_df)[1:2])
   }
 
   #complete timestamp
-  df <- full_join(df, datat)
+  eval(parse(text = paste(c("df <- full_join(df, datat,by = c('", colnames(datat)[1], "' = '", colnames(datat)[1], "', '", colnames(datat)[2], "' = '", colnames(datat)[2], "'))"),collapse = "")))
 
   #In case first row is NaN
   df[,-1][df[,-1] == "NaN"] <- NA
@@ -132,7 +117,14 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
   
   #set format for datetime
   df[,1] = as.POSIXct(df[,1], '%Y-%m-%d %H:%M', tz = tzlc)
+  df=df[order( df[,1]),]
   
+  #plot
+  colors <- colorRampPalette(c("purple","royalblue","seagreen","orange","red"))(500)
+  p=eval(parse(text = paste(c("ggplot() + geom_point(data=df, aes(x=", colnames(df)[1], ", y=", colnames(df)[2], ", fill=ifelse(", colnames(df)[3], "<nlmt,", colnames(df)[3], ",ifelse(", colnames(df)[3], ">=nlmt,nlmt,", colnames(df)[3], "))),shape=22, color='transparent',size=colsz) + scale_y_log10(breaks = ybk,labels = ybk) + scale_fill_gradientn(limits = c(0,nlmt),colors= colors,name='dn/dlogdp',guide = guide_colorbar(frame.colour = 'black', ticks.colour = 'black'),na.value='transparent') + annotation_logticks(sides = 'lr') + labs(x = 'Datetime', y = 'Midrange')"),collapse = "")))
+  plot(p)
+  
+  results <- list(results=df, img=p)
   #output
-  return(df)
+  return(results)
 }
