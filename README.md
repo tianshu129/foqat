@@ -10,7 +10,7 @@ version](http://www.r-pkg.org/badges/version/foqat)](http://www.r-pkg.org/pkg/fo
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Development
-version](https://img.shields.io/badge/devel-1.6.4-orange.svg)](https://github.com/tianshu129/foqat)
+version](https://img.shields.io/badge/devel-1.6.6-orange.svg)](https://github.com/tianshu129/foqat)
 [![Gitter
 chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/foqater/community)  
 [![](https://cranlogs.r-pkg.org/badges/grand-total/foqat)](https://cran.r-project.org/package=foqat)
