@@ -1,7 +1,7 @@
 Package: foqat
 Type: Package
 Title: Field Observation Quick Analysis Toolkit
-Version: 1.6.4
+Version: 1.6.6
 Author: Tianshu Chen
 Maintainer: Tianshu Chen <tianshu129@163.com>
 Description: Tools for quickly processing and analyzing 
