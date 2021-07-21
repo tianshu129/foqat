@@ -1,11 +1,9 @@
-#' Calculate average of variation
+#' Calculate average variation of particle number concentration
 #'
-#' Calculates average of variation of time series. (contain but not limited to:
+#' Calculates average variation of particle number concentration. (contain but not limited to:
 #' average daily variation, average monthly variation, average annual variation)
 #'
-#' If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
-#'
-#' @param df dataframe of time series.
+#' @param df dataframe of time series. The columns order should be: datetime, midrange of channel, dN_dlogdp.
 #' @param bkip the basic time reslution for average variation, such as '1 hour'.
 #' @param mode for calculating cycles: "recipes", "ncycle", "custom".
 #' "recipes" means using internal setting for calculation.
@@ -18,16 +16,14 @@
 #' "year" equals to 12 (months) values in 1 year.
 #' values for "ncycle" is a number representing number of items in per cycle.
 #' values for "custom" is a number representing column index in dataframe.
-#' @param colid column index for date-time. The default value is 1.
 #' @param st start time of resampling. The default value is the fisrt value of datetime column.
 #' @param et end time of resampling. The default value is the last value of datetime column.
 #' @param na.rm logical value. Remove NA value or not?
 #' @param digits numeric value, digits for result dataframe.
-#' @param wind logical value. if TRUE, please set coliwd, coliws.
-#' @param coliws numeric value, column index of wind speed in dataframe.
-#' @param coliwd numeric value, column index of wind direction (degree) in dataframe.
-#' @return  a list with 2 dataframe (average and SD). The first column of dataframe is the serial number within the period. The
-#' average variation (or SD) start from the second column. \cr
+#' @param ybk numeric vector, log breaks of y axis of plot.
+#' @param nlmt numeric value, uplimit of dNdlogdp colorscales of plot.
+#' @param colsz numeric value, size of columns in plot.
+#' @return a list with 2 dataframe (average and SD) and 1 plot. The first column of dataframe is the serial number within the period. The second column is for the midranges of channels. The Third column is for the particle number concentration. \cr
 #' Note that when the pattern USES
 #' "ncycle" or "custom", the start time determines the start time of the first
 #' element in the average variation. For example, if the first timestamp of data is
@@ -35,26 +31,21 @@
 #' value is 24, then the result represents diurnal variation starting from 12 o'clock.
 
 #' @export
-#' @examples
-#' avri(met, bkip = "1 hour", mode = "recipes", value = "day",
-#' st = "2017-05-01 00:00:00", wind = TRUE, coliws = 4, coliwd = 5)
 #' @importFrom dplyr full_join
 #' @importFrom stats aggregate
 #' @importFrom lubridate duration
+#' @importFrom ggplot2 ggplot geom_point scale_y_log10 scale_fill_gradientn guide_colorbar annotation_logticks labs
+#' @importFrom graphics plot
+#' @importFrom grDevices colorRampPalette
 
-avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, et = NULL, na.rm = TRUE, digits = 2, wind = FALSE, coliws = 2, coliwd = 3){
+avrip<-function(df, bkip, mode = "recipes", value = "day", st = NULL, et = NULL, na.rm = TRUE, digits = 2, ybk=c(10,100,500,1000),nlmt=20000,colsz=10){
 
   #time resampling
-  rs_df <- trs(df, bkip, colid = colid, st = st, et = et, na.rm = na.rm, wind = wind, coliws = coliws, coliwd = coliwd)
+  rs_df <- trsp(df, bkip, st = st, et = et, na.rm = na.rm)
 
-  #get colnames of rs_df
+  #set colnames of rs_df
   cona_df <- colnames(rs_df)
-
-  #generate u, v
-  if(wind == TRUE){
-    rs_df$u<-sin(pi/180*rs_df[,coliwd])*rs_df[,coliws]
-    rs_df$v<-cos(pi/180*rs_df[,coliwd])*rs_df[,coliws]
-  }
+  #colnames(rs_df)=c("Datetime", "Midrange", "dN_dlogdp")
 
   #mode
   #mode recipes custom ncycle
@@ -80,38 +71,11 @@ avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, 
   }
 
   #avearage
-  results=aggregate(rs_df[,-1], by=list(cycle=mod_list), mean, na.rm = na.rm)
+  eval(parse(text = paste(c("results <- aggregate(rs_df[,3], list(cycle=mod_list,", colnames(df)[2], "=rs_df[,2]), mean, na.rm = na.rm)"),collapse = "")))
 
   #sd
-  results_sd=aggregate(rs_df[,-1], by=list(cycle=mod_list), sd, na.rm = na.rm)
+  eval(parse(text = paste(c("results_sd <- aggregate(rs_df[,3], list(cycle=mod_list,", colnames(df)[2], "=rs_df[,2]), sd, na.rm = na.rm)"),collapse = "")))
 
-  #calculate avearage of ws, wd
-  if(wind == TRUE){
-    datat=results
-    datat$fake_degree<-(atan(datat$u/datat$v)/pi*180)
-    datat$ws<-sqrt((datat$u)^2+(datat$v)^2)
-    datat <- within(datat, {
-      true_degree = ifelse(datat$v<0,datat$fake_degree+180,ifelse(datat$u<0,datat$fake_degree+360,datat$fake_degree))
-    })
-    datat <- datat[ ,-which(names(datat) %in% c("u", "v", "fake_degree"))]
-    datat[ ,c(coliws,coliwd)] <- datat[ ,c((length(datat)-1),length(datat))]
-    datat <- datat[,-c((length(datat)-1),length(datat))]
-    results=datat
-  }
-
-  #calculate sd of ws, wd
-  if(wind == TRUE){
-    datat=results_sd
-    datat$fake_degree<-(atan(datat$u/datat$v)/pi*180)
-    datat$ws<-sqrt((datat$u)^2+(datat$v)^2)
-    datat <- within(datat, {
-      true_degree = ifelse(datat$v<0,datat$fake_degree+180,ifelse(datat$u<0,datat$fake_degree+360,datat$fake_degree))
-    })
-    datat <- datat[ ,-which(names(datat) %in% c("u", "v", "fake_degree"))]
-    datat[ ,c(coliws,coliwd)] <- datat[ ,c((length(datat)-1),length(datat))]
-    datat <- datat[,-c((length(datat)-1),length(datat))]
-    results_sd=datat
-  }
 
   #format average data (avoid NA)
   if(!all(is.na(results[, -1]))){
@@ -157,10 +121,18 @@ avri<-function(df, bkip, mode = "recipes", value = "day", colid = 1, st = NULL, 
 
   #rename sd df
   colnames(results_sd) <- colnames(results)
-
+  
+  #plot
+  colors <- colorRampPalette(c("purple","royalblue","seagreen","orange","red"))(500)
+   
+   p=eval(parse(text = paste(c("ggplot() + geom_point(data=results, aes(x=", colnames(results)[1], ", y=", colnames(results)[2], ", fill=ifelse(", colnames(results)[3], "<nlmt,", colnames(results)[3], ",ifelse(", colnames(results)[3], ">=nlmt,nlmt,", colnames(results)[3], "))),shape=22, color='transparent',size=colsz) + scale_y_log10(breaks = ybk,labels = ybk) + scale_fill_gradientn(limits = c(0,nlmt),colors= colors,name='dn/dlogdp',guide = guide_colorbar(frame.colour = 'black', ticks.colour = 'black'),na.value='transparent') + annotation_logticks(sides = 'lr') + labs(x = 'Datetime', y = 'Midrange')"),collapse = "")))
+	plot(p)
+  
   #output
   df_average=results
+  df_average[,-1] <- sapply(df_average[,-1],as.numeric)
   df_sd=results_sd
-  results <- list(df_average = df_average, df_sd = df_sd)
+  df_sd[,-1] <- sapply(df_sd[,-1],as.numeric)
+  results <- list(df_average = df_average, df_sd = df_sd,img=p)
   return(results)
 }

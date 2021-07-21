@@ -21,5 +21,5 @@ Unit is cm3/molecule-sec.\cr
 Condition is 25 deg C.
 }
 \examples{
-koh("Benzene")
+koh("CH4")
 }
