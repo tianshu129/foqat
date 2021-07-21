@@ -6,7 +6,7 @@
 #' The third column of input is for particle number concentration of each channel at each timepoint.
 #'
 #'
-#' @param df dataframe of particle size data: a table or a list.
+#' @param df dataframe of particle size data: a table or a list. 
 #' @param prplot logical. The default vaule is TRUE. If TRUE, plot the data.
 #' @param logy logical. The default vaule is TRUE. If TRUE, plot the data with log y axis.
 #' @param ybk numeric vector, breaks of y axis of plot.
@@ -21,6 +21,8 @@
 #' @importFrom grDevices colorRampPalette
 
 transp <- function(df, prplot=TRUE, logy=TRUE, ybk=c(10,100,500,1000), nlmt=20000, colsz=10){
+	temp_name=names(df)[1]
+	names(df)[1]="Datetime"
 	if(ncol(df)==3){
 		listp=df
 		tablep=eval(parse(text = paste(c("dcast(df,", names(df)[1], " ~ ", names(df)[2], ")"),collapse = "")))
@@ -45,8 +47,10 @@ transp <- function(df, prplot=TRUE, logy=TRUE, ybk=c(10,100,500,1000), nlmt=2000
   
 	#output
 	if(ncol(df)==3){
+		names(tablep)[1]=temp_name
 		results <- tablep
 	}else{
+		names(listp)[1]=temp_name
 		results <- listp
 	}
 	return(results)	
