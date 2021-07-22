@@ -15,8 +15,8 @@
 #' @return a dataframe. If the input is a table, the output is a list, and if the input is a list, the output is a table. 
 #' @export
 #' @importFrom reshape2 dcast melt
-#' @importFrom ggplot2 ggplot geom_point scale_y_log10 scale_fill_gradientn guide_colorbar labs
-#' @importFrom ggprism annotation_logticks annotation_ticks
+#' @import ggplot2
+#' @importFrom ggprism annotation_ticks
 #' @importFrom graphics plot
 #' @importFrom grDevices colorRampPalette
 
