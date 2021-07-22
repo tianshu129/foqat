@@ -32,6 +32,7 @@ Imports:
   lmodel2,
   reshape2,
   ggplot2,
+  ggprism,
   ggplotify,
   gridExtra
 License: GPL-3 | file LICENSE

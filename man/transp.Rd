@@ -7,6 +7,7 @@
 transp(
   df,
   prplot = TRUE,
+  logy = TRUE,
   ybk = c(10, 100, 500, 1000),
   nlmt = 20000,
   colsz = 10
@@ -17,7 +18,9 @@ transp(
 
 \item{prplot}{logical. The default vaule is TRUE. If TRUE, plot the data.}
 
-\item{ybk}{numeric vector, log breaks of y axis of plot.}
+\item{logy}{logical. The default vaule is TRUE. If TRUE, plot the data with log y axis.}
+
+\item{ybk}{numeric vector, breaks of y axis of plot.}
 
 \item{nlmt}{numeric value, uplimit of dNdlogdp colorscales of plot.}
 
