@@ -5,7 +5,7 @@
 #'
 #' The CAS number is matched for each VOC speices (from column name), and the
 #' Maximum Incremental Reactivity (MIR) value is matched through the CAS number and used for time series calculation. \cr
-#' The MIR value comes from <https://ww3.arb.ca.gov/regact/2009/mir2009/mir10.pdf>, 
+#' The MIR value comes from <https://ww2.arb.ca.gov/sites/default/files/classic/regact/2009/mir2009/mir10.pdf>, 
 #' Zhang et al.(2021) <doi:10.5194/acp-21-11053-2021>.
 #'
 #' @param df dataframe contains time series.
