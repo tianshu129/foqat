@@ -12,8 +12,8 @@ ofp(
   p = 101.325,
   stcd = FALSE,
   sortd = TRUE,
-  colid = 1,
-  chn = FALSE
+  chn = FALSE,
+  mtype = "usa"
 )
 }
 \arguments{
@@ -40,9 +40,9 @@ are sorted or not. By default, sortd has value "TRUE".
 If TRUE, VOC species in time series will be arranged according to VOC group,
  relative molecular weight, and MIR value.}
 
-\item{colid}{column index for date-time. The default value is 1.}
-
 \item{chn}{logical. Dose colnames present as Chinese? The default vaule is FALSE.}
+
+\item{mtype}{text. "usa" for MIR value from USA, "chn" for MIR value from CHINA.}
 }
 \value{
 a list contains 5 tables:
@@ -59,9 +59,8 @@ Note: for Chinese VOC name, please also use English punctuation.
 \details{
 The CAS number is matched for each VOC speices (from column name), and the
 Maximum Incremental Reactivity (MIR) value is matched through the CAS number and used for time series calculation. \cr
-The MIR value comes from "Carter, W. P. (2009). Updated maximum incremental
-reactivity scale and hydrocarbon bin reactivities for regulatory applications.
-California Air Resources Board Contract, 2009, 339" (revised January 28, 2010).
+The MIR value comes from <https://ww3.arb.ca.gov/regact/2009/mir2009/mir10.pdf>, 
+Zhang et al.(2021) <doi:acp-21-11053-2021>.
 Note: If input VOC species contain M,P-xylene, it will be automatically divided into m-xylene and P-xylene evenly.
 }
 \examples{

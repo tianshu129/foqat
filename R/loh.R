@@ -6,10 +6,8 @@
 #' The CAS number is matched for each VOC speices (from column name), and the
 #' OH Rate Constant is matched through the CAS number and used for time series calculation. \cr
 #' The OH Rate Constant comes from 'AopWin v1.92' in 25 degree celsius.
-#' Note: If input VOC species contain M,P-xylene, it will be automatically divided into m-xylene and P-xylene evenly.
 #'
 #' @param df dataframe contains time series.
-#' @param colid column index for date-time. The default value is 1.
 #' @param unit unit for VOC concentration. A character vector from these options: "ugm" or "ppbv". "ugm" means ug/m3. "ppbv" means part per billion volumn.
 #' @param t Temperature, in Degrees Celsius, used to convert data in 
 #' micrograms per cubic meter to standard conditions 
@@ -24,7 +22,6 @@
 #'  relative molecular weight, and OH Rate Constant.
 #' @param stcd logical. Does it output the concentration in standard condition? 
 #' The default vaule is FALSE.
-#' @param colid column index for date-time. The default value is 1.
 #' @param atk logical. use kOH value from atk or not? If not, kOH comes from 'AopWin v1.92' will be used. The default vaule is TRUE.
 #' @param chn logical. Dose colnames present as Chinese? The default vaule is FALSE.
 #' @return  a list contains 5 tables:
@@ -37,34 +34,26 @@
 #' @export
 #' @examples
 #' loh(voc)
-#' @importFrom utils URLencode
-#' @importFrom utils download.file
-#' @importFrom xml2 read_html
-#' @importFrom rvest html_nodes html_text
+
 #' @import magrittr
 #' @importFrom stringr str_split_fixed
 
 
-loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, colid = 1, atk=TRUE, chn=FALSE){
+loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, atk=TRUE, chn=FALSE){
 
     #generate datacasv2 according to datacas
   datacasv2=datacas
   if(atk==TRUE){
-	datacasv2$koh=datacasv2$koh_atk
-	datacasv2$koh_type=NA
-	datacasv2$koh_type[which(!is.na(datacasv2$koh))]="Atkinson"
-	datacasv2$koh_type[which(is.na(datacasv2$koh)&!is.na(datacasv2$koh_aop))]="AopWin"
-	datacasv2$koh[which(is.na(datacasv2$koh)&!is.na(datacasv2$koh_aop))]=datacasv2$koh_aop[which(is.na(datacasv2$koh)&!is.na(datacasv2$koh_aop))]
+	datacasv2$Koh=datacasv2$koh_atk
+	datacasv2$Koh_type=NA
+	datacasv2$Koh_type[which(!is.na(datacasv2$Koh))]="Atkinson"
+	datacasv2$Koh_type[which(is.na(datacasv2$Koh)&!is.na(datacasv2$koh_aop))]="AopWin"
+	datacasv2$Koh[which(is.na(datacasv2$Koh)&!is.na(datacasv2$koh_aop))]=datacasv2$koh_aop[which(is.na(datacasv2$Koh)&!is.na(datacasv2$koh_aop))]
   }else{
-	datacasv2$koh=datacasv2$koh_aop
-	datacasv2$koh_type[which(!is.na(datacasv2$koh))]="AopWin"
+	datacasv2$Koh=datacasv2$koh_aop
+	datacasv2$koh_type[which(!is.na(datacasv2$Koh))]="AopWin"
   }
 
-  #set colid
-  if(colid != 1){
-    df[,c(1,colid)] = df[,c(colid,1)]
-    colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
-  }
 
   #In case df is not a dataframe.
   temp_col_name <- colnames(df)
@@ -72,15 +61,6 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   colnames(df) <- temp_col_name
   
   if(chn==FALSE){
-	  #In case df includes m,p-Xylene
-	  colnames_short = gsub("\\,|\\-| ", "", tolower(colnames(df)))
-	  if("mpxylene" %in% colnames_short){
-		  xyleneid=which(colnames_short %in% "mpxylene")
-		  df=df[,c(1:xyleneid,xyleneid:ncol(df))]
-		  df[,c(xyleneid,(xyleneid+1))]=df[,c(xyleneid,(xyleneid+1))]/2
-		  colnames(df)[c(xyleneid,(xyleneid+1))]=c("m-Xylene","p-Xylene")
-	  }
-
 	  #get VOC name by colnames of df
 	  #if read from xlsx, replace "X" and "."
 	  colnm_df = colnames(df)[2:ncol(df)]
@@ -90,81 +70,37 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 	  chemicalnames = gsub("\\i-", "iso-", chemicalnames)
 
 	  #build name_df
-	  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, koh = NA, koh_type = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
+	  name_df = data.frame(name = chemicalnames,CAS = NA, Matched_Name = NA, Koh = NA, Koh_type = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
 
 	  #search VOC name to get CAS Number from different sources, add cas, sources, mathed_name to name_df
 	  ##firstly by NIST
 	  for( i in 1:nrow(name_df)){
-		str <- name_df[i,1]
-		str <- URLencode(str)
-		url=paste(c("https://webbook.nist.gov/cgi/cbook.cgi?Name=", str,"&Units=SI"), collapse='')
-		download.file(url, destfile = "scrapedpage.html", quiet=TRUE)
-		web <- read_html("scrapedpage.html")
-		result_test<-web%>%html_nodes("h1")%>%html_text()
-		if(result_test[2] == "Name Not Found"){
-		  name_df[i,2]="Name Not Found"
-		  name_df[i,3]=NA
-		}else if(result_test[2] == "Search Results"){
-		  name_df[i,2]="More than 1 result"
-		  name_df[i,3]=NA
-		}else if(grepl("structure unspecified",result_test[2])){
-		  name_df[i,2]="structure unspecified in NIST"
-		  name_df[i,3]=NA
-		}else{
-		  result_test<-web%>%html_nodes("li")%>%html_text()
-		  result_test<-strsplit(result_test[21], ": ")
-		  name_df[i,2]=result_test[[1]][2]
-		  name_df[i,3]="NIST"
+		tarname <- name_df[i,1]
+		#test if name can be matched by names
+		tarname=gsub("[^[:alnum:]]", "",tarname)
+		tarname=tolower(tarname)
+		tarid=eval(parse(text=paste0("grep('(?<![^;])",tarname,"(?![^;])',datacasv2$otn, value = FALSE, perl=TRUE)")))
+		#if no, test if name can be matched by names
+		if(length(tarid)!=1){
+			tarname <- name_df[i,1]
+			tarid=eval(parse(text=paste0("grep('(?<![^;])",tarname,"(?![^;])',datacasv2$CAS, value = FALSE, perl=TRUE)")))
 		}
-	  }
-	  file.remove("scrapedpage.html")
-
-	  #match koh by different sources
-	  ##get CAS from NIST, match name by CAS
-	  a=lapply(name_df$CAS[which(name_df$Source=="NIST"&!is.na(name_df$CAS))], function(i) grep(i, datacasv2$CAS))
-	  a=unlist(lapply(a,function(x) if(identical(x,integer(0))) ' ' else x))
-	  name_df$koh[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacasv2$koh[as.numeric(a)]
-	  name_df$koh_type[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacasv2$koh_type[as.numeric(a)]
-	  name_df$Matched_Name[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacasv2$Description[as.numeric(a)]
-	  name_df$MW[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacasv2$MWt[as.numeric(a)]
-	  name_df$Group[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacasv2$Group[as.numeric(a)]
-
-	  #if it is matched by CAS in NIST and matched by name in Carter paper, but it doesn't have CAS in Carter paper.
-	  for(k in which(!is.na(name_df$Source)&is.na(name_df$koh))){
-		tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
-		tar=gsub(" ", "", tolower(name_df$name[k]), fixed = TRUE)
-		df_null=data.frame(datacasv2[tarlist %in% tar,])
-		if(nrow(df_null)!=0){
-		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
-		  #name_df$CAS[as.numeric(k)] = df_null$CAS[1]
-		  name_df$koh[as.numeric(k)] = df_null$koh[1]
-		  name_df$koh_type[as.numeric(k)] = df_null$koh_type[1]
-		  name_df$Source[as.numeric(k)] = "CAS is found in NIST. But it only has name in Carter paper 2010"
-		  name_df$MW[as.numeric(k)] = df_null$MWt[1]
-		  name_df$Group[as.numeric(k)] = df_null$Group[1]
-		}
-	  }
-
-	  #if it isn't found in NIST, but its name is matched by Carter paper.
-	  for(k in which(is.na(name_df$Source))){
-		tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
-		tar=gsub(" ", "", tolower(name_df$name[k]), fixed = TRUE)
-		df_null=data.frame(datacasv2[tarlist %in% tar,])
-		if(nrow(df_null)!=0){
-		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
-		  name_df$CAS[as.numeric(k)] = df_null$CAS[1]
-		  name_df$koh[as.numeric(k)] = df_null$koh[1]
-		  name_df$koh_type[as.numeric(k)] = df_null$koh_type[1]
-		  name_df$Source[as.numeric(k)] = "Carter paper 2010"
-		  name_df$MW[as.numeric(k)] = df_null$MWt[1]
-		  name_df$Group[as.numeric(k)] = df_null$Group[1]
+		#if finally get tarid (match)
+		if(length(tarid)==1){
+			tarid=as.numeric(tarid)
+			name_df$CAS[i] = datacasv2$CAS[tarid]
+			name_df$Matched_Name[i] = datacasv2$Description[tarid]
+			name_df$Koh[i] = datacasv2$Koh[tarid]
+			name_df$Koh_type[i] = datacasv2$Koh_type[tarid]
+			name_df$MW[i] = datacasv2$MWt[tarid]
+			name_df$Group[i] = datacasv2$Group[tarid]
 		}
 	  }
 	}else{
 	  #build name_df
 	  colnm_df = colnames(df)[2:ncol(df)]
 	  chemicalnames = ifelse(substr(colnm_df, 1, 1) == "X", sub("^.", "", colnm_df), colnm_df)
-	  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, koh = NA, koh_type = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
+	  name_df = data.frame(name = chemicalnames,CAS = NA, Matched_Name = NA, Koh = NA, Koh_type = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
 
 	  #match table by chinese name
 	  chn_name_db<-data.frame(str_split_fixed(gsub("\\/|\\,|\\-| ", "", datacasv2$chn), ';', 3))#change according to max chinese name vector
@@ -173,11 +109,10 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 		x=which(chn_df == gsub("\\,|\\,|\\-| ", "", name_df$name[k]), arr.ind = TRUE)[1]
 		df_null=data.frame(datacasv2[x,])
 		if(nrow(df_null)!=0){
-		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
 		  name_df$CAS[as.numeric(k)] = df_null$CAS[1]
-		  name_df$koh[as.numeric(k)] = df_null$koh[1]
-		  name_df$koh_type[as.numeric(k)] = df_null$koh_type[1]
-		  name_df$Source[as.numeric(k)] = "Chinese"
+		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
+		  name_df$Koh[as.numeric(k)] = df_null$Koh[1]
+		  name_df$Koh_type[as.numeric(k)] = df_null$Koh_type[1]
 		  name_df$MW[as.numeric(k)] = df_null$MWt[1]
 		  name_df$Group[as.numeric(k)] = df_null$Group[1]
 		}
@@ -199,12 +134,12 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
   if(sortd==TRUE){
 	  #order by 2 columns
 	  name_df$Group <- factor(name_df$Group, levels = c("Alkanes", "Alkenes", "BVOC", "Alkynes", "Aromatic_Hydrocarbons", "Oxygenated_Organics", "Other_Organic_Compounds", "Unknown"))
-	  name_df = name_df[with(name_df, order(Group, MW, koh)), ]
+	  name_df = name_df[with(name_df, order(Group, MW, Koh)), ]
 	  df[,2:ncol(df)]=df[,name_df$raw_order+1]
 	  colnames(df)[2:ncol(df)]=colnames(df)[name_df$raw_order+1]
   }
 
-  #set concentration df, multiple df with koh in name_df
+  #set concentration df, multiple df with Koh in name_df
   loh_df = df
   r = 22.4*(273.15+t)*101.325/(273.15*p)
   r2 = (298.15*p)/((273.15+t)*101.325)
@@ -216,7 +151,7 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 		Con_ugm[,2:ncol(df)] = Con_ugm[,2:ncol(df)]/r2	
 	}	
 	Con_ppbv[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x]*as.numeric(r/name_df$MW)[x-1]),ncol = ncol(df)-1))
-	loh_df[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$koh*Avogadro*1e-12/(name_df$MW*r2))[x-1]),ncol = ncol(df)-1))
+	loh_df[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x] * as.numeric(name_df$Koh*Avogadro*1e-12/(name_df$MW*r2))[x-1]),ncol = ncol(df)-1))
   }else if(unit=="ppbv"){
 	Con_ppbv = df
 	Con_ugm = df
@@ -226,7 +161,7 @@ loh <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE,
 		Con_ugm[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x]*as.numeric(name_df$MW/24.45016)[x-1]),ncol = ncol(df)-1))	
 	}
 	loh_df[,2:ncol(df)] = data.frame(matrix(sapply(2:ncol(df),function(x) df[,x] * 
-		as.numeric(name_df$koh*Avogadro*1e-12/24.45016)[x-1]),ncol = ncol(df)-1))
+		as.numeric(name_df$Koh*Avogadro*1e-12/24.45016)[x-1]),ncol = ncol(df)-1))
   }else{
     print("unit error")
   }

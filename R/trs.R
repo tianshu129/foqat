@@ -7,7 +7,6 @@
 #'
 #' @param df dataframe of time series.
 #' @param bkip new resolution breaking input of time series, such as '1 hour'.
-#' @param colid column index for date-time. The default value is 1.
 #' @param st start time of resampling. The default value is the fisrt value of datetime column.
 #' @param et end time of resampling. The default value is the last value of datetime column.
 #' @param na.rm logical value. Remove NA value or not?
@@ -23,13 +22,10 @@
 #' @importFrom stats aggregate
 #' @importFrom lubridate duration
 
-trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3, cpms=TRUE){
+trs <- function(df, bkip, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3, cpms=TRUE){
   
-  #move datetime to first column
-  if(colid != 1){
-    df[,c(1,colid)] = df[,c(colid,1)]
-    colnames(df)[c(1,colid)] = colnames(df)[c(colid,1)]
-  }
+  #remove rows showing NA in datatime
+  df=df[!is.na(df[,1]),]
 
   #In case df is not a dataframe.
   df <- data.frame(df,stringsAsFactors = FALSE)
@@ -58,14 +54,14 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
     bkip <- gsub("([0-9])([a-z])", "\\1 \\2", bkip)
   }
   #set format for datetime
-  df[,1] = as.POSIXct(df[,1], '%Y-%m-%d %H:%M', tz = tzlc)
+  df[,1] = as.POSIXct(df[,1], tz = tzlc)
   #input st, et?
   if(is.null(st)){
     #if not input st, set first timestamp as st
-    st = as.POSIXct(df[1,1], '%Y-%m-%d %H:%M', tz = tzlc)
+    st = as.POSIXct(df[1,1], tz = tzlc) #"%Y-%m-%d %H:%M:%S"
   }else{
     #if input st, cut df by st
-    st = as.POSIXct(st, format = "%Y-%m-%d %H:%M", tz = tzlc)
+    st = as.POSIXct(st, tz = tzlc) #"%Y-%m-%d %H:%M:%S"
     ##if st not exist in df, insert st
     if(st != df[min(which(df[,1] >= st)),1]){
       k=min(which(df[,1] >= st))
@@ -77,10 +73,10 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
   }
   if(is.null(et)){
     #if not input et, set last timestamp as et
-    et<-as.POSIXct(df[length(df[,1]),1],'%Y-%m-%d %H:%M',tz= tzlc)
+    et<-as.POSIXct(df[length(df[,1]),1], tz = tzlc) #"%Y-%m-%d %H:%M:%S"
   }else{
     #if input et, cut df by et
-    et=as.POSIXct(et,format="%Y-%m-%d %H:%M",tz= tzlc)
+    et=as.POSIXct(et, tz = tzlc) #"%Y-%m-%d %H:%M:%S"
     #not need to insert et, just need to trunck by et (">=").
     df <- df[df[,1] <= et,]
   }
@@ -91,14 +87,14 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
   bkip_str = tolower(bkip_str)
   bkip_str = gsub("[s]", "", bkip_str)
   if(bkip_str == ""|bkip_str == "ec"|bkip_str == "min"|bkip_str == "hour"){
-	datat[,1] = as.POSIXct(datat[,1], "%Y-%m-%d %H:%M", tz = tzlc)
+	datat[,1] = as.POSIXct(datat[,1], tz = tzlc) #"%Y-%m-%d %H:%M:%S"
   }else{
 	datat[,1] = as.Date(datat[,1])
   }
 
   if(wind == TRUE){
     datat$fake_degree<-(atan(datat$u/datat$v)/pi*180)
-    datat$ws<-sqrt((datat$u)^2+(datat$v)^2)
+    datat$temp_ws<-sqrt((datat$u)^2+(datat$v)^2)
     datat <- within(datat, {
       true_degree = ifelse(datat$v<0,datat$fake_degree+180,ifelse(datat$u<0,datat$fake_degree+360,datat$fake_degree))
     })
@@ -131,7 +127,7 @@ trs <- function(df, bkip, colid = 1, st = NULL, et = NULL, na.rm = TRUE, wind = 
   colnames(df) <- cona_df
   
   #set format for datetime
-  df[,1] = as.POSIXct(df[,1], '%Y-%m-%d %H:%M', tz = tzlc)
+  df[,1] = as.POSIXct(df[,1], tz = tzlc) #"%Y-%m-%d %H:%M:%S"
   
   #output
   return(df)

@@ -7,7 +7,6 @@
 trs(
   df,
   bkip,
-  colid = 1,
   st = NULL,
   et = NULL,
   na.rm = TRUE,
@@ -21,8 +20,6 @@ trs(
 \item{df}{dataframe of time series.}
 
 \item{bkip}{new resolution breaking input of time series, such as '1 hour'.}
-
-\item{colid}{column index for date-time. The default value is 1.}
 
 \item{st}{start time of resampling. The default value is the fisrt value of datetime column.}
 

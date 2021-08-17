@@ -11,7 +11,6 @@ vocct(
   p = 101.325,
   stcd = FALSE,
   sortd = TRUE,
-  colid = 1,
   chn = FALSE
 )
 }
@@ -34,8 +33,6 @@ By default, p equals to 101.325 kPa.}
 are sorted or not. By default, sortd has value "TRUE".
 If TRUE, VOC species in time series will be arranged according to VOC group,
  relative molecular weight, and MIR value.}
-
-\item{colid}{column index for date-time. The default value is 1.}
 
 \item{chn}{logical. Dose colnames present as Chinese? The default vaule is FALSE.}
 }

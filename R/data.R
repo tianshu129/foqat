@@ -1,6 +1,6 @@
 #' Demo data of air quality
 #'
-#' 5 days air quality data (1 min) includes: NO, NO2, CO, SO2, O3.
+#' 5 days air quality data (1 min resolution) includes: NO, NO2, CO, SO2, O3.
 #' The variables are as follows:
 #'
 #' @format A data frame with 7140 rows and 6 variables:
@@ -16,7 +16,7 @@
 
 #' Demo data of meteorology
 #'
-#' 5 days meteorology data (5 mins) includes: Temperature, Humidity,
+#' 5 days meteorology data (5 mins resolution) includes: Temperature, Humidity,
 #' Wind speed, Wind direction.
 #' The variables are as follows:
 #'
@@ -32,7 +32,7 @@
 
 #' Demo data of volatile organic compounds (VOCs)
 #'
-#' 5 days VOCs data (1 hour) includes: Propylene, Acetylene, n-Butane,
+#' 5 days VOCs data (1 hour resolution) includes: Propylene, Acetylene, n-Butane,
 #' trans-2-Butene, Cyclohexane.
 #' The variables are as follows:
 #'

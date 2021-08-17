@@ -6,10 +6,9 @@
 \usage{
 avri(
   df,
-  bkip,
+  bkip = NULL,
   mode = "recipes",
   value = "day",
-  colid = 1,
   st = NULL,
   et = NULL,
   na.rm = TRUE,
@@ -22,7 +21,7 @@ avri(
 \arguments{
 \item{df}{dataframe of time series.}
 
-\item{bkip}{the basic time reslution for average variation, such as '1 hour'.}
+\item{bkip}{the basic time reslution for average variation, such as '1 hour'. If mode "custom" is selected, do not need to enter bkip.}
 
 \item{mode}{for calculating cycles: "recipes", "ncycle", "custom".
 "recipes" means using internal setting for calculation.
@@ -36,8 +35,6 @@ avri(
 "year" equals to 12 (months) values in 1 year.
 values for "ncycle" is a number representing number of items in per cycle.
 values for "custom" is a number representing column index in dataframe.}
-
-\item{colid}{column index for date-time. The default value is 1.}
 
 \item{st}{start time of resampling. The default value is the fisrt value of datetime column.}
 

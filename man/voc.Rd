@@ -19,7 +19,7 @@ A data frame with 120 rows and 6 variables:
 voc
 }
 \description{
-5 days VOCs data (1 hour) includes: Propylene, Acetylene, n-Butane,
+5 days VOCs data (1 hour resolution) includes: Propylene, Acetylene, n-Butane,
 trans-2-Butene, Cyclohexane.
 The variables are as follows:
 }
