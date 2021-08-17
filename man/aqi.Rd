@@ -19,7 +19,7 @@ A data frame with 7140 rows and 6 variables:
 aqi
 }
 \description{
-5 days air quality data (1 min) includes: NO, NO2, CO, SO2, O3.
+5 days air quality data (1 min resolution) includes: NO, NO2, CO, SO2, O3.
 The variables are as follows:
 }
 \keyword{datasets}

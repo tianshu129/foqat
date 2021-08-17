@@ -4,27 +4,10 @@
 \alias{transp}
 \title{Convert the format of particle size data}
 \usage{
-transp(
-  df,
-  prplot = TRUE,
-  logy = TRUE,
-  ybk = c(10, 100, 500, 1000),
-  nlmt = 20000,
-  colsz = 10
-)
+transp(df)
 }
 \arguments{
 \item{df}{dataframe of particle size data: a table or a list.}
-
-\item{prplot}{logical. The default vaule is TRUE. If TRUE, plot the data.}
-
-\item{logy}{logical. The default vaule is TRUE. If TRUE, plot the data with log y axis.}
-
-\item{ybk}{numeric vector, breaks of y axis of plot.}
-
-\item{nlmt}{numeric value, uplimit of dNdlogdp colorscales of plot.}
-
-\item{colsz}{numeric value, size of columns in plot.}
 }
 \value{
 a dataframe. If the input is a table, the output is a list, and if the input is a list, the output is a table.

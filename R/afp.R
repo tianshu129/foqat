@@ -33,10 +33,6 @@
 #' AFP_Result_group_mean: the average value and proportion of AFP of VOC according to major groups (sorted from large to small).
 #'
 #' @export
-#' @importFrom utils URLencode
-#' @importFrom utils download.file
-#' @importFrom xml2 read_html
-#' @importFrom rvest html_nodes html_text
 #' @import magrittr
 #' @importFrom stringr str_split_fixed
 
@@ -48,15 +44,6 @@ afp <- function(df, inunit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
   colnames(df) <- temp_col_name
 
   if(chn==FALSE){  
-	  #In case df includes m,p-Xylene
-	  colnames_short = gsub("\\,|\\-| ", "", tolower(colnames(df)))
-	  if("mpxylene" %in% colnames_short){
-		  xyleneid=which(colnames_short %in% "mpxylene")
-		  df=df[,c(1:xyleneid,xyleneid:ncol(df))]
-		  df[,c(xyleneid,(xyleneid+1))]=df[,c(xyleneid,(xyleneid+1))]/2
-		  colnames(df)[c(xyleneid,(xyleneid+1))]=c("m-Xylene","p-Xylene")
-	  }
-	  
 	  #get VOC name by colnames of df
 	  #if read from xlsx, replace "X" and "."
 	  colnm_df = colnames(df)[2:ncol(df)]
@@ -66,79 +53,36 @@ afp <- function(df, inunit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
 	  chemicalnames = gsub("\\i-", "iso-", chemicalnames)
 
 	  #build name_df
-	  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, SOAY = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
+	  name_df = data.frame(name = chemicalnames,CAS = NA, Matched_Name = NA, SOAY = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
 
 	  #search VOC name to get CAS Number from different sources, add cas, sources, mathed_name to name_df
 	  ##firstly by NIST
 	  for( i in 1:nrow(name_df)){
-		str <- name_df[i,1]
-		str <- URLencode(str)
-		url=paste(c("https://webbook.nist.gov/cgi/cbook.cgi?Name=", str,"&Units=SI"), collapse='')
-		download.file(url, destfile = "scrapedpage.html", quiet=TRUE)
-		web <- read_html("scrapedpage.html")
-		result_test<-web%>%html_nodes("h1")%>%html_text()
-		if(result_test[2] == "Name Not Found"){
-		  name_df[i,2]="Name Not Found"
-		  name_df[i,3]=NA
-		}else if(result_test[2] == "Search Results"){
-		  name_df[i,2]="More than 1 result"
-		  name_df[i,3]=NA
-		}else if(grepl("structure unspecified",result_test[2])){
-		  name_df[i,2]="structure unspecified in NIST"
-		  name_df[i,3]=NA
-		}else{
-		  result_test<-web%>%html_nodes("li")%>%html_text()
-		  result_test<-strsplit(result_test[21], ": ")
-		  name_df[i,2]=result_test[[1]][2]
-		  name_df[i,3]="NIST"
+		tarname <- name_df[i,1]
+		#test if name can be matched by names
+		tarname=gsub("[^[:alnum:]]", "",tarname)
+		tarname=tolower(tarname)
+		tarid=eval(parse(text=paste0("grep('(?<![^;])",tarname,"(?![^;])',datacas$otn, value = FALSE, perl=TRUE)")))
+		#if no, test if name can be matched by names
+		if(length(tarid)!=1){
+			tarname <- name_df[i,1]
+			tarid=eval(parse(text=paste0("grep('(?<![^;])",tarname,"(?![^;])',datacas$CAS, value = FALSE, perl=TRUE)")))
 		}
-	  }
-	  file.remove("scrapedpage.html")
-
-	  #match SOAY by different sources
-	  ##get CAS from NIST, match name by CAS
-	  a=lapply(name_df$CAS[which(name_df$Source=="NIST"&!is.na(name_df$CAS))], function(i) grep(i, datacas$CAS))
-	  a=unlist(lapply(a,function(x) if(identical(x,integer(0))) ' ' else x))
-	  name_df$SOAY[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$soay[as.numeric(a)]
-	  name_df$Matched_Name[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$Description[as.numeric(a)]
-	  name_df$MW[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$MWt[as.numeric(a)]
-	  name_df$Group[which(name_df$Source=="NIST"&!is.na(name_df$CAS))] = datacas$Group[as.numeric(a)]
-
-
-	  #if it is matched by CAS in NIST and matched by name in Carter paper, but it doesn't have CAS in Carter paper.
-	  for(k in which(!is.na(name_df$Source)&is.na(name_df$SOAY))){
-		tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
-		tar=gsub(" ", "", tolower(name_df$name[k]), fixed = TRUE)
-		df_null=data.frame(datacas[tarlist %in% tar,])
-		if(nrow(df_null)!=0){
-		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
-		  #name_df$CAS[as.numeric(k)] = df_null$CAS[1]
-		  name_df$SOAY[as.numeric(k)] = df_null$soay[1]
-		  name_df$Source[as.numeric(k)] = "CAS is found in NIST. But it only has name in Carter paper 2010"
-		  name_df$MW[as.numeric(k)] = df_null$MWt[1]
-		  name_df$Group[as.numeric(k)] = df_null$Group[1]
-		}
-	  }
-
-	  #if it isn't found in NIST, but its name is matched by Carter paper.
-	  for(k in which(is.na(name_df$Source))){
-		tarlist=gsub(" ", "", tolower(datacas$Description), fixed = TRUE)
-		tar=gsub(" ", "", tolower(name_df$name[k]), fixed = TRUE)
-		df_null=data.frame(datacas[tarlist %in% tar,])
-		if(nrow(df_null)!=0){
-		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
-		  name_df$CAS[as.numeric(k)] = df_null$CAS[1]
-		  name_df$SOAY[as.numeric(k)] = df_null$soay[1]
-		  name_df$Source[as.numeric(k)] = "Carter paper 2010"
-		  name_df$MW[as.numeric(k)] = df_null$MWt[1]
-		  name_df$Group[as.numeric(k)] = df_null$Group[1]
+		#if finally get tarid (match)
+		if(length(tarid)==1){
+			tarid=as.numeric(tarid)
+			name_df$CAS[i] = datacas$CAS[tarid]
+			name_df$Matched_Name[i] = datacas$Description[tarid]
+			name_df$SOAY[i] = datacas$soay[tarid]
+			name_df$MW[i] = datacas$MWt[tarid]
+			name_df$Group[i] = datacas$Group[tarid]
 		}
 	  }
 	}else{
 	  #build name_df
 	  colnm_df = colnames(df)[2:ncol(df)]
 	  chemicalnames = ifelse(substr(colnm_df, 1, 1) == "X", sub("^.", "", colnm_df), colnm_df)
-	  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, SOAY = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
+	  name_df = data.frame(name = chemicalnames,CAS = NA, Matched_Name = NA, SOAY = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
 	  #match table by chinese name
 
 	  chn_name_db<-data.frame(str_split_fixed(gsub("\\/|\\,|\\-| ", "", datacas$chn), ';', 3))#change according to max chinese name vector
@@ -147,10 +91,9 @@ afp <- function(df, inunit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
 		x=which(chn_df == gsub("\\,|\\,|\\-| ", "", name_df$name[k]), arr.ind = TRUE)[1]
 		df_null=data.frame(datacas[x,])
 		if(nrow(df_null)!=0){
-		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
 		  name_df$CAS[as.numeric(k)] = df_null$CAS[1]
+		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]		  
 		  name_df$SOAY[as.numeric(k)] = df_null$soay[1]
-		  name_df$Source[as.numeric(k)] = "Carter paper 2010"
 		  name_df$MW[as.numeric(k)] = df_null$MWt[1]
 		  name_df$Group[as.numeric(k)] = df_null$Group[1]
 		}

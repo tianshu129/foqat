@@ -13,8 +13,6 @@
 #' @importFrom xml2 read_html
 #' @importFrom rvest html_nodes html_text
 #' @importFrom utils download.file read.table
-#' @examples
-#' koh("CH4")
 
 koh <- function(spec){
   url <- paste0(c("http://www.chemspider.com/Search.aspx?q=", spec), collapse='')

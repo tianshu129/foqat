@@ -18,7 +18,7 @@ A data frame with 1287 rows and 5 variables:
 met
 }
 \description{
-5 days meteorology data (5 mins) includes: Temperature, Humidity,
+5 days meteorology data (5 mins resolution) includes: Temperature, Humidity,
 Wind speed, Wind direction.
 The variables are as follows:
 }

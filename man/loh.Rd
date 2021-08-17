@@ -11,7 +11,6 @@ loh(
   p = 101.325,
   stcd = FALSE,
   sortd = TRUE,
-  colid = 1,
   atk = TRUE,
   chn = FALSE
 )
@@ -36,8 +35,6 @@ The default vaule is FALSE.}
 are sorted or not. By default, sortd has value "TRUE".
 If TRUE, VOC species in time series will be arranged according to VOC group,
  relative molecular weight, and OH Rate Constant.}
-
-\item{colid}{column index for date-time. The default value is 1.}
 
 \item{atk}{logical. use kOH value from atk or not? If not, kOH comes from 'AopWin v1.92' will be used. The default vaule is TRUE.}
 

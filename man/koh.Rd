@@ -20,6 +20,3 @@ Theoretical values of the species' OH reaction constant kOH at 25 degrees were o
 Unit is cm3/molecule-sec.\cr
 Condition is 25 deg C.
 }
-\examples{
-koh("CH4")
-}
