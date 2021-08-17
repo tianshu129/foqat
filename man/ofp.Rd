@@ -60,8 +60,7 @@ Note: for Chinese VOC name, please also use English punctuation.
 The CAS number is matched for each VOC speices (from column name), and the
 Maximum Incremental Reactivity (MIR) value is matched through the CAS number and used for time series calculation. \cr
 The MIR value comes from <https://ww3.arb.ca.gov/regact/2009/mir2009/mir10.pdf>, 
-Zhang et al.(2021) <doi:acp-21-11053-2021>.
-Note: If input VOC species contain M,P-xylene, it will be automatically divided into m-xylene and P-xylene evenly.
+Zhang et al.(2021) <doi:10.5194/acp-21-11053-2021>.
 }
 \examples{
 ofp(voc)
