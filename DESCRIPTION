@@ -13,30 +13,18 @@ Description: Tools for quickly processing and analyzing
 	homepage<https://github.com/tianshu129/foqat>.
 	Scientific Reference:
 	1. The Hydroxyl Radical (OH) Reactivity: Roger Atkinson and Janet Arey (2003) <doi:10.1021/cr0206420>.
-	2. Ozone Formation Potential (OFP): <https://ww3.arb.ca.gov/regact/2009/mir2009/mir10.pdf>, Zhang et al.(2021) <doi:10.5194/acp-21-11053-2021>.
+	2. Ozone Formation Potential (OFP): <https://ww2.arb.ca.gov/sites/default/files/classic/regact/2009/mir2009/mir10.pdf>, Zhang et al.(2021) <doi:10.5194/acp-21-11053-2021>.
 	3. Aerosol Formation Potential (AFP): Wenjing Wu et al. (2016) <doi:10.1016/j.jes.2016.03.025>.
 	4. TUV model: <https://www2.acom.ucar.edu/modeling/tropospheric-ultraviolet-and-visible-tuv-radiation-model>.
 URL: https://github.com/tianshu129/foqat
 BugReports: https://github.com/tianshu129/foqat/issues
 Depends: R (>= 3.5.0)
-Imports: 
-  lubridate, 
-  magrittr, 
-  dplyr,
-  plyr,
-  stats,
-  stringr,
-  utils,
-  lmodel2,
-  reshape2,
-  ggplot2,
-  ggprism,
-  ggplotify,
-  gridExtra,
-  scales,
-  rvest,
-  xml2
+Imports: lubridate, magrittr, dplyr, plyr, stats, stringr, utils,
+        lmodel2, reshape2, ggplot2, ggprism, ggplotify, gridExtra,
+        scales, rvest, xml2
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
+NeedsCompilation: no
+Packaged: 2021-08-17 16:44:03 UTC; Administrator
