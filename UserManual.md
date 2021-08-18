@@ -14,6 +14,8 @@ version](https://img.shields.io/badge/devel-1.6.4-orange.svg)](https://github.co
 [![Gitter
 chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/foqater/community)
 
+## Please update to v1.7.1 through Github!
+
 ## Tableof Contents
 * [GENERAL OVERVIEW](#general-overview)
 * [INSTALLATION OF R & RSTUDIO](#Rinstallation-of-r--rstudio)
