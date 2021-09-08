@@ -32,7 +32,7 @@ The FOQAT stands for "Field observation quick analysis toolkit".
 
 The FOQAT package is developed and maintained by Chen Tianshu from Professor Xue Likun's research group of Environmental Research Institute of Shandong University.  
 
-For getting start or detail usage, please visit: [user manual](https://github.com/tianshu129/foqat/wiki/User-Manual) or [说明手册](https://www.yuque.com/tich/foqat) .  
+For getting start or detail usage, please visit: [user manual](https://github.com/tianshu129/foqat/wiki/User-Manual) or [说明手册](https://www.yuque.com/foqat/doc) .  
 
 If FOQAT is used to support a scientific publication, please cite the following reference:
 
