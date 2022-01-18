@@ -1,6 +1,6 @@
-#' Resample time series
+#' Resample time series for summary statistics
 #'
-#' Resamples time series, and returns complete time series with new time resolution.
+#' Resamples time series for summary statistics, and returns complete time series with new time resolution.
 #'   (wind data is acceptable)
 #'
 #' If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
@@ -9,12 +9,14 @@
 #' @param bkip new resolution breaking input of time series, such as '1 hour'.
 #' @param st start time of resampling. The default value is the fisrt value of datetime column.
 #' @param et end time of resampling. The default value is the last value of datetime column.
+#' @param fun  a function to compute the summary statistics which can be applied to all data subsets: 'sum', 'mean', 'median', 'min', 'max', 'sd' and 'quantile'.
+#' @param probs numeric vector of probabilities with values in \([0,1]\).
 #' @param na.rm logical value. Remove NA value or not?
 #' @param wind logical value. if TRUE, please set coliwd, coliws.
 #' @param coliws numeric value, column index of wind speed in dataframe.
 #' @param coliwd numeric value, column index of wind direction (degree) in dataframe.
 #' @param cpms logical value. Compensate the insufficient amount of the millisecond bit for datetime column.
-#' @return a dataframe which contains a time series with a new time resolution.
+#' @return a dataframe which contains a time series for summary statistics with a new time resolution.
 #' @export
 #' @examples
 #' trs(met, bkip = "1 hour", st = "2017-05-01 00:00:00", wind = TRUE, coliws = 4, coliwd = 5)
@@ -22,7 +24,7 @@
 #' @importFrom stats aggregate
 #' @importFrom lubridate duration
 
-trs <- function(df, bkip, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3, cpms=TRUE){
+trs <- function(df, bkip, st = NULL, et = NULL, fun = 'mean', probs=0.5, na.rm = TRUE, wind = FALSE, coliws = 2, coliwd = 3, cpms=TRUE){
   
   #remove rows showing NA in datatime
   df=df[!is.na(df[,1]),]
@@ -80,8 +82,11 @@ trs <- function(df, bkip, st = NULL, et = NULL, na.rm = TRUE, wind = FALSE, coli
     #not need to insert et, just need to trunck by et (">=").
     df <- df[df[,1] <= et,]
   }
-  eval(parse(text = paste(c("datat <- aggregate(df[,-1], list(", colnames(df)[1], " = cut(df[,1], breaks = bkip)), mean, na.rm = na.rm)"),collapse = "")))
-
+  if(fun!="quantile"){
+	eval(parse(text = paste(c("datat <- aggregate(df[,-1], list(", colnames(df)[1], " = cut(df[,1], breaks = bkip)), FUN=", fun, ", na.rm = na.rm)"),collapse = "")))
+  }else{
+	eval(parse(text = paste(c("datat <- aggregate(df[,-1], list(", colnames(df)[1], " = cut(df[,1], breaks = bkip)), FUN = 'quantile', probs=", probs, ", na.rm = na.rm)"),collapse = "")))
+  }
   #convert ts according to type of bkip
   bkip_str = gsub("[^a-zA-Z]", "", bkip)
   bkip_str = tolower(bkip_str)

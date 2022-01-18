@@ -1,0 +1,1 @@
+utils::globalVariables(c("ymin", "ymax", "Datetime", "value", "variable", "data", "WSfoqat", "WDfoqat", "O3foqat"))

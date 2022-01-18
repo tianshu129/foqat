@@ -2,13 +2,15 @@
 % Please edit documentation in R/trs.R
 \name{trs}
 \alias{trs}
-\title{Resample time series}
+\title{Resample time series for summary statistics}
 \usage{
 trs(
   df,
   bkip,
   st = NULL,
   et = NULL,
+  fun = "mean",
+  probs = 0.5,
   na.rm = TRUE,
   wind = FALSE,
   coliws = 2,
@@ -25,6 +27,10 @@ trs(
 
 \item{et}{end time of resampling. The default value is the last value of datetime column.}
 
+\item{fun}{a function to compute the summary statistics which can be applied to all data subsets: 'sum', 'mean', 'median', 'min', 'max', 'sd' and 'quantile'.}
+
+\item{probs}{numeric vector of probabilities with values in \([0,1]\).}
+
 \item{na.rm}{logical value. Remove NA value or not?}
 
 \item{wind}{logical value. if TRUE, please set coliwd, coliws.}
@@ -36,10 +42,10 @@ trs(
 \item{cpms}{logical value. Compensate the insufficient amount of the millisecond bit for datetime column.}
 }
 \value{
-a dataframe which contains a time series with a new time resolution.
+a dataframe which contains a time series for summary statistics with a new time resolution.
 }
 \description{
-Resamples time series, and returns complete time series with new time resolution.
+Resamples time series for summary statistics, and returns complete time series with new time resolution.
   (wind data is acceptable)
 }
 \details{

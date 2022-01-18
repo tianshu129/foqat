@@ -11,7 +11,8 @@ vocct(
   p = 101.325,
   stcd = FALSE,
   sortd = TRUE,
-  chn = FALSE
+  chn = FALSE,
+  bvoc = TRUE
 )
 }
 \arguments{
@@ -35,6 +36,8 @@ If TRUE, VOC species in time series will be arranged according to VOC group,
  relative molecular weight, and MIR value.}
 
 \item{chn}{logical. Dose colnames present as Chinese? The default vaule is FALSE.}
+
+\item{bvoc}{logical. Whether you want to list BVOC as a separate VOC group? The default vaule is TRUE.}
 }
 \value{
 a list contains 9 tables:

@@ -1,12 +1,11 @@
-#' Calculate average of variation
+#' Compute the variation of summary statistics
 #'
-#' Calculates average of variation of time series. (contain but not limited to:
-#' average daily variation, average monthly variation, average annual variation)
+#' Compute the variation of summary statistics for time series.
 #'
 #' If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
 #'
 #' @param df dataframe of time series.
-#' @param bkip the basic time reslution for average variation, such as '1 hour'. If mode "custom" is selected, do not need to enter bkip.
+#' @param bkip the basic time reslution for variation, such as '1 hour'. If mode "custom" is selected, do not need to enter bkip.
 #' @param mode for calculating cycles: "recipes", "ncycle", "custom".
 #' "recipes" means using internal setting for calculation.
 #' "ncycle" means setting number of items for per cycle.
@@ -20,14 +19,15 @@
 #' values for "custom" is a number representing column index in dataframe.
 #' @param st start time of resampling. The default value is the fisrt value of datetime column.
 #' @param et end time of resampling. The default value is the last value of datetime column.
+#' @param fun  a function to compute the summary statistics which can be applied to all data subsets: 'sum', 'mean', 'median', 'min', 'max', 'sd' and 'quantile'.
+#' @param probs numeric vector of probabilities with values in \([0,1]\).
 #' @param na.rm logical value. Remove NA value or not?
 #' @param digits numeric value, digits for result dataframe.
 #' @param wind logical value. if TRUE, please set coliwd, coliws.
 #' @param coliws numeric value, column index of wind speed in dataframe.
 #' @param coliwd numeric value, column index of wind direction (degree) in dataframe.
 #' @param sn logical value. if TRUE, the results will be presented by scientific notation (string).
-#' @return  a list with 2 dataframe (average and SD). The first column of dataframe is the serial number within the period. The
-#' average variation (or SD) start from the second column. \cr
+#' @return the variation of summary statistics
 #' Note that when the pattern USES
 #' "ncycle" or "custom", the start time determines the start time of the first
 #' element in the average variation. For example, if the first timestamp of data is
@@ -36,13 +36,13 @@
 #'
 #' @export
 #' @examples
-#' avri(met, bkip = "1 hour", mode = "recipes", value = "day",
-#' st = "2017-05-01 00:00:00", wind = TRUE, coliws = 4, coliwd = 5)
-#' @importFrom dplyr full_join left_join
+#' svri(met, bkip = "1 hour", mode = "recipes", value = "day", fun = 'quantile', probs=0.5,
+#' st = "2017-05-01 00:00:00")
+#' @importFrom dplyr full_join
 #' @importFrom stats aggregate
 #' @importFrom lubridate duration
 
-avri<-function(df, bkip=NULL, mode = "recipes", value = "day", st = NULL, et = NULL, na.rm = TRUE, digits = 2, wind = FALSE, coliws = 2, coliwd = 3, sn=FALSE){
+svri<-function(df, bkip=NULL, mode = "recipes", value = "day", st = NULL, et = NULL, fun = 'mean', probs=0.5, na.rm = TRUE, digits = 2, wind = FALSE, coliws = 2, coliwd = 3, sn=FALSE){
 
   #time resampling
   if(mode!="custom"){
@@ -84,18 +84,19 @@ avri<-function(df, bkip=NULL, mode = "recipes", value = "day", st = NULL, et = N
       mod_list=month(rs_df[,1])
     }
   }else if(mode=="ncycle"){
-    mod_list=seq(0,nrow(rs_df)-1,1)%%as.numeric(value)
+    mod_list=seq(0,nrow(rs_df)-1,1)%%value
   }else if(mode=="custom"){
     mod_list=rs_df[,1]
   }
 
-  #avearage
-  results=aggregate(rs_df[,-1], by=list(cycle=mod_list), mean, na.rm = na.rm)
-
-  #sd
-  results_sd=aggregate(rs_df[,-1], by=list(cycle=mod_list), sd, na.rm = na.rm)
-
-  #calculate avearage of ws, wd
+  #stat 
+  if(fun!="quantile"){
+	eval(parse(text = paste(c("results <- aggregate(rs_df[,-1], by=list(cycle=mod_list), FUN=", fun, ", na.rm = na.rm)"),collapse = "")))
+  }else{
+	eval(parse(text = paste(c("results <- aggregate(rs_df[,-1], by=list(cycle=mod_list), FUN = 'quantile', probs=", probs, ", na.rm = na.rm)"),collapse = "")))
+  }
+  
+  #calculate ws, wd
   if(wind == TRUE){
     datat=results
     datat$fake_degree<-(atan(datat$u/datat$v)/pi*180)
@@ -107,20 +108,6 @@ avri<-function(df, bkip=NULL, mode = "recipes", value = "day", st = NULL, et = N
     datat[ ,c(coliws,coliwd)] <- datat[ ,c((length(datat)-1),length(datat))]
     datat <- datat[,-c((length(datat)-1),length(datat))]
     results=datat
-  }
-
-  #calculate sd of ws, wd
-  if(wind == TRUE){
-    datat=results_sd
-    datat$fake_degree<-(atan(datat$u/datat$v)/pi*180)
-    datat$temp_ws<-sqrt((datat$u)^2+(datat$v)^2)
-    datat <- within(datat, {
-      true_degree = ifelse(datat$v<0,datat$fake_degree+180,ifelse(datat$u<0,datat$fake_degree+360,datat$fake_degree))
-    })
-    datat <- datat[ ,-which(names(datat) %in% c("u", "v", "fake_degree"))]
-    datat[ ,c(coliws,coliwd)] <- datat[ ,c((length(datat)-1),length(datat))]
-    datat <- datat[,-c((length(datat)-1),length(datat))]
-    results_sd=datat
   }
 
   #format average data (avoid NA)
@@ -136,23 +123,6 @@ avri<-function(df, bkip=NULL, mode = "recipes", value = "day", st = NULL, et = N
 			results[,-1]=lapply(results[,-1], formatC, format = "e", digits = digits)
 		}else{
 			results[,-1]=lapply(results[,-1], as.numeric)
-		}
-	}
-  }
-
-  #format sd data (avoid NA)
-  if(!all(is.na(results_sd[, -1]))){
-	if(ncol(results_sd)==2){
-		if(sn==TRUE){
-			results_sd[,-1]=do.call(rbind, lapply(results_sd[,-1], formatC, format = "e", digits = digits))
-		}else{
-			results_sd[,-1]=do.call(rbind, lapply(results_sd[,-1], as.numeric))
-		}
-	}else{
-		if(sn==TRUE){	
-			results_sd[,-1]=lapply(results_sd[,-1], formatC, format = "e", digits = digits)
-		}else{
-			results_sd[,-1]=lapply(results_sd[,-1], as.numeric)
 		}
 	}
   }
@@ -181,14 +151,6 @@ avri<-function(df, bkip=NULL, mode = "recipes", value = "day", st = NULL, et = N
   #rename average df
   colnames(results)[2:ncol(results)] <- cona_df[2:length(cona_df)]
 
-  #rename sd df
-  colnames(results_sd) <- colnames(results)
-
   #output
-  df_average=results
-  df_sd=results_sd
-  names(df_average)[-1]=paste0(names(df)[-1],"_ave")
-  names(df_sd)[-1]=paste0(names(df)[-1],"_sd")
-  results=left_join(df_average, df_sd, by = names(df_average)[1])
   return(results)
 }

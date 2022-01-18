@@ -15,7 +15,7 @@
 #' @param lsz line size of panel border and axis in plot.
 #' @param tkl tick length in plot.
 #' @return a plot for the time series of particle size distribution. \cr
-
+#'
 #' @export
 #' @import ggplot2 
 #' @importFrom scales rescale pretty_breaks

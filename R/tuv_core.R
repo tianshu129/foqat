@@ -32,6 +32,7 @@
 #' OutputMode 3: Weighted irradiance (27 weighting functions). \cr
 #' OutputMode 4: Spectral actinic flux. \cr
 #' OutputMode 5: Spectral irradiance. \cr
+#' @importFrom stats complete.cases 
 
 tuv_core=function(wStart=280, wStop=420, wIntervals=140, inputMode=0, latitude=0, longitude=0, date=20150630, timeStamp="12:00:00",  zenith=0, ozone=300, albedo=0.1, gAltitude=0, mAltitude=0, taucld=0.00, zbase=4.00, ztop=5.00, tauaer=0.235, ssaaer=0.990, alpha=1.000, time=12, outputMode=2, nStreams=-2, dirsun=1.0, difdn=1.0, difup=NA){
   if(is.na(difup)&(outputMode==2|outputMode==4)){
@@ -44,10 +45,9 @@ tuv_core=function(wStart=280, wStop=420, wIntervals=140, inputMode=0, latitude=0
   filetext=read.delim("file.txt")
   if(outputMode==2){
 	#PHOTOLYSIS RATES (1/sec)
-	photolysis_rates=filetext[23:135,]
-	phlydf=do.call(rbind.data.frame,strsplit(photolysis_rates, "\\s{4,}"))
-	phlydf[34,1]=paste0(" ", strsplit(filetext[56,], "\\s{2,}")[[1]][2])
-	phlydf[34,2]=strsplit(filetext[56,], "\\s{2,}")[[1]][3]
+	photolysis_rates=filetext[19:131,]
+	phlydf=data.frame(do.call(rbind, strsplit(photolysis_rates, ' (?=[^ ]+$)', perl=TRUE)))
+	phlydf=phlydf[complete.cases(phlydf),]
 	phlydf_value=data.frame(t(phlydf[,2]))
 	names(phlydf_value)=phlydf[,1]
 	return(phlydf_value)
