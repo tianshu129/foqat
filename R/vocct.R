@@ -24,6 +24,7 @@
 #' If TRUE, VOC species in time series will be arranged according to VOC group,
 #'  relative molecular weight, and MIR value.
 #' @param chn logical. Dose colnames present as Chinese? The default vaule is FALSE.
+#' @param bvoc logical. Whether you want to list BVOC as a separate VOC group? The default vaule is TRUE.
 #' @return  a list contains 9 tables:
 #' MW_Result: matched Molecular Weight (MW) value result;
 #' Con_ugm: time series of VOC mass concentration by species;
@@ -41,7 +42,7 @@
 #' @import magrittr
 #' @importFrom stringr str_split_fixed
 
-vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, chn=FALSE){
+vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRUE, chn=FALSE, bvoc=TRUE){
 
   #In case df is not a dataframe.
   temp_col_name <- colnames(df)
@@ -58,7 +59,7 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
 	  chemicalnames = gsub("\\i-", "iso-", chemicalnames)
 
 	  #build name_df
-	  name_df = data.frame(name = chemicalnames,CAS = NA, Matched_Name = NA, MIR = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
+	  name_df = data.frame(Name = chemicalnames,CAS = NA, Matched_Name = NA, MIR = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
 
 	  #search VOC name to get CAS Number from different sources, add cas, sources, mathed_name to name_df
 	  ##firstly by NIST
@@ -87,13 +88,13 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
 	  #build name_df
 	  colnm_df = colnames(df)[2:ncol(df)]
 	  chemicalnames = ifelse(substr(colnm_df, 1, 1) == "X", sub("^.", "", colnm_df), colnm_df)
-	  name_df = data.frame(name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, MIR = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
+	  name_df = data.frame(Name = chemicalnames,CAS = NA, Source = NA, Matched_Name = NA, MIR = NA, MW = NA, Group = NA, stringsAsFactors = FALSE)
 
 	  #match table by chinese name
 	  chn_name_db<-data.frame(str_split_fixed(gsub("\\/|\\,|\\-| ", "", datacas$chn), ';', 3))#change according to max chinese name vector
 	  for(k in 1:nrow(name_df)){
 		chn_df<-data.frame(str_split_fixed(gsub("\\,|\\-| ", "", datacas$chn), ';', 2))
-		x=which(chn_df == gsub("\\,|\\,|\\-| ", "", name_df$name[k]), arr.ind = TRUE)[1]
+		x=which(chn_df == gsub("\\,|\\,|\\-| ", "", name_df$Name[k]), arr.ind = TRUE)[1]
 		df_null=data.frame(datacas[x,])
 		if(nrow(df_null)!=0){
 		  name_df$Matched_Name[as.numeric(k)] = df_null$Description[1]
@@ -109,18 +110,24 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
   name_df$Group[is.na(name_df$Group)] = "Unknown"
 
   #set GROUP to BVOC for BVOC group
-  name_df$Group[name_df$CAS %in% c('80-56-8','127-91-3','78-79-5','138-86-3')] = "BVOC"
-
+  if(bvoc==TRUE){
+	name_df$Group[name_df$CAS %in% c('80-56-8','127-91-3','78-79-5','138-86-3')] = "BVOC"
+  }
+  
   #raw_order
-  name_df$raw_order = seq.int(nrow(name_df))
+  name_df$Raw_order = seq.int(nrow(name_df))
 
   #set order for voc species in df and name_df
   if(sortd==TRUE){
 	  #order by 2 columns
-	  name_df$Group <- factor(name_df$Group, levels = c("Alkanes", "Alkenes", "BVOC", "Alkynes", "Aromatic_Hydrocarbons", "Oxygenated_Organics", "Other_Organic_Compounds", "Unknown"))
+	  if(bvoc==TRUE){
+		name_df$Group <- factor(name_df$Group, levels = c("Alkanes", "Alkenes", "BVOC", "Alkynes", "Aromatic_Hydrocarbons", "Oxygenated_Organics", "Other_Organic_Compounds", "Unknown"))
+	  }else{
+		name_df$Group <- factor(name_df$Group, levels = c("Alkanes", "Alkenes", "Alkynes", "Aromatic_Hydrocarbons", "Oxygenated_Organics", "Other_Organic_Compounds", "Unknown"))
+	  }
 	  name_df = name_df[with(name_df, order(Group, MW, MIR)), ]
-	  df[,2:ncol(df)]=df[,name_df$raw_order+1]
-	  colnames(df)[2:ncol(df)]=colnames(df)[name_df$raw_order+1]
+	  df[,2:ncol(df)]=df[,name_df$Raw_order+1]
+	  colnames(df)[2:ncol(df)]=colnames(df)[name_df$Raw_order+1]
   }
 
   #set concentration df, multiple df with MIR in name_df
@@ -146,12 +153,21 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
   }
 
   #vector of group names
-  gn_list = c("Alkanes", "Alkenes", "BVOC", "Alkynes", "Aromatic_Hydrocarbons", "Oxygenated_Organics", "Other_Organic_Compounds", "Unknown")
+  if(bvoc==TRUE){
+	gn_list = c("Alkanes", "Alkenes", "BVOC", "Alkynes", "Aromatic_Hydrocarbons", "Oxygenated_Organics", "Other_Organic_Compounds", "Unknown")
+  }else{
+	gn_list = c("Alkanes", "Alkenes", "Alkynes", "Aromatic_Hydrocarbons", "Oxygenated_Organics", "Other_Organic_Compounds", "Unknown")
+  }
 
   #generate group df
-  Con_ppbv_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
-  Con_ugm_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
-
+  if(bvoc==TRUE){
+	Con_ppbv_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
+	Con_ugm_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
+  }else{
+	Con_ppbv_group=data.frame(Time=df[,1], Alkanes=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
+	Con_ugm_group=data.frame(Time=df[,1], Alkanes=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA) 
+  }
+  
   #sum up columns
   for(gn in 1:length(gn_list)){
 	gn_sub_index = which(name_df$Group == gn_list[gn])
@@ -165,42 +181,46 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
 		}
 	}
   }
+  
+  #remove NA columns
+  Con_ppbv_group <- Con_ppbv_group[,colSums(is.na(Con_ppbv_group))<nrow(Con_ppbv_group)]
+  Con_ugm_group <- Con_ugm_group[,colSums(is.na(Con_ugm_group))<nrow(Con_ugm_group)]
+  
+  #Con_ugm_stat
+  Con_ugm_stat=data.frame(Species=row.names(statdf(Con_ugm)),Mean=as.numeric(as.character(statdf(Con_ugm,n = 3)[,1])),SD=as.numeric(as.character(statdf(Con_ugm,n = 3)[,2])),Min=as.numeric(as.character(statdf(Con_ugm,n = 3)[,3])),Q25=as.numeric(as.character(statdf(Con_ugm,n = 3)[,4])),Q50=as.numeric(as.character(statdf(Con_ugm,n = 3)[,5])),Q75=as.numeric(as.character(statdf(Con_ugm,n = 3)[,6])),Max=as.numeric(as.character(statdf(Con_ugm,n = 3)[,6])))
+  Con_ugm_stat$Proportion=Con_ugm_stat$Mean/sum(as.numeric(as.character(statdf(Con_ugm,n = 3)[,1])),na.rm = TRUE)
+  Con_ugm_stat$Proportion=round(Con_ugm_stat$Proportion,4)
+  Con_ugm_stat=Con_ugm_stat[with(Con_ugm_stat, order(-Mean)), ]
 
-  #Con_ugm_mean
-  Con_ugm_mean=data.frame(species=row.names(statdf(Con_ugm)[-1,]),mean=as.numeric(as.character(statdf(Con_ugm,n = 6)[-1,1])))
-  Con_ugm_mean$Proportion=Con_ugm_mean$mean/sum(as.numeric(as.character(statdf(Con_ugm,n = 6)[-1,1])),na.rm = TRUE)
-  Con_ugm_mean$Proportion=round(Con_ugm_mean$Proportion,4)
-  Con_ugm_mean=Con_ugm_mean[with(Con_ugm_mean, order(-mean)), ]
+  #Con_ppbv_stat
+  Con_ppbv_stat=data.frame(species=row.names(statdf(Con_ppbv)),Mean=as.numeric(as.character(statdf(Con_ppbv,n = 3)[,1])),sd=as.numeric(as.character(statdf(Con_ppbv,n = 3)[,2])),Min=as.numeric(as.character(statdf(Con_ppbv,n = 3)[,3])),Q25=as.numeric(as.character(statdf(Con_ppbv,n = 3)[,4])),Q50=as.numeric(as.character(statdf(Con_ppbv,n = 3)[,5])),Q75=as.numeric(as.character(statdf(Con_ppbv,n = 3)[,6])),Max=as.numeric(as.character(statdf(Con_ppbv,n = 3)[,6])))
+  Con_ppbv_stat$Proportion=Con_ppbv_stat$Mean/sum(as.numeric(as.character(statdf(Con_ppbv,n = 6)[,1])),na.rm = TRUE)
+  Con_ppbv_stat$Proportion=round(Con_ppbv_stat$Proportion,4)
+  Con_ppbv_stat=Con_ppbv_stat[with(Con_ppbv_stat, order(-Mean)), ]
 
-  #Con_ppbv_mean
-  Con_ppbv_mean=data.frame(species=row.names(statdf(Con_ppbv)[-1,]),mean=as.numeric(as.character(statdf(Con_ppbv,n = 6)[-1,1])))
-  Con_ppbv_mean$Proportion=Con_ppbv_mean$mean/sum(as.numeric(as.character(statdf(Con_ppbv,n = 6)[-1,1])),na.rm = TRUE)
-  Con_ppbv_mean$Proportion=round(Con_ppbv_mean$Proportion,4)
-  Con_ppbv_mean=Con_ppbv_mean[with(Con_ppbv_mean, order(-mean)), ]
+  #Con_ugm_group_stat
+  Con_ugm_group_stat=data.frame(Species=row.names(statdf(Con_ugm_group)),Mean=as.numeric(as.character(statdf(Con_ugm_group,n = 3)[,1])),SD=as.numeric(as.character(statdf(Con_ugm_group,n = 3)[,2])),min=as.numeric(as.character(statdf(Con_ugm_group,n = 3)[,3])),Q25=as.numeric(as.character(statdf(Con_ugm_group,n = 3)[,4])),Q50=as.numeric(as.character(statdf(Con_ugm_group,n = 3)[,5])),Q75=as.numeric(as.character(statdf(Con_ugm_group,n = 3)[,6])),Max=as.numeric(as.character(statdf(Con_ugm_group,n = 3)[,6])))
+  Con_ugm_group_stat$Proportion=Con_ugm_group_stat$Mean/sum(as.numeric(as.character(statdf(Con_ugm_group,n = 6)[,1])),na.rm = TRUE)
+  Con_ugm_group_stat$Proportion=round(Con_ugm_group_stat$Proportion,4)
+  Con_ugm_group_stat=Con_ugm_group_stat[with(Con_ugm_group_stat, order(-Mean)), ]
 
-  #Con_ugm_group_mean
-  Con_ugm_group_mean=data.frame(species=row.names(statdf(Con_ugm_group)[-1,]),mean=as.numeric(as.character(statdf(Con_ugm_group,n = 6)[-1,1])))
-  Con_ugm_group_mean$Proportion=Con_ugm_group_mean$mean/sum(as.numeric(as.character(statdf(Con_ugm_group,n = 6)[-1,1])),na.rm = TRUE)
-  Con_ugm_group_mean$Proportion=round(Con_ugm_group_mean$Proportion,4)
-  Con_ugm_group_mean=Con_ugm_group_mean[with(Con_ugm_group_mean, order(-mean)), ]
-
-  #Con_ppbv_group_mean
-  Con_ppbv_group_mean=data.frame(species=row.names(statdf(Con_ppbv_group)[-1,]),mean=as.numeric(as.character(statdf(Con_ppbv_group,n = 6)[-1,1])))
-  Con_ppbv_group_mean$Proportion=Con_ppbv_group_mean$mean/sum(as.numeric(as.character(statdf(Con_ppbv_group,n = 6)[-1,1])),na.rm = TRUE)
-  Con_ppbv_group_mean$Proportion=round(Con_ppbv_group_mean$Proportion,4)
-  Con_ppbv_group_mean=Con_ppbv_group_mean[with(Con_ppbv_group_mean, order(-mean)), ]
+  #Con_ppbv_group_stat
+  Con_ppbv_group_stat=data.frame(Species=row.names(statdf(Con_ppbv_group)),Mean=as.numeric(as.character(statdf(Con_ppbv_group,n = 3)[,1])),SD=as.numeric(as.character(statdf(Con_ppbv_group,n = 3)[,2])),Min=as.numeric(as.character(statdf(Con_ppbv_group,n = 3)[,3])),Q25=as.numeric(as.character(statdf(Con_ppbv_group,n = 3)[,4])),Q50=as.numeric(as.character(statdf(Con_ppbv_group,n = 3)[,5])),Q75=as.numeric(as.character(statdf(Con_ppbv_group,n = 3)[,6])),Max=as.numeric(as.character(statdf(Con_ppbv_group,n = 3)[,6])))
+  Con_ppbv_group_stat$Proportion=Con_ppbv_group_stat$Mean/sum(as.numeric(as.character(statdf(Con_ppbv_group,n = 3)[,1])),na.rm = TRUE)
+  Con_ppbv_group_stat$Proportion=round(Con_ppbv_group_stat$Proportion,4)
+  Con_ppbv_group_stat=Con_ppbv_group_stat[with(Con_ppbv_group_stat, order(-Mean)), ]
 
   #results
   results <- list(
 	MW_Result = name_df,
 	Con_ugm = Con_ugm,
-	Con_ugm_mean = Con_ugm_mean,
+	Con_ugm_stat = Con_ugm_stat,
 	Con_ugm_group = Con_ugm_group,
-	Con_ugm_group_mean = Con_ugm_group_mean,
+	Con_ugm_group_mean = Con_ugm_group_stat,
 	Con_ppbv = Con_ppbv,
-	Con_ppbv_mean = Con_ppbv_mean,
+	Con_ppbv_stat = Con_ppbv_stat,
 	Con_ppbv_group = Con_ppbv_group,
-	Con_ppbv_group_mean = Con_ppbv_group_mean
+	Con_ppbv_group_stat = Con_ppbv_group_stat
   )
   return(results)
 }

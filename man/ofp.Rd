@@ -13,7 +13,8 @@ ofp(
   stcd = FALSE,
   sortd = TRUE,
   chn = FALSE,
-  mtype = "usa"
+  mtype = "usa",
+  bvoc = TRUE
 )
 }
 \arguments{
@@ -43,6 +44,8 @@ If TRUE, VOC species in time series will be arranged according to VOC group,
 \item{chn}{logical. Dose colnames present as Chinese? The default vaule is FALSE.}
 
 \item{mtype}{text. "usa" for MIR value from USA, "chn" for MIR value from CHINA.}
+
+\item{bvoc}{logical. Whether you want to list BVOC as a separate VOC group? The default vaule is TRUE.}
 }
 \value{
 a list contains 5 tables:

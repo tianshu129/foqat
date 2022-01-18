@@ -5,15 +5,24 @@
 #' Summary of dataframe: mean, standard deviation (sd), minimum (min), percentiles
 #' (0.25, 0.50, 0.75), maximum (max).
 #'
-#' @param x dataframe of time series.
+#' @param df dataframe of time series.
 #' @param n digits for reuslt in dataframe.
-#' @return  a dataframe, columns stands for parameters, rows stands for variables.
+#' @param cmcase logical value. Set to TRUE if you only 
+#' want to summary cases which are complete, i.e., have 
+#' no missing values.
+#' @param prop logical value. Convert time series into 
+#' proportion time series before summary.
+#' @return  a dataframe, columns stands for parameters, 
+#' rows stands for variables.
 #' @export
 #' @examples
-#' statdf(aqi)
-#' @importFrom stats quantile sd
+#' statdf(voc)
+#' @importFrom stats quantile sd complete.cases
 
-statdf = function(x, n = 2) {
+statdf = function(df, n = 2, cmcase=FALSE, prop=FALSE){
+  if(cmcase==TRUE){df=df[complete.cases(df), ]}
+  if(prop==TRUE){df=prop(df)}
+  x=df[,-1]
   mean_df <- function(x) {if (is.numeric(x)) round(mean(x, na.rm=TRUE), digits=n) else "Not numeric type"}
   sd_df <- function(x) {if (is.numeric(x)) round(sd(x, na.rm=TRUE), digits=n) else "Not numeric type"}
   min_df <- function(x) {if (is.numeric(x)) round(min(x, na.rm=TRUE), digits=n) else "Not numeric type"}

@@ -4,15 +4,23 @@
 \alias{statdf}
 \title{Summary of dataframe}
 \usage{
-statdf(x, n = 2)
+statdf(df, n = 2, cmcase = FALSE, prop = FALSE)
 }
 \arguments{
-\item{x}{dataframe of time series.}
+\item{df}{dataframe of time series.}
 
 \item{n}{digits for reuslt in dataframe.}
+
+\item{cmcase}{logical value. Set to TRUE if you only 
+want to summary cases which are complete, i.e., have 
+no missing values.}
+
+\item{prop}{logical value. Convert time series into 
+proportion time series before summary.}
 }
 \value{
-a dataframe, columns stands for parameters, rows stands for variables.
+a dataframe, columns stands for parameters, 
+rows stands for variables.
 }
 \description{
 Summary of dataframe.
@@ -22,5 +30,5 @@ Summary of dataframe: mean, standard deviation (sd), minimum (min), percentiles
 (0.25, 0.50, 0.75), maximum (max).
 }
 \examples{
-statdf(aqi)
+statdf(voc)
 }

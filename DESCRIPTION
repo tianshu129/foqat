@@ -1,7 +1,7 @@
 Package: foqat
 Type: Package
 Title: Field Observation Quick Analysis Toolkit
-Version: 1.7.2
+Version: 2.0.0
 Author: Tianshu Chen
 Maintainer: Tianshu Chen <tianshu129@163.com>
 Description: Tools for quickly processing and analyzing 
@@ -21,7 +21,7 @@ BugReports: https://github.com/tianshu129/foqat/issues
 Depends: R (>= 3.5.0)
 Imports: lubridate, magrittr, dplyr, plyr, stats, stringr, utils,
         lmodel2, reshape2, ggplot2, ggplotify, gridExtra,
-        scales, rvest, xml2
+        scales, rvest, xml2, ggnewscale, patchwork
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
 LazyData: true

@@ -25,6 +25,7 @@
 #' @param colid column index of date. The default value is 1.
 #' @return a dataframe.The first column is datetime. The second column is the solar altitude Angle. The rates of photolysis for each reaction(Unit: s-1)
 #' start from third column: 1 = O3 -> O2 + O1D
+#'
 #' @export
 #' @importFrom stringr str_split_fixed
 #' @importFrom lubridate hours

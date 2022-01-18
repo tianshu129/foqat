@@ -31,6 +31,7 @@
 #' OutputMode 3: Weighted irradiance (27 weighting functions). \cr
 #' OutputMode 4: Spectral actinic flux. \cr
 #' OutputMode 5: Spectral irradiance. \cr
+#'
 #' @export
 #' @importFrom lubridate hour minute second
 #' @importFrom utils read.delim setTxtProgressBar txtProgressBar
