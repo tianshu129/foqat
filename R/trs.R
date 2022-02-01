@@ -1,6 +1,6 @@
-#' Resample time series for summary statistics
+#' Resample time series by summary statistics
 #'
-#' Resamples time series for summary statistics, and returns complete time series with new time resolution.
+#' Resamples time series by summary statistics, and returns complete time series with new time resolution.
 #'   (wind data is acceptable)
 #'
 #' If you have wind data (wind speed, and wind direction in dgree), please set 'wind' as 'TRUE', and set values for 'coliwd' and 'coliws'.
