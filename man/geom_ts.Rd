@@ -26,7 +26,11 @@ geom_ts(
   lcc = NULL,
   pcc = NULL,
   aff = NULL,
-  bff = NULL
+  bff = NULL,
+  ana = TRUE,
+  apos = "stack",
+  bna = TRUE,
+  bpos = "identity"
 )
 }
 \arguments{
@@ -73,6 +77,14 @@ geom_ts(
 \item{aff}{fill color of areas. The default vaule is NULL.}
 
 \item{bff}{fill color of bars. The default vaule is NULL.}
+
+\item{ana}{logical value, the way to handle NA values for areas. If you select FALSE, NA value will be replaced by 0.}
+
+\item{apos}{Position adjustment for areas, either as a string, or the result of a call to a position adjustment function.}
+
+\item{bna}{logical value, the way to handle NA values for bars. If you select FALSE, NA value will be replaced by 0.}
+
+\item{bpos}{Position adjustment for bars, either as a string, or the result of a call to a position adjustment function.}
 }
 \description{
 Easy way to plot time series.

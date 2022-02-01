@@ -164,8 +164,8 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
 	Con_ppbv_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
 	Con_ugm_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes_exclude_BVOC=NA, BVOC=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
   }else{
-	Con_ppbv_group=data.frame(Time=df[,1], Alkanes=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
-	Con_ugm_group=data.frame(Time=df[,1], Alkanes=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA) 
+	Con_ppbv_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA)
+	Con_ugm_group=data.frame(Time=df[,1], Alkanes=NA, Alkenes=NA, Alkynes=NA, Aromatic_Hydrocarbons=NA, Oxygenated_Organics=NA, Other_Organic_Compounds=NA, Unknown=NA) 
   }
   
   #sum up columns
@@ -216,7 +216,7 @@ vocct <- function(df, unit = "ppbv", t = 25, p = 101.325, stcd=FALSE, sortd =TRU
 	Con_ugm = Con_ugm,
 	Con_ugm_stat = Con_ugm_stat,
 	Con_ugm_group = Con_ugm_group,
-	Con_ugm_group_mean = Con_ugm_group_stat,
+	Con_ugm_group_stat = Con_ugm_group_stat,
 	Con_ppbv = Con_ppbv,
 	Con_ppbv_stat = Con_ppbv_stat,
 	Con_ppbv_group = Con_ppbv_group,

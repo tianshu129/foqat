@@ -2,7 +2,7 @@
 % Please edit documentation in R/trs.R
 \name{trs}
 \alias{trs}
-\title{Resample time series for summary statistics}
+\title{Resample time series by summary statistics}
 \usage{
 trs(
   df,
@@ -45,7 +45,7 @@ trs(
 a dataframe which contains a time series for summary statistics with a new time resolution.
 }
 \description{
-Resamples time series for summary statistics, and returns complete time series with new time resolution.
+Resamples time series by summary statistics, and returns complete time series with new time resolution.
   (wind data is acceptable)
 }
 \details{
