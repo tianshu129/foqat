@@ -63,24 +63,10 @@ remotes::install_github("tianshu129/foqat")
 
 ## Functions
 Functions in foqat are listed below:  
-**statdf**: summary each variable of dataframe into: mean, sd, min, max, percentiles (25%, 50%, 75%).  
-**trs**: resample time series and return complete time series with new time resolution.  
-**avri**: calculate average of variation of time series.   
-**anylm**: analyse linear regression for time series in batch.  
-**dm8n**: calculate daily maximum-8-hour ozone.    
-**vocct**: convert and analyse VOC concentrations   
-**ofp**: calculate ozone formation potential (OFP) of VOC time series.  
-MIR values are refered from "Carter, W. P. (2009). Updated maximum incremental reactivity scale and hydrocarbon bin reactivities for regulatory applications. California Air Resources Board Contract, 2009, 339" (Revised January 28, 2010).  
-**koh**: search kOH value from 'chemspider.com'. Predicted data is generated using the US Environmental Protection Agency’s EPISuite.  
-**loh**: calculate OH reactivity (LOH) of VOC time series. kOH value is generated using the US Environmental Protection Agency’s EPISuite "AOPWIN".  
-**tuv**: run offline batch calculation of [TROPOSPHERIC ULTRAVIOLET AND VISIBLE (TUV) RADIATION MODEL](https://www2.acom.ucar.edu/modeling/tropospheric-ultraviolet-and-visible-tuv-radiation-model).  
-Currently, this function only support output of photolysis rate coefficients (J-values). 
-If you want to know detail about each function, please type ?functionname in R. Below is an example:
+<img src="https://s4.ax1x.com/2022/02/01/HF4zDg.png" align="center"/>
 
-``` r
-library(foqat)
-?dm8n
-```
+## Example usage
+(To be updated)
 
 ## QUESTION OR FEEDBACK
 Click the link to ask questions and give feedback: ☛ https://github.com/tianshu129/foqat/issues/new ☚   
