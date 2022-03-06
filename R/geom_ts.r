@@ -24,6 +24,10 @@
 #' @param pcc vector, colors of points. The default vaule is NULL. The default vaule is NULL.
 #' @param aff fill color of areas. The default vaule is NULL.
 #' @param bff fill color of bars. The default vaule is NULL.
+#' @param ana logical value, the way to handle NA values for areas. If you select FALSE, NA value will be replaced by 0.
+#' @param apos Position adjustment for areas, either as a string, or the result of a call to a position adjustment function.
+#' @param bna logical value, the way to handle NA values for bars. If you select FALSE, NA value will be replaced by 0.
+#' @param bpos Position adjustment for bars, either as a string, or the result of a call to a position adjustment function.
 #'
 #' @export
 #' @examples 
@@ -54,7 +58,7 @@ yllab=NULL, yrlab=NULL, xlab=NULL,
 llist=NULL, plist=NULL, alist=NULL, blist=NULL, 
 llab=NULL, plab=NULL, alab=NULL, blab=NULL,
 ltype=NULL, pshape=NULL, lsize=1, psize=1,
-lcc=NULL, pcc=NULL, aff=NULL, bff=NULL){
+lcc=NULL, pcc=NULL, aff=NULL, bff=NULL, ana=TRUE, apos='stack', bna=TRUE, bpos='identity'){
 	#命名时间列#################################
 	names(df)[1]="Datetime"
 	
@@ -84,8 +88,8 @@ lcc=NULL, pcc=NULL, aff=NULL, bff=NULL){
 		###因子排序
 		df_yl_alist$variable=factor(df_yl_alist$variable,levels=fc_yl_alist)
 		###NA值用0
-		df_yl_alist[is.na(df_yl_alist)]=0
-		p=p+geom_area(data=df_yl_alist, aes(x = Datetime,y = value, fill = variable), position = 'stack')
+		if(ana==FALSE){df_yl_alist[is.na(df_yl_alist)]=0}
+		p=p+geom_area(data=df_yl_alist, aes(x = Datetime,y = value, fill = variable), position = apos)
 	}
 
 	##if area in right
@@ -101,8 +105,8 @@ lcc=NULL, pcc=NULL, aff=NULL, bff=NULL){
 		###因子排序
 		df_yr_alist$variable=factor(df_yr_alist$variable,levels=fc_yr_alist)
 		###NA值用0
-		df_yr_alist[is.na(df_yr_alist)]=0
-		p=p+geom_area(data=df_yr_alist, aes(x = Datetime,y = value*ryl/ryr, fill = variable), position = 'stack')
+		if(ana==FALSE){df_yr_alist[is.na(df_yr_alist)]=0}
+		p=p+geom_area(data=df_yr_alist, aes(x = Datetime,y = value*ryl/ryr, fill = variable), position = apos)
 	}
 
 	#if(!exists("yl_alist")){yl_alist=NULL}
@@ -137,8 +141,8 @@ lcc=NULL, pcc=NULL, aff=NULL, bff=NULL){
 		###因子排序
 		df_yl_blist$variable=factor(df_yl_blist$variable,levels=fc_yl_blist)
 		###NA值用0
-		df_yl_blist[is.na(df_yl_blist)]=0
-		p=p+geom_bar(data=df_yl_blist, aes(x = Datetime,y = value, fill = variable), stat = 'identity')
+		if(bna==FALSE){df_yl_blist[is.na(df_yl_blist)]=0}
+		p=p+geom_bar(data=df_yl_blist, aes(x = Datetime,y = value, fill = variable), stat = bpos)
 	}
 
 	##if area in right
@@ -154,8 +158,8 @@ lcc=NULL, pcc=NULL, aff=NULL, bff=NULL){
 		###因子排序
 		df_yr_blist$variable=factor(df_yr_blist$variable,levels=fc_yr_blist)
 		###NA值用0
-		df_yr_blist[is.na(df_yr_blist)]=0
-		p=p+geom_bar(data=df_yr_blist, aes(x = Datetime,y = value*ryl/ryr, fill = variable), stat = 'identity')
+		if(bna==FALSE){df_yr_blist[is.na(df_yr_blist)]=0}
+		p=p+geom_bar(data=df_yr_blist, aes(x = Datetime,y = value*ryl/ryr, fill = variable), stat = bpos)
 	}
 
 	#if(!exists("yl_blist")){yl_blist=NULL}
