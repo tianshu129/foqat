@@ -3,7 +3,7 @@ pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   my-vignette: my-vignette.html
-last_built: 2022-04-03T14:55Z
+last_built: 2022-04-03T15:07Z
 urls:
   reference: https://tianshu129.github.io/foqat/reference
   article: https://tianshu129.github.io/foqat/articles
