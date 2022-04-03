@@ -30,7 +30,12 @@ geom_ts(
   ana = TRUE,
   apos = "stack",
   bna = TRUE,
-  bpos = "identity"
+  bpos = "identity",
+  yl_limit = NULL,
+  yr_limit = NULL,
+  yl_breaks = waiver(),
+  yr_breaks = waiver(),
+  yl_minor_breaks = waiver()
 )
 }
 \arguments{
@@ -54,13 +59,13 @@ geom_ts(
 
 \item{blist}{plist vector, col index of species to be ploted by bars. The default vaule is NULL.}
 
-\item{llab}{text expression of legend labels of lines. The default vaule is NULL.}
+\item{llab}{list of text expressions of legend labels of lines. The default vaule is NULL.}
 
-\item{plab}{text expression of legend labels of points. The default vaule is NULL.}
+\item{plab}{list of text expressions of legend labels of points. The default vaule is NULL.}
 
-\item{alab}{text expression of legend labels of areas. The default vaule is NULL.}
+\item{alab}{list of text expressions of legend labels of areas. The default vaule is NULL.}
 
-\item{blab}{text expression of legend labels of bars. The default vaule is NULL.}
+\item{blab}{list of text expressions of legend labels of bars. The default vaule is NULL.}
 
 \item{ltype}{vector, type of lines. The default vaule is NULL.}
 
@@ -85,6 +90,16 @@ geom_ts(
 \item{bna}{logical value, the way to handle NA values for bars. If you select FALSE, NA value will be replaced by 0.}
 
 \item{bpos}{Position adjustment for bars, either as a string, or the result of a call to a position adjustment function.}
+
+\item{yl_limit}{two numeric values, specifying the lower limit and the upper limit of the scale in left y axis.}
+
+\item{yr_limit}{two numeric values, specifying the lower limit and the upper limit of the scale in right y axis.}
+
+\item{yl_breaks}{a numeric vector of positions for breaks in left y axis.}
+
+\item{yr_breaks}{a numeric vector of positions for breaks in right y axis.}
+
+\item{yl_minor_breaks}{a numeric vector of positions for minor breaks in left y axis.}
 }
 \description{
 Easy way to plot time series.

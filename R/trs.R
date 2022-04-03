@@ -28,12 +28,15 @@ trs <- function(df, bkip, st = NULL, et = NULL, fun = 'mean', probs=0.5, na.rm =
   
   #remove rows showing NA in datatime
   df=df[!is.na(df[,1]),]
-
+  
+  #get colnames of df
+  cona_df <- colnames(df)
+  
   #In case df is not a dataframe.
   df <- data.frame(df,stringsAsFactors = FALSE)
 
-  #get colnames of df
-  cona_df <- colnames(df)
+  #set colnames of df
+  colnames(df) <- cona_df
   
   #get time zone of datetime
   tzlc=attr(df[,1],"tzone")
