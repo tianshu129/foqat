@@ -1,0 +1,10 @@
+pandoc: 2.7.3
+pkgdown: 2.0.2
+pkgdown_sha: ~
+articles:
+  my-vignette: my-vignette.html
+last_built: 2022-04-03T14:53Z
+urls:
+  reference: https://tianshu129.github.io/foqat/reference
+  article: https://tianshu129.github.io/foqat/articles
+
