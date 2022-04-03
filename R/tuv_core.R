@@ -45,7 +45,9 @@ tuv_core=function(wStart=280, wStop=420, wIntervals=140, inputMode=0, latitude=0
   filetext=read.delim("file.txt")
   if(outputMode==2){
 	#PHOTOLYSIS RATES (1/sec)
-	photolysis_rates=filetext[19:131,]
+	strow=which(grepl("PHOTOLYSIS RATES", filetext[,1]))+1
+	edrow=nrow(filetext)
+	photolysis_rates=filetext[strow:edrow,]
 	phlydf=data.frame(do.call(rbind, strsplit(photolysis_rates, ' (?=[^ ]+$)', perl=TRUE)))
 	phlydf=phlydf[complete.cases(phlydf),]
 	phlydf_value=data.frame(t(phlydf[,2]))
@@ -53,22 +55,28 @@ tuv_core=function(wStart=280, wStop=420, wIntervals=140, inputMode=0, latitude=0
 	return(phlydf_value)
   }else if(outputMode==3){
 	#WEIGHTED IRRADIANCES (W m-2)
-	weighted_irradiances=filetext[24:27,]
+    strow=which(grepl("with normalized action spectra", filetext[,1]))+1
+	edrow=nrow(filetext)
+	weighted_irradiances=filetext[strow:edrow,]
 	weirdf=do.call(rbind.data.frame,strsplit(weighted_irradiances, "\\s{2,}"))
 	weirdf_value=data.frame(t(weirdf[,3]))
 	names(weirdf_value)=weirdf[,2]
 	return(weirdf_value)
   }else if(outputMode==4){
 	#ACTINIC FLUX (# photons/sec/nm/cm2)
-	actinic_flux=filetext[24:163,]
+	strow=which(grepl("LOWER WVL  UPPER WVL  DIRECT", filetext[,1]))+1
+	edrow=nrow(filetext)	   
+	actinic_flux=filetext[strow:edrow,]
 	acfldf_value=do.call(rbind.data.frame,strsplit(actinic_flux, "\\s{2,}"))
-	names(acfldf_value)=unlist(strsplit(filetext[23,], "\\s{2,}"))
+	names(acfldf_value)=unlist(strsplit(filetext[strow-1,], "\\s{2,}"))
 	return(acfldf_value)
   }else if(outputMode==5){
 	#SPECTRAL IRRADIANCE (W m-2 nm-1)
-	spectral_irradiance=filetext[24:163,]
+	strow=which(grepl("LOWER WVL  UPPER WVL  DIRECT", filetext[,1]))+1
+	edrow=nrow(filetext)	   
+	spectral_irradiance=filetext[strow:edrow,]
 	spirdf_value=do.call(rbind.data.frame,strsplit(spectral_irradiance, "\\s{2,}"))
-	names(spirdf_value)=unlist(strsplit(filetext[23,], "\\s{2,}"))
+	names(spirdf_value)=unlist(strsplit(filetext[strow-1,], "\\s{2,}"))
 	return(spirdf_value)
   }
 }
