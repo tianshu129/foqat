@@ -45,11 +45,11 @@ If TRUE, VOC species in time series will be arranged according to VOC group,
 }
 \value{
 a list contains 5 tables:
-KOH_Result: matched KOH value result;
-LOH_Result: LOH time series of VOC by species;
-LOH_Result_mean: the average value and proportion of LOH of VOC by species (sorted from large to small);
-LOH_Result_group: LOH time series of VOC classified by groups;
-LOH_Result_group_mean: the average value and proportion of LOH of VOC according to major groups (sorted from large to small).
+KOH_Result: the matched KOH value results;
+LOH_Result: the LOH time series of VOC by species;
+LOH_Result_stat: the statistics of LOH of VOC by species;
+LOH_Result_group: the LOH time series of VOC classified by groups;
+LOH_Result_group_mean: the statistics of LOH of VOC according to major groups.
 }
 \description{
 Calculate OH reactivity of VOC time series in 25 degree celsius. 

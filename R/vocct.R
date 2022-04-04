@@ -26,15 +26,15 @@
 #' @param chn logical. Dose colnames present as Chinese? The default vaule is FALSE.
 #' @param bvoc logical. Whether you want to list BVOC as a separate VOC group? The default vaule is TRUE.
 #' @return  a list contains 9 tables:
-#' MW_Result: matched Molecular Weight (MW) value result;
-#' Con_ugm: time series of VOC mass concentration by species;
-#' Con_ugm_mean: the average mass concentration and proportion of VOC by species (sorted from large to small);
-#' Con_ugm_group: time series of VOC mass concentration classified by groups;
-#' Con_ugm_group_mean: the average value and proportion of VOC mass concentration (sorted from large to small) according to major groups;
+#' MW_Result: the matched Molecular Weight (MW) value result;
+#' Con_ugm: the time series of VOC mass concentration by species;
+#' Con_ugm_stat: the statistics of VOC mass concentration by species;
+#' Con_ugm_group: the time series of VOC mass concentration classified by groups;
+#' Con_ugm_group_stat: the statistics of VOC mass concentrationaccording to major groups;
 #' Con_ppbv: time series of VOC volume concentration by species;
-#' Con_ppbv_mean: the average volume concentration and proportion of VOC by species (sorted from large to small);
-#' Con_ppbv_group: time series of VOC volume concentration according to major groups;
-#' Con_ppbv_group_mean: VOC volume concentration average and proportion (sorted from large to small) according to major groups;
+#' Con_ppbv_stat: the statistics of VOC volume concentration by species;
+#' Con_ppbv_group: the time series of VOC volume concentration according to major groups;
+#' Con_ppbv_group_stat: the time series of VOC volume concentration classified by groups.
 #'
 #' @export
 #' @examples

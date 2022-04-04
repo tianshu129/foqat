@@ -28,11 +28,11 @@
 #' @param mtype text. "usa" for MIR value from USA, "chn" for MIR value from CHINA.
 #' @param bvoc logical. Whether you want to list BVOC as a separate VOC group? The default vaule is TRUE.
 #' @return  a list contains 5 tables:
-#' MIR_Result: matched MIR value result;
-#' OFP_Result: OFP time series of VOC by species;
-#' OFP_Result_mean: the average value and proportion of OFP of VOC by species (sorted from large to small);
-#' OFP_Result_group: OFP time series of VOC classified by groups;
-#' OFP_Result_group_mean: the average value and proportion of OFP of VOC according to major groups (sorted from large to small).
+#' MIR_Result: the matched MIR value results;
+#' OFP_Result: the OFP time series of VOC by species;
+#' OFP_Result_stat: the statistics of OFP of VOC by species;
+#' OFP_Result_group: OFP the time series of VOC classified by groups;
+#' OFP_Result_group_stat: the statistics of OFP of VOC according to major groups.
 #'
 #' @export
 #' @examples

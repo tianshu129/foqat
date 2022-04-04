@@ -1,0 +1,184 @@
+---
+title: "Trace Gas Chemistry"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Trace_Gas_Chemistry}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+To begin, we’ll load `foqat` and show three datasets in `foqat`:   
+`voc` is a dataset about time series of volatile organic compounds with 1-hour resolution.   
+
+```{r setup}
+library(foqat)
+head(voc)
+```
+
+## Convert VOC unit and analyse VOC concentration 
+
+`vocct()` allows you to convert unit of VOCs between micrograms per cubic meter (ugm) and parts per billion by volume (ppbv); conduct statistics of VOC concentrations.  
+You need to set `unit` into "ugm" or "ppbv". "ugm" means ug m~-3~. "ppbv" means part per billion volumn.  
+
+```{r}
+voc_con=vocct(voc, unit = "ppbv")
+summary(voc_con)
+```
+
+`MW_Result` is the matched Molecular Weight (MW) value results.  
+
+```{r}
+voc_con[["MW_Result"]]
+```
+
+`Con_ugm` is time series of VOC mass concentrations by species.  
+
+```{r}
+head(voc_con[["Con_ugm"]])
+```
+
+`Con_ugm_stat` is the statistics of VOC mass concentration by species.  
+
+```{r}
+voc_con[["Con_ugm_stat"]]
+```
+
+`Con_ugm_group` is the time series of VOC mass concentration classified by groups.  
+
+```{r}
+head(voc_con[["Con_ugm_group"]])
+```
+
+`Con_ugm_group_stat` is the statistics of VOC mass concentration according to major groups.  
+
+```{r}
+voc_con[["Con_ugm_group_stat"]]
+```
+
+`Con_ppbv` is the time series of VOC volume concentration by species.
+```{r}
+head(voc_con[["Con_ppbv"]])
+```
+
+`Con_ppbv_stat` is the statistics of VOC volume concentration by species.  
+
+```{r}
+voc_con[["Con_ppbv_stat"]]
+```
+
+`Con_ppbv_group` is the time series of VOC volume concentration according to major groups.  
+
+```{r}
+head(voc_con[["Con_ppbv_group"]])
+```
+
+`Con_ppbv_group_stat` is the time series of VOC volume concentration classified by groups.  
+
+```{r}
+voc_con[["Con_ppbv_group_stat"]]
+```
+
+
+## Calculate ozone formation potential  
+
+The `ofp()` allows you to statistics time series:  
+
+```{r}
+voc_ofp=ofp(voc)
+summary(voc_ofp)
+```
+
+`MIR_Result` is the matched MIR value results.  
+
+```{r}
+voc_ofp[["MIR_Result"]]
+```
+
+`OFP_Result` is the OFP time series of VOC by species.  
+
+```{r}
+head(voc_ofp[["OFP_Result"]])
+```
+
+`OFP_Result_stat` is the statistics of OFP of VOC by species.  
+
+```{r}
+voc_ofp[["OFP_Result_stat"]]
+```
+
+`OFP_Result_group` is the time series of VOC classified by groups.  
+
+```{r}
+head(voc_ofp[["OFP_Result_group"]])
+```
+
+`OFP_Result_group_stat` is the statistics of OFP of VOC according to major groups.  
+
+```{r}
+voc_ofp[["OFP_Result_group_stat"]]
+```
+
+## Calculate OH reactivity  
+
+The `loh()` allows you to statistics time series:
+
+```{r}
+voc_loh=loh(voc)
+summary(voc_loh)
+```
+
+`KOH_Result` is the matched KOH value results.  
+
+```{r}
+voc_loh[["KOH_Result"]]
+```
+
+`LOH_Result` is the LOH time series of VOC by species.
+
+```{r}
+head(voc_loh[["LOH_Result"]])
+```
+
+`LOH_Result_stat` is the statistics of LOH of VOC by species.  
+
+```{r}
+voc_loh[["LOH_Result_stat"]]
+```
+
+`LOH_Result_group` is the LOH time series of VOC classified by groups.  
+
+```{r}
+head(voc_loh[["LOH_Result_group"]])
+```
+
+`LOH_Result_group_stat` is the statistics of LOH of VOC according to major groups.  
+
+```{r}
+voc_loh[["LOH_Result_group_stat"]]
+```
+
+## Get K~OH~  
+
+The `koh()` allows you Searches K~OH~ value from 'chemspider.com'.
+
+```{r}
+koh("propene")
+```
+
+
+
+
+
+
+
+
+
+
+

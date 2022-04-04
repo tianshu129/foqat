@@ -1,0 +1,53 @@
+---
+title: "Air Quality"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Air_Quality}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+To begin, we’ll load `foqat` and show one dataset in `foqat`:   
+`aqi` is a dataset about time series of air quality with 1-second resolution.  
+
+```{r setup}
+library(foqat)
+head(aqi)
+```
+
+## Calculate daily maximum-8-hour ozone 
+
+You can use `dm8n()` to calculate daily maximum-8-hour ozone.  
+`colid` is the column index of date.
+`colio` is the column index of ozone.
+`outputMode` have two options: value `1` will output 1 list which incudes
+1 table (maximum-8-hour ozone); value `2` will output 
+1 list which contains 4 tables (8-hour ozone, 
+statistics of the number of effective hourly 
+concentrations in each 8-hour average concentration, 
+statistics of the number of effective 8-hour average
+concentrations in each day, maximum-8-hour ozone).
+This function will calculate the average values of other species at the same time and plot them.  
+
+```{r, eval = FALSE}
+dm8n_df = dm8n(aqi, colio=6, outputmode = 1)
+```
+
+If you do not want the plot or you want to save time, you can try `dm8n_np()`
+
+```{r}
+dm8n_df = dm8n_np(aqi, colio=6, outputmode = 1)
+dm8n_df
+```
+
+## Calculate daily maximum-8-hour ozone in batch
+
+`dm8n_batch()` allows you to calculate daily maximum-8-hour ozone of multiple sites (or cities, or sensors), which means that it will calculate daily maximum-8-hour ozone for all columns except first column (date).
+

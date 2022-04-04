@@ -26,8 +26,7 @@
 #' @param coliws numeric value, column index of wind speed in dataframe.
 #' @param coliwd numeric value, column index of wind direction (degree) in dataframe.
 #' @param sn logical value. if TRUE, the results will be presented by scientific notation (string).
-#' @return  a list with 2 dataframe (average and SD). The first column of dataframe is the serial number within the period. The
-#' average variation (or SD) start from the second column. \cr
+#' @return   a data frame which contains both the average variations and the standard deviations.
 #' Note that when the pattern USES
 #' "ncycle" or "custom", the start time determines the start time of the first
 #' element in the average variation. For example, if the first timestamp of data is
