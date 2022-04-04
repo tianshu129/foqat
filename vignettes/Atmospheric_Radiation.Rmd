@@ -1,0 +1,58 @@
+---
+title: "Atmospheric Radiation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Atmospheric_Radiation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+To begin, we’ll load `foqat`.
+
+```{r setup}
+library(foqat)
+```
+
+## Calculate TUV in batch online
+TUV models are available in both online and offline versions, but both require running on a daily basis (i.e., resetting parameters every day of the run).  
+
+`tuv_batch()` runs the online batch TUV by reading a time series of the proposed input parameters and their values, and aggregates the results to a new data frame.  
+
+`tuv_batch()`  automates the online TUV calculation (https://www.acom.ucar.edu/Models/TUV/Interactive_TUV/).  
+
+Four output modes are supported:    
+Output mode 2: Molecular photolysis frequencies (109 photoreactions). Molecular photolysis frequencies (109 photoreactions).   
+Output mode 3: Weighted irradiance (27 weighting functions).   
+Output mode 4: Spectral actinic flux.  
+Output mode 5: Spectral irradiance.   
+
+```{r}
+#Examples.
+#output molecular photolysis frequency (109 light reactions)
+#Time range: March 1, 2021
+#Resolution: hour
+#Ground elevation 1 km
+#Measured altitude 1.05 km
+#Longitude 109.747144 °
+#latitude 38.298267 °
+#Ozone column concentration 306 DU
+
+df=data.frame(
+  time=seq(as.POSIXct("2021-03-01 00:00:00",tz="GMT"), as.POSIXct("2021-03-01 3:00:00",tz="GMT"), by="hour"), 
+  gAltitude=rep(1, 4), 
+  mAltitude=rep(1.05, 4),
+  longitude=rep(109.747144, 4),
+  latitude=rep(38.298267, 4),
+  ozone=rep(306, 4)
+)
+tuv_df=tuv_batch(df, inputMode=0, outputMode=2, nStreams=-2)
+#Show columns 1 to 3
+head(tuv_df[,1:3])
+```

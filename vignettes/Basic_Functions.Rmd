@@ -1,0 +1,133 @@
+---
+title: "Basic Functions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+To begin, we’ll load `foqat` and show three datasets in `foqat`:   
+`aqi` is a dataset about time series of air quality with 1-second resolution.  
+`voc` is a dataset about time series of volatile organic compounds with 1-hour resolution.   
+`met` is a dataset about time series of meterological conditions with 1-hour resolution. 
+
+```{r setup}
+library(foqat)
+head(aqi)
+head(voc)
+head(met)
+```
+
+## Summary time series  
+
+The `statdf()` allows you to statistics time series:
+
+```{r}
+statdf(aqi)
+```
+
+## Resample time series  
+
+We can resample time series by using `trs()`.  
+You can use `bkip` to set a new time resolution.  
+The time series can be clipped by using `st` (start time) and `et` (end time).  
+The default function of resampling is `mean`.
+The wind data is acceptable by setting `wind` to `TRUE` and specifying `coliws` (the column index of the wind speed) and `coliwd` (the column index of the wind speed).  
+
+```{r}
+new_met=trs(met, bkip = "1 hour", st = "2017-05-01 01:00:00", wind = TRUE, coliws = 4, coliwd = 5)
+head(new_met)
+```
+
+You can also change the default function of resampling to `sum`, `median`, `min`, `max`, `sd`, `quantile`. If you choose `quantile`, you will also need to fill `probs` (e.g., 0.5).
+
+## Calculate the variation of time series
+
+`svri()` helps you compute the variation of time series (e.g. calculate the max value of all values grouped by hours of day). 
+
+The parameters of `bkip`, `st`, `et`, `fun` is same as `trs`. The wind data is acceptable just like `trs()`.  
+
+`mode` allows you to choose modes of calculation, `value` is the sub parameter of `mode`.There have three modes:  `recipes`, `ncycle`, `custom` which will be introduced below:   
+
+### `mode = recipes`
+
+`recipes` stands for built-in solutions.  
+The mode `recipes` corresponds to three `values`: `day`, `week`, `month`. `day` means the time series will group by hours from 0 to 23.  
+`week` means the time series will group by hours from 1 to 7.  
+`month` means the time series will group by hours from 1 to 31. 
+Below is an example which calculate the median values for time series group by hour (e.g., 0:00, 1:00 ...).
+
+```{r}
+new_voc=svri(voc, bkip="1 hour", mode="recipes", value="day", fun="median")
+head(new_voc)
+```
+
+### `mode = ncycle`
+
+`ncycle` stands for grouping time series by the order number of each row in each cycle.  
+Below is an example which calculate the median values for time series group by hour (e.g., 0:00, 1:00 ...). 
+
+```{r}
+new_voc=svri(voc, bkip="1 hour", st="2020-05-01 00:00:00", mode="ncycle", value=24, fun="median")
+head(new_voc)
+```
+
+### `mode = custom`
+
+`custom` stands for grouping time series by a reference column in time serires. If you select `mode = custom`, `value` stands for the column index of the reference column.
+Below is an example which calculate the median values for time series group by hour (e.g., 0:00, 1:00 ...).
+
+```{r}
+#add a new column stands for hour.
+voc$hour=lubridate::hour(voc$Time)
+#calculate according to the index of reference column.
+new_voc=svri(voc, bkip = "1 hour", mode="custom", value=7, fun="median")
+head(new_voc[,-2])
+#rmove voc 
+rm(voc)
+```
+
+## Calculate average of variation
+
+`avri()` is a customized version of `svri()` which helps you to calculate the average variation (with standard deviation) of time series.  
+
+The output is a data frame which contains both the average variations and the standard deviations. An example is a time series of 3 species. The second to the fourth column are the average variations, and the fifth to the seventh column are the standard deviations.
+
+```{r}
+new_voc=avri(voc, bkip = "1 hour", st = "2020-05-01 01:00:00")
+head(new_voc)
+```
+
+## Convert time series into proportion time series
+
+`prop()` helps you convert time series into proportion time series (e.g., convert a time series of concentrations of species into a time series of contributions of species).  
+
+```{r}
+prop_voc=prop(voc)
+head(prop_voc)
+```
+
+## Analysis of linear regression for time series in batch 
+
+`anylm()` allows you to analyze linear regression for time series in batch.    
+`xd` are the index of columns you want to put in x axis (independent variables).  
+`yd` are the index of columns you want to put in y axis (dependent variables).  
+`zd` are the index of columns you want to put as color scales.
+`td` are the index of columns you want to use as a basis for grouping.  
+
+A simple example is demonstrated below to illustrate the functionality.  
+This example explores the correlation of the built-in dataset aqi. Grouped by day, it explores the correlation of O3 with NO and NO2 for each day. and explores the effect of CO on correlations using CO as the fill color.  
+
+```{r, eval = FALSE}
+df=data.frame(aqi,day=day(lubridate::aqi$Time))
+lr_result=anylm(df, xd=c(2,3), yd=6, zd=4, td=7,dign=3)
+View(lr_result)
+```

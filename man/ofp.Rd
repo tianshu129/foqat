@@ -49,11 +49,11 @@ If TRUE, VOC species in time series will be arranged according to VOC group,
 }
 \value{
 a list contains 5 tables:
-MIR_Result: matched MIR value result;
-OFP_Result: OFP time series of VOC by species;
-OFP_Result_mean: the average value and proportion of OFP of VOC by species (sorted from large to small);
-OFP_Result_group: OFP time series of VOC classified by groups;
-OFP_Result_group_mean: the average value and proportion of OFP of VOC according to major groups (sorted from large to small).
+MIR_Result: the matched MIR value results;
+OFP_Result: the OFP time series of VOC by species;
+OFP_Result_stat: the statistics of OFP of VOC by species;
+OFP_Result_group: OFP the time series of VOC classified by groups;
+OFP_Result_group_stat: the statistics of OFP of VOC according to major groups.
 }
 \description{
 Calculate Ozone Formation Potential (OFP) of VOC time series.
