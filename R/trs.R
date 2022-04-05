@@ -38,6 +38,9 @@ trs <- function(df, bkip, st = NULL, et = NULL, fun = 'mean', probs=0.5, na.rm =
   #set colnames of df
   colnames(df) <- cona_df
   
+  #temp replace first colname
+  colnames(df)[1]="temp_datetime"
+  
   #get time zone of datetime
   tzlc=attr(df[,1],"tzone")
   

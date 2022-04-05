@@ -20,7 +20,9 @@
 #' statistics of the number of effective 8-hour average concentrations in each day, maximum-8-hour ozone) and 1 plot (dma8 plot).
 #' @export
 #' @examples
+#' \dontrun{ 
 #' dm8n(aqi,colio=6,unitlb=c("NO (ppbv)", "NO2 (ppbv)", "CO (ppbv)", "SO2 (ppbv)", "O3 (ppbv)"))
+#' }
 #' @import lubridate
 #' @importFrom stats aggregate
 #' @importFrom utils stack unstack

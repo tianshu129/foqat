@@ -42,6 +42,7 @@ geom_avri_batch(
 Easy way to plot the average variation in batch.
 }
 \examples{
+\dontrun{ 
 #example 1
 x=avri(aqi, bkip = "1 hour", mode = "recipes", value
  = "day", st = "2017-05-01 00:00:00")
@@ -64,4 +65,5 @@ xlab2=rep("Time",5)
 ylab2=c("NO","NO2","CO","SO2","O3")
 geom_avri_batch(x, alpha=0.6, xlab=xlab2, ylab=ylab2,
  lcc=lcc, rff=rff, bquote=FALSE)
+}
 }
