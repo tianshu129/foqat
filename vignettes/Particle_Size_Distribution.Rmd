@@ -30,7 +30,7 @@ To begin, we’ll load `foqat` and pre-process the SMPS data in `foqat`.
 ```{r setup}
 library(foqat)
 #Read built-in files
-dn_table <- read.delim(system.file("extdata", "smps.txt", package = "foqat"))
+dn_table <- read.delim(system.file("extdata", "smps.txt", package = "foqat"), check.names = FALSE)
 dn1_table=dn_table[,c(1,5:148)]
 #Set time format
 dn1_table[,1]=as.POSIXct(dn1_table[,1], format="%m/%d/%Y %H:%M:%S", tz="GMT")

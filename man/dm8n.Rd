@@ -51,5 +51,7 @@ Calculates daily maximum-8-hour ozone from ozone observation data.
 This function can calculate daily maximum-8-hour ozone and other parameters corresponding to it.
 }
 \examples{
+\dontrun{ 
 dm8n(aqi,colio=6,unitlb=c("NO (ppbv)", "NO2 (ppbv)", "CO (ppbv)", "SO2 (ppbv)", "O3 (ppbv)"))
+}
 }

@@ -76,6 +76,7 @@ side for discrete variables.}
 Easy way to plot time series in batch.
 }
 \examples{
+\dontrun{ 
 #example 1
 geom_ts_batch(aqi)
 #example 2
@@ -89,4 +90,5 @@ ylab2=list(bquote(NO~" "~(ppbv)), bquote(NO[2]~"
  "~(ppbv)), bquote(O[3]~" "~(ppbv)))
 cclist=c("#eb2f96", "#1890ff", "#52c41a", "#faad14", "#f5222d")
 geom_ts_batch(aqi, xlab=xlab2, ylab=ylab2, cclist=cclist, bquote=TRUE)
+}
 }

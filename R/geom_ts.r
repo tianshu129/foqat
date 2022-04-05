@@ -35,7 +35,8 @@
 #' @param yl_minor_breaks a numeric vector of positions for minor breaks in left y axis. 
 #'
 #' @export
-#' @examples 
+#' @examples
+#' \dontrun{ 
 #' aqi2=aqi
 #' aqi2$NO[aqi2$NO>7]=NA
 #' aqi2$NO2=aqi2$NO2*0.3
@@ -52,6 +53,7 @@
 #'      lcc="#ff4d4f", 
 #'      aff=c("#096dd9","#69c0ff"),
 #' xlab="Datetime")
+#' }
 #' @importFrom reshape2 melt
 #' @importFrom ggplot2 ggplot geom_area geom_bar geom_point geom_line scale_fill_discrete scale_fill_manual scale_linetype_manual scale_color_discrete scale_color_manual scale_shape_manual scale_y_continuous scale_x_datetime theme
 #' @importFrom ggnewscale new_scale_color new_scale_fill 
@@ -86,7 +88,7 @@ yl_breaks= waiver(), yr_breaks= waiver(), yl_minor_breaks = waiver()){
 			if(length(intersect(alist,yl))==1){
 					yla=intersect(alist,yl)
 					df[,yla][df[,yla]>yl_limit[2]]=NA#upper
-					df[,yla][df[,yla]<yl_limit[1]]=NAlower	
+					df[,yla][df[,yla]<yl_limit[1]]=NA#lower	
 			}else{
 					yla=intersect(alist,yl)
 					df[which(rowSums(df[,yla], na.rm=TRUE)>yl_limit[2]),yla]=NA#upper
@@ -357,7 +359,6 @@ yl_breaks= waiver(), yr_breaks= waiver(), yl_minor_breaks = waiver()){
 	labs=setNames(llab,names(df)[llist])
 
 	##判断线型需求
-	##判断线型需求
 	if(length(ltype)!=0){
 	p = p + scale_linetype_manual(values=ltype, labels=labs)
 	} 
@@ -388,9 +389,9 @@ yl_breaks= waiver(), yr_breaks= waiver(), yl_minor_breaks = waiver()){
 		###因子排序
 		df_yl_plist$variable=factor(df_yl_plist$variable,levels=fc_yl_plist)
 		if(length(pshape)==0){
-			p=p+geom_point(data=df_yl_plist, aes(x=df_yl_plist[,1], y=value, color=variable), size=lsize)
+			p=p+geom_point(data=df_yl_plist, aes(x=df_yl_plist[,1], y=value, color=variable), size=psize)
 		}else{
-			p=p+geom_point(data=df_yl_plist, aes(x=df_yl_plist[,1], y=value, color=variable, shape=variable), size=lsize) 
+			p=p+geom_point(data=df_yl_plist, aes(x=df_yl_plist[,1], y=value, color=variable, shape=variable), size=psize) 
 		}
 	}
 
@@ -407,14 +408,11 @@ yl_breaks= waiver(), yr_breaks= waiver(), yl_minor_breaks = waiver()){
 		###因子排序
 		df_yr_plist$variable=factor(df_yr_plist$variable,levels=fc_yr_plist)
 		if(length(pshape)==0){
-			p=p+geom_point(data=df_yr_plist, aes(x=df_yr_plist[,1], y=(value-yr_limit[1])*ryl/ryr+yl_limit[1], color=variable), size=lsize)
+			p=p+geom_point(data=df_yr_plist, aes(x=df_yr_plist[,1], y=(value-yr_limit[1])*ryl/ryr+yl_limit[1], color=variable), size=psize)
 		}else{
-			p=p+geom_point(data=df_yr_plist, aes(x=df_yr_plist[,1], y=(value-yr_limit[1])*ryl/ryr+yl_limit[1], color=variable, shape=variable), size=lsize)  
+			p=p+geom_point(data=df_yr_plist, aes(x=df_yr_plist[,1], y=(value-yr_limit[1])*ryl/ryr+yl_limit[1], color=variable, shape=variable), size=psize)  
 		}
 	}
-
-	#if(!exists("yl_plist")){yl_plist=NULL}
-	#if(!exists("yr_plist")){yr_plist=NULL}
 
 	##限制legend
 	if(length(plab)==0){plab=names(df)[plist]}
@@ -426,7 +424,6 @@ yl_breaks= waiver(), yr_breaks= waiver(), yl_minor_breaks = waiver()){
 	}
 
 	##判断颜色需求
-
 	if(length(pcc)==0){
 		p = p + scale_color_discrete(labels=labs)
 	}else{
@@ -442,14 +439,14 @@ yl_breaks= waiver(), yr_breaks= waiver(), yl_minor_breaks = waiver()){
 		p=p+new_scale_color()+new_scale_fill()
 		
 		###从df取上下限子数据集
-		df_yl_plist=df[,c(names(df)[1],"yl_up","yl_down")]
+		df_yl_plist_axis=df[,c(names(df)[1],"yl_up","yl_down")]
 		###为因子排序提前提取交集物种名
-		fc_yl_plist=names(df_yl_plist)[-1]
+		fc_yl_plist_axis=names(df_yl_plist_axis)[-1]
 		###子数据集变形以供画图
-		df_yl_plist=melt(df_yl_plist, id.vars = names(df_yl_plist)[1])
+		df_yl_plist_axis=melt(df_yl_plist_axis, id.vars = names(df_yl_plist_axis)[1])
 		###因子排序
-		df_yl_plist$variable=factor(df_yl_plist$variable,levels=fc_yl_plist)
-		p=p+geom_point(data=df_yl_plist, alpha = 0, aes(x=df_yl_plist[,1], y=value))  
+		df_yl_plist_axis$variable=factor(df_yl_plist_axis$variable,levels=fc_yl_plist_axis)
+		p=p+geom_point(data=df_yl_plist_axis, alpha = 0, aes(x=df_yl_plist_axis[,1], y=value))  
     }
 
     #副轴范围控制#################################
@@ -460,14 +457,14 @@ yl_breaks= waiver(), yr_breaks= waiver(), yl_minor_breaks = waiver()){
 		p=p+new_scale_color()+new_scale_fill()
 		
 		###从df取上下限子数据集
-		df_yr_plist=df[,c(names(df)[1],"yr_up","yr_down")]
+		df_yr_plist_axis=df[,c(names(df)[1],"yr_up","yr_down")]
 		###为因子排序提前提取交集物种名
-		fc_yr_plist=names(df_yr_plist)[-1]
+		fc_yr_plist_axis=names(df_yr_plist_axis)[-1]
 		###子数据集变形以供画图
-		df_yr_plist=melt(df_yr_plist, id.vars = names(df_yr_plist)[1])
+		df_yr_plist_axis=melt(df_yr_plist_axis, id.vars = names(df_yr_plist_axis)[1])
 		###因子排序
-		df_yr_plist$variable=factor(df_yr_plist$variable,levels=fc_yr_plist)
-		p=p+geom_point(data=df_yr_plist, alpha = 0, aes(x=df_yr_plist[,1], y=(value-yr_limit[1])*ryl/ryr+yl_limit[1]))  	
+		df_yr_plist_axis$variable=factor(df_yr_plist_axis$variable,levels=fc_yr_plist_axis)
+		p=p+geom_point(data=df_yr_plist_axis, alpha = 0, aes(x=df_yr_plist_axis[,1], y=(value-yr_limit[1])*ryl/ryr+yl_limit[1]))  	
 	}
 	
 	if(length(yr)!=0){

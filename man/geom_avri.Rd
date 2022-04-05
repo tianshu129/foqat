@@ -42,8 +42,10 @@ geom_avri(
 Easy way to plot the average variation.
 }
 \examples{
+\dontrun{ 
 x=avri(aqi, bkip = "1 hour", mode = "recipes", value
  = "day", st = "2017-05-01 00:00:00")
 geom_avri(x,cave=6, csd=11, alpha=0.5, lcc="#0050b3",
  rff="#40a9ff", xlab="Time",ylab=bquote(O[3]~" "~(ppbv)))
+}
 }
