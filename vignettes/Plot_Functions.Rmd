@@ -315,7 +315,7 @@ geom_ts_batch(aqids, xlab=xlab, ylab=ylab, cclist=cclist, bquote=TRUE)
 
 The `ggplot2` plotting system is not very good at plotting wind time series where the length of the arrow refers to the wind speed; we will always have the need to plot wind time series. 
 
-So, you try this function: . 
+So, you try this function: `geom_tsw()`. 
 
 Just tell it the table name, the wind speed and the wind direction are the first columns.
 
