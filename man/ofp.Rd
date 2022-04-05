@@ -66,5 +66,6 @@ The MIR value comes from <https://ww2.arb.ca.gov/sites/default/files/classic/reg
 Zhang et al.(2021) <doi:10.5194/acp-21-11053-2021>.
 }
 \examples{
-ofp(voc)
+voc_ofp=ofp(voc)
+summary(voc_ofp)
 }

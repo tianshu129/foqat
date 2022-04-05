@@ -80,8 +80,7 @@ If there are two species drawn with the line type, then the line needs to have t
 ### Example  
 
 Here we use `aqids`:  
-<br/>
-<div style='width: 0 auto;margin: 0 auto;'>
+
 ```{r, echo=FALSE, layout="l-body-outset", paged.print=FALSE}
 library(rmarkdown)
 paged_table(aqids, options = list(max.print=10000, rows.print = 10, cols.print = 6))

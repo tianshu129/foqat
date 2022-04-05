@@ -64,5 +64,6 @@ reactivity scale and hydrocarbon bin reactivities for regulatory applications.
 California Air Resources Board Contract, 2009, 339" (revised January 28, 2010).
 }
 \examples{
-vocct(voc)
+voc_con=vocct(voc)
+summary(voc_con)
 }

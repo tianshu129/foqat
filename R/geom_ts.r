@@ -36,7 +36,6 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{ 
 #' aqi2=aqi
 #' aqi2$NO[aqi2$NO>7]=NA
 #' aqi2$NO2=aqi2$NO2*0.3
@@ -53,7 +52,6 @@
 #'      lcc="#ff4d4f", 
 #'      aff=c("#096dd9","#69c0ff"),
 #' xlab="Datetime")
-#' }
 #' @importFrom reshape2 melt
 #' @importFrom ggplot2 ggplot geom_area geom_bar geom_point geom_line scale_fill_discrete scale_fill_manual scale_linetype_manual scale_color_discrete scale_color_manual scale_shape_manual scale_y_continuous scale_x_datetime theme
 #' @importFrom ggnewscale new_scale_color new_scale_fill 

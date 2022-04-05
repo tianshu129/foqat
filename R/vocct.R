@@ -38,7 +38,8 @@
 #'
 #' @export
 #' @examples
-#' vocct(voc)
+#' voc_con=vocct(voc)
+#' summary(voc_con)
 #' @import magrittr
 #' @importFrom stringr str_split_fixed
 

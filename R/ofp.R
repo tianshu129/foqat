@@ -36,7 +36,8 @@
 #'
 #' @export
 #' @examples
-#' ofp(voc)
+#' voc_ofp=ofp(voc)
+#' summary(voc_ofp)
 #' @import magrittr
 #' @importFrom stringr str_split_fixed
 

@@ -61,5 +61,6 @@ OH Rate Constant is matched through the CAS number and used for time series calc
 The OH Rate Constant comes from 'AopWin v1.92' in 25 degree celsius.
 }
 \examples{
-loh(voc)
+voc_loh=loh(voc)
+summary(voc_loh)
 }

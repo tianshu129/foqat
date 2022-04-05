@@ -105,7 +105,6 @@ geom_ts(
 Easy way to plot time series.
 }
 \examples{
-\dontrun{ 
 aqi2=aqi
 aqi2$NO[aqi2$NO>7]=NA
 aqi2$NO2=aqi2$NO2*0.3
@@ -122,5 +121,4 @@ geom_ts(
      lcc="#ff4d4f", 
      aff=c("#096dd9","#69c0ff"),
 xlab="Datetime")
-}
 }

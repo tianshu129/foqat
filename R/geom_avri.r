@@ -15,12 +15,10 @@
 #'
 #' @export
 #' @examples
-#' \dontrun{ 
 #' x=avri(aqi, bkip = "1 hour", mode = "recipes", value
 #'  = "day", st = "2017-05-01 00:00:00")
 #' geom_avri(x,cave=6, csd=11, alpha=0.5, lcc="#0050b3",
 #'  rff="#40a9ff", xlab="Time",ylab=bquote(O[3]~" "~(ppbv)))
-#' }
 #' @importFrom lubridate is.timepoint
 
 geom_avri<-function(df,cave=2, csd=3, ssd=1, alpha=0.5, xlab=NULL, ylab=NULL, lcc=NULL, lsize=1, rff=NULL){
