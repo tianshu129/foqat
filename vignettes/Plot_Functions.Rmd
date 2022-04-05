@@ -2,7 +2,7 @@
 title: "Plot Functions"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Plot}
+  %\VignetteIndexEntry{Plot_Functions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
