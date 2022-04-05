@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">foqat</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +101,7 @@ And we also need to load <code>ggplot2</code>.</p>
 <span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">aqids</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>
 <span class="va">aqids</span><span class="op">[</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">aqids</span><span class="op">[</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, <span class="fl">2</span><span class="op">)</span>
 <span class="co">#pre-process the met data</span>
-<span class="va">metds</span><span class="op">=</span><span class="fu"><a href="../reference/trs.html">trs</a></span><span class="op">(</span><span class="va">met</span>, bkip<span class="op">=</span><span class="st">"10 mins"</span><span class="op">)</span>
+<span class="va">metds</span><span class="op">=</span><span class="fu"><a href="../reference/trs.html">trs</a></span><span class="op">(</span><span class="va">met</span>, bkip<span class="op">=</span><span class="st">"15 mins"</span><span class="op">)</span>
 <span class="co">#&gt; Joining, by = "temp_datetime"</span></code></pre></div>
 <div class="section level2">
 <h2 id="plot-time-series">Plot time series<a class="anchor" aria-label="anchor" href="#plot-time-series"></a>
