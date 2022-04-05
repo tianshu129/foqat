@@ -15,7 +15,10 @@
 #'
 #' @export
 #' @examples
-#' geom_tsw(met, coliws=4, coliwd=5)
+#' \dontrun{
+#' metds=trs(met, bkip="15 mins")
+#' geom_tsw(metds, coliws=4, coliwd=5)
+#' }
 #' @importFrom ggplot2 ggplot geom_line geom_text scale_y_continuous scale_colour_viridis_c theme_bw
 
 geom_tsw <- function(df, coliws = 2, coliwd = 3, lsize = 0.8, psize=NA, msize = 8, mlabel = "West wind", mx = 0.05, my = -0.1, mwd = 270){

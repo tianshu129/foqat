@@ -40,7 +40,7 @@ aqids$NO2=aqids$NO2*0.3
 cols <- names(aqids)[2:6]
 aqids[, 2:6]=round(aqids[, 2:6], 2)
 #pre-process the met data
-metds=trs(met, bkip="10 mins")
+metds=trs(met, bkip="15 mins")
 ```
 
 ## Plot time series
