@@ -17,11 +17,19 @@
 #' @return a plot for the time series of particle size distribution. \cr
 #'
 #' @export
+#' @examples
+#' \dontrun{ 
+#' dn_table = read.delim(system.file("extdata", "smps.txt", package = "foqat"),
+#' check.names = FALSE)
+#' dn1_table=dn_table[,c(1,5:148)]
+#' dn1_table[,1]=as.POSIXct(dn1_table[,1], format="%m/%d/%Y %H:%M:%S", tz="GMT")
+#' geom_psd(dn1_table,fsz=10)
+#' }
 #' @import ggplot2 
 #' @importFrom scales rescale pretty_breaks
 #' @importFrom grDevices colorRampPalette
 
-tsplotp=function(df, labxyl=NULL, logy=TRUE, ybk=NULL, nlmt=NULL, csbk=pretty_breaks(4), trans="identity", colsz=1, fsz=13, ff="TT Arial", lsz=0.4, tkl=0.2){
+geom_psd=function(df, labxyl=NULL, logy=TRUE, ybk=NULL, nlmt=NULL, csbk=pretty_breaks(4), trans="identity", colsz=1, fsz=13, ff="TT Arial", lsz=0.4, tkl=0.2){
 	#trans from table to list
 	df=transp(df)
 	
