@@ -2,8 +2,13 @@ pandoc: 2.7.3
 pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
-  my-vignette: my-vignette.html
-last_built: 2022-04-04T00:17Z
+  Air_Quality: Air_Quality.html
+  Atmospheric_Radiation: Atmospheric_Radiation.html
+  Basic_Functions: Basic_Functions.html
+  Particle_Size_Distribution: Particle_Size_Distribution.html
+  Plot_Functions: Plot_Functions.html
+  Trace_Gas_Chemistry: Trace_Gas_Chemistry.html
+last_built: 2022-04-05T02:39Z
 urls:
   reference: https://tianshu129.github.io/foqat/reference
   article: https://tianshu129.github.io/foqat/articles

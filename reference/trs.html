@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">foqat</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,7 +26,12 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/my-vignette.html">my-vignette</a>
+    <a class="dropdown-item" href="../articles/Air_Quality.html">Air Quality</a>
+    <a class="dropdown-item" href="../articles/Atmospheric_Radiation.html">Atmospheric Radiation</a>
+    <a class="dropdown-item" href="../articles/Basic_Functions.html">Basic Functions</a>
+    <a class="dropdown-item" href="../articles/Particle_Size_Distribution.html">Particle Size Distribution</a>
+    <a class="dropdown-item" href="../articles/Plot_Functions.html">Plot Functions</a>
+    <a class="dropdown-item" href="../articles/Trace_Gas_Chemistry.html">Trace Gas Chemistry</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -109,7 +114,7 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">trs</span><span class="op">(</span><span class="va">met</span>, bkip <span class="op">=</span> <span class="st">"1 hour"</span>, st <span class="op">=</span> <span class="st">"2017-05-01 00:00:00"</span>, wind <span class="op">=</span> <span class="cn">TRUE</span>, coliws <span class="op">=</span> <span class="fl">4</span>, coliwd <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = "Time"</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = "temp_datetime"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    Time      TEM      HUM        WS        WD</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   2017-05-01 00:00:00 20.95833 85.60000 3.3613210  74.90716</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2   2017-05-01 01:00:00 21.18333 83.15833 4.5554271  72.52891</span>

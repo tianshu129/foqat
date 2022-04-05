@@ -14,7 +14,7 @@ Note: for Chinese VOC name, please also use English punctuation."><!-- mathjax -
     
     <a class="navbar-brand me-2" href="../index.html">foqat</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,12 @@ Note: for Chinese VOC name, please also use English punctuation."><!-- mathjax -
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/my-vignette.html">my-vignette</a>
+    <a class="dropdown-item" href="../articles/Air_Quality.html">Air Quality</a>
+    <a class="dropdown-item" href="../articles/Atmospheric_Radiation.html">Atmospheric Radiation</a>
+    <a class="dropdown-item" href="../articles/Basic_Functions.html">Basic Functions</a>
+    <a class="dropdown-item" href="../articles/Particle_Size_Distribution.html">Particle Size Distribution</a>
+    <a class="dropdown-item" href="../articles/Plot_Functions.html">Plot Functions</a>
+    <a class="dropdown-item" href="../articles/Trace_Gas_Chemistry.html">Trace Gas Chemistry</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -101,15 +106,15 @@ If TRUE, VOC species in time series will be arranged according to VOC group,
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>a list contains 9 tables:
-MW_Result: matched Molecular Weight (MW) value result;
-Con_ugm: time series of VOC mass concentration by species;
-Con_ugm_mean: the average mass concentration and proportion of VOC by species (sorted from large to small);
-Con_ugm_group: time series of VOC mass concentration classified by groups;
-Con_ugm_group_mean: the average value and proportion of VOC mass concentration (sorted from large to small) according to major groups;
+MW_Result: the matched Molecular Weight (MW) value result;
+Con_ugm: the time series of VOC mass concentration by species;
+Con_ugm_stat: the statistics of VOC mass concentration by species;
+Con_ugm_group: the time series of VOC mass concentration classified by groups;
+Con_ugm_group_stat: the statistics of VOC mass concentrationaccording to major groups;
 Con_ppbv: time series of VOC volume concentration by species;
-Con_ppbv_mean: the average volume concentration and proportion of VOC by species (sorted from large to small);
-Con_ppbv_group: time series of VOC volume concentration according to major groups;
-Con_ppbv_group_mean: VOC volume concentration average and proportion (sorted from large to small) according to major groups;</p>
+Con_ppbv_stat: the statistics of VOC volume concentration by species;
+Con_ppbv_group: the time series of VOC volume concentration according to major groups;
+Con_ppbv_group_stat: the time series of VOC volume concentration classified by groups.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

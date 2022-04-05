@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">foqat</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,7 +24,12 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/my-vignette.html">my-vignette</a>
+    <a class="dropdown-item" href="../articles/Air_Quality.html">Air Quality</a>
+    <a class="dropdown-item" href="../articles/Atmospheric_Radiation.html">Atmospheric Radiation</a>
+    <a class="dropdown-item" href="../articles/Basic_Functions.html">Basic Functions</a>
+    <a class="dropdown-item" href="../articles/Particle_Size_Distribution.html">Particle Size Distribution</a>
+    <a class="dropdown-item" href="../articles/Plot_Functions.html">Plot Functions</a>
+    <a class="dropdown-item" href="../articles/Trace_Gas_Chemistry.html">Trace Gas Chemistry</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -128,74 +133,13 @@ side for discrete variables.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co">#example 1</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> </span>
+<span class="r-in"><span class="co">#example 1</span></span>
 <span class="r-in"><span class="fu">geom_ts_batch</span><span class="op">(</span><span class="va">aqi</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in check_aesthetics(evaled, n):</span> Aesthetics must be either length 1 or the same as the data (7140): x</span>
 <span class="r-in"><span class="co">#example 2</span></span>
 <span class="r-in"><span class="va">xlab1</span><span class="op">=</span><span class="st">"Time"</span></span>
 <span class="r-in"><span class="va">ylab1</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"NO"</span>,<span class="st">"NO2"</span>,<span class="st">"CO"</span>,<span class="st">"SO2"</span>,<span class="st">"O3"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">geom_ts_batch</span><span class="op">(</span><span class="va">aqi</span>, xlab<span class="op">=</span><span class="va">xlab1</span>, ylab<span class="op">=</span><span class="va">ylab1</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in check_aesthetics(evaled, n):</span> Aesthetics must be either length 1 or the same as the data (7140): x</span>
 <span class="r-in"><span class="co">#example 3</span></span>
 <span class="r-in"><span class="va">xlab2</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/bquote.html" class="external-link">bquote</a></span><span class="op">(</span><span class="va">Time</span><span class="op">~</span><span class="st">""</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">ylab2</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/bquote.html" class="external-link">bquote</a></span><span class="op">(</span><span class="va">NO</span><span class="op">~</span><span class="st">" "</span><span class="op">~</span><span class="op">(</span><span class="va">ppbv</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/bquote.html" class="external-link">bquote</a></span><span class="op">(</span><span class="va">NO</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">~</span><span class="st">"</span>
@@ -203,38 +147,7 @@ side for discrete variables.</p></dd>
 <span class="r-in"> "</span><span class="op">~</span><span class="op">(</span><span class="va">ppbv</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/bquote.html" class="external-link">bquote</a></span><span class="op">(</span><span class="va">O</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">~</span><span class="st">" "</span><span class="op">~</span><span class="op">(</span><span class="va">ppbv</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">cclist</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#eb2f96"</span>, <span class="st">"#1890ff"</span>, <span class="st">"#52c41a"</span>, <span class="st">"#faad14"</span>, <span class="st">"#f5222d"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu">geom_ts_batch</span><span class="op">(</span><span class="va">aqi</span>, xlab<span class="op">=</span><span class="va">xlab2</span>, ylab<span class="op">=</span><span class="va">ylab2</span>, cclist<span class="op">=</span><span class="va">cclist</span>, bquote<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'y' is already present. Adding another scale for 'y', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Scale for 'x' is already present. Adding another scale for 'x', which will</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> replace the existing scale.</span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in check_aesthetics(evaled, n):</span> Aesthetics must be either length 1 or the same as the data (7140): x</span>
-<span class="r-plt img"><img src="geom_ts_batch-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span class="op">}</span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
