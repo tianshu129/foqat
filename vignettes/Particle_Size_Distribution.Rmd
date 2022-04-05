@@ -22,7 +22,7 @@ The functions provided by the FOQAT package in R language bridge the process fro
 
 The flow and functions are shown in the figure below:  
 
-![](https://s1.ax1x.com/2022/04/04/qqYsbj.png){width=500px}
+![](https://s1.ax1x.com/2022/04/05/qLbLef.png){width=500px}
 
 <br/>
 To begin, we’ll load `foqat` and pre-process the SMPS data in `foqat`.  
@@ -30,7 +30,7 @@ To begin, we’ll load `foqat` and pre-process the SMPS data in `foqat`.
 ```{r setup}
 library(foqat)
 #Read built-in files
-dn_table <- read.delim(system.file("extdata", "smps.txt", package = "foqat"), check.names = FALSE)
+dn_table = read.delim(system.file("extdata", "smps.txt", package = "foqat"), check.names = FALSE)
 dn1_table=dn_table[,c(1,5:148)]
 #Set time format
 dn1_table[,1]=as.POSIXct(dn1_table[,1], format="%m/%d/%Y %H:%M:%S", tz="GMT")
@@ -39,12 +39,12 @@ head(dn1_table[,1:5])
 
 ## Plot the time series of particle size distribution  
 
-`tsplotp()` allows you to plot wide form data.
+`geom_psd()` allows you to plot wide form data.
 
 The input is the dataframe of particle size data. The first column of input is datetime; the other columns are number concentration (N, unit: #/cm3) or log number concentration (dN/dlogdp, unit: # cm~-3~) for each particle size channel. Column names of the other columns are the middle particle size for each particle size channel.  
 
 ```{r, fig.width = 7, fig.height = 3}
-tsplotp(dn1_table,fsz=10)
+geom_psd(dn1_table,fsz=10)
 ```
 
 ## Calculate relevant parameters and convert data type betwenn dn and dn/dlogdp    

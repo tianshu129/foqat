@@ -25,21 +25,22 @@ There are two advantages:
 On the one hand, this module greatly reduces the difficulty of drawing time series of field observation data.  
  
 On the other hand, this module supports the GGplot2 syntax, which can be used to adjust and beautify the target graph.  
-<br/>
 
 To begin, we’ll load `foqat` and show one dataset in `foqat`:   
-`aqi` is a dataset about time series of air quality with 1-second resolution. For a better presentation, we slightly manipulate aqi to generate aqids.  
+`aqi` is a dataset about time series of air quality with 1-second resolution. For a better presentation, we slightly manipulate `aqi` and `met` to generate `aqids` and `metds`.  
 And we also need to load `ggplot2`.  
 
 ```{r setup}
 library(foqat)
 library(ggplot2)
+#pre-process the aqi data
 aqids=trs(aqi, bkip="10 min")
 aqids$NO[aqids$NO>7]=NA
 aqids$NO2=aqids$NO2*0.3
 cols <- names(aqids)[2:6]
 aqids[, 2:6]=round(aqids[, 2:6], 2)
-metds=trs(met, bkip="5 mins")
+#pre-process the met data
+metds=trs(met, bkip="10 mins")
 ```
 
 ## Plot time series
@@ -78,7 +79,9 @@ If there are two species drawn with the line type, then the line needs to have t
 
 ### Example  
 
-Here we use `aqids`:
+Here we use `aqids`:  
+<br/>
+<div style='width: 0 auto;margin: 0 auto;'>
 ```{r, echo=FALSE, layout="l-body-outset", paged.print=FALSE}
 library(rmarkdown)
 paged_table(aqids, options = list(max.print=10000, rows.print = 10, cols.print = 6))
@@ -95,6 +98,27 @@ geom_ts(
   alab=list(bquote(NO[2]~" "), bquote(NO~" ")), llab=list(bquote(O[3]~" ")),  
   lcc="#ff4d4f", aff=c("#096dd9","#69c0ff"),
   ana=FALSE
+)
+```
+
+### Adjust the range of left y axis and right y axis 
+`yl_limit` and `yl_breaks` allows you to adjust the ranges and breaks of left y axis in `geom_ts()`.    
+`yr_limit` and `yr_breaks` allows you to adjust the ranges and breaks of right y axis  in `geom_ts()`.    
+See this example:
+
+```{r fig.width = 7, fig.height = 3, message=FALSE, warning=FALSE, exercise=TRUE, tidy=FALSE}
+geom_ts(
+  df=aqids,   
+  yl=c(3,2), yr=6,   
+  alist=c(3,2), llist=6,   
+  yllab=bquote(NO[x]~" "~(ppbv)), yrlab=bquote(O[3]~" "~(ppbv)), xlab="Datetime",  
+  alab=list(bquote(NO[2]~" "), bquote(NO~" ")), llab=list(bquote(O[3]~" ")),  
+  lcc="#ff4d4f", aff=c("#096dd9","#69c0ff"),
+  ana=FALSE,
+  yl_limit=c(0,5), 
+  yr_limit=c(0,120), 
+  yl_breaks= seq(0,5,1), 
+  yr_breaks=  seq(0,120,30)
 )
 ```
 
@@ -272,7 +296,7 @@ Now, you should be able to plot regular time series graphs comfortably and quick
   
 ### One-step method  
 
-Of course, if you're tired sometimes, or if your boss only gives you 10 seconds, try geom_ts_batch:  
+Of course, if you're tired sometimes, or if your boss only gives you 10 seconds, try `geom_ts_batch()`:  
 
 ```{r, eval=FALSE, message=FALSE, warning=FALSE, exercise=TRUE, tidy=FALSE}
 geom_ts_batch(aqids)
@@ -287,15 +311,77 @@ cclist=c("#eb2f96", "#1890ff", "#52c41a", "#faad14", "#f5222d")
 geom_ts_batch(aqids, xlab=xlab, ylab=ylab, cclist=cclist, bquote=TRUE)
 ```
   
-## Plotting wind time series  
+## Plot wind time series  
 
 The `ggplot2` plotting system is not very good at plotting wind time series where the length of the arrow refers to the wind speed; we will always have the need to plot wind time series. 
 
-So, you try this function. 
+So, you try this function: . 
 
 Just tell it the table name, the wind speed and the wind direction are the first columns.
 
 ```{r, fig.width=7, fig.height=3, message=FALSE, warning=FALSE, exercise=TRUE, tidy=FALSE}
-geom_tsw(metds, coliws=4, coliwd=5)
+geom_tsw(metds, coliws=4, coliwd=5, mx = 0.7, my = 2.5)
 ```
- 
+
+
+## Plot the time series of particle size distribution  
+
+`tsplotp()` allows you to plot wide form data.
+
+The input is the dataframe of particle size data. The first column of input is datetime; the other columns are number concentration (N, unit: #/cm3) or log number concentration (dN/dlogdp, unit: # cm~-3~) for each particle size channel. Column names of the other columns are the middle particle size for each particle size channel.  
+
+Firstly, we need to pre-process the SMPS data: 
+
+```{r, message=FALSE, warning=FALSE, exercise=TRUE, tidy=FALSE}
+dn_table = read.delim(system.file("extdata", "smps.txt", package = "foqat"),
+check.names = FALSE)
+dn1_table=dn_table[,c(1,5:148)]
+dn1_table[,1]=as.POSIXct(dn1_table[,1], format="%m/%d/%Y %H:%M:%S", tz="GMT")
+head(dn1_table[,1:5])
+``` 
+
+Plot it:  
+
+```{r, fig.width=7, fig.height=3, message=FALSE, warning=FALSE, exercise=TRUE, tidy=FALSE}
+geom_psd(dn1_table,fsz=10)
+``` 
+
+## Plot the average variation  
+
+`geom_avri()` allows you to plot average variation.
+
+`cave` and `cave` are the column index of average variation and its standard deviation, respectively.  
+
+```{r, fig.width=3.5, fig.height = 2.5, message=FALSE, warning=FALSE, exercise=TRUE, tidy=FALSE}
+avri_aqi=avri(aqi, bkip = "1 hour", mode = "recipes", value = "day", st = "2017-05-01 00:00:00")
+geom_avri(avri_aqi,cave=6,csd=11)
+``` 
+
+You can further beautify the image:  
+
+```{r, fig.width=3.5, fig.height = 2.5, message=FALSE, warning=FALSE, exercise=TRUE, tidy=FALSE}
+geom_avri(avri_aqi,cave=6,csd=11,alpha=0.5,lcc="#0050b3",
+rff="#40a9ff", xlab="Hour of day",ylab=bquote(O[3]~" "~(ppbv)))
+``` 
+
+`geom_avri_batch()` allows you to plot average variations in batch.
+
+The input data should contain both the average variations and the standard deviations. An example is a time series of 3 species. The second to the fourth column are the average variations, and the fifth to the seventh column are the standard deviations.  
+
+You can use the results of `avri()` as input directly.  
+
+```{r, fig.width=7, fig.height = 7.5, message=FALSE, warning=FALSE, exercise=TRUE, tidy=FALSE}
+geom_avri_batch(avri_aqi)
+``` 
+
+You can further beautify the image:  
+
+```{r, fig.width=7, fig.height = 7.5, message=FALSE, warning=FALSE, exercise=TRUE, tidy=FALSE}
+lcc=c("#f5222d","#fa8c16","#52c41a","#1890ff","#722ed1")
+rff=c("#ff7875","#ffc069","#95de64","#69c0ff","#b37feb")
+xlab1=list(bquote(Time~""),bquote(Time~""),bquote(Time~""), bquote(Time~""),bquote(Time~""))
+ylab1=list(bquote(NO~" "~(ppbv)), bquote(NO[2]~" "~(ppbv)), bquote(CO~" "~(ppmv)), bquote(SO[2]~" "~(ppbv)), bquote(O[3]~" "~(ppbv)))
+geom_avri_batch(avri_aqi, alpha=0.6, xlab=xlab1, ylab=ylab1, lcc=lcc, rff=rff, bquote=TRUE)
+``` 
+
+
