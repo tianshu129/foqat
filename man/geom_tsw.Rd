@@ -42,5 +42,8 @@ geom_tsw(
 Easy way to plot time series.
 }
 \examples{
-geom_tsw(met, coliws=4, coliwd=5)
+\dontrun{
+metds=trs(met, bkip="15 mins")
+geom_tsw(metds, coliws=4, coliwd=5)
+}
 }
