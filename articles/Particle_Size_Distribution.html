@@ -85,12 +85,12 @@
 <p>Unlike gas pollution, particle size spectral data involve three dimensions: time, particle size, and number concentration. This makes the processing and visualization of particle size spectral data a bit more problematic than conventional gas data.</p>
 <p>The functions provided by the FOQAT package in R language bridge the process from reading to visualization, making the process much lighter and more natural.</p>
 <p>The flow and functions are shown in the figure below:</p>
-<p><img src="https://s1.ax1x.com/2022/04/04/qqYsbj.png" width="500"></p>
+<p><img src="https://s1.ax1x.com/2022/04/05/qLbLef.png" width="500"></p>
 <p><br> To begin, we’ll load <code>foqat</code> and pre-process the SMPS data in <code>foqat</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tianshu129/foqat" class="external-link">foqat</a></span><span class="op">)</span>
 <span class="co">#Read built-in files</span>
-<span class="va">dn_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"smps.txt"</span>, package <span class="op">=</span> <span class="st">"foqat"</span><span class="op">)</span>, check.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="va">dn_table</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.delim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"smps.txt"</span>, package <span class="op">=</span> <span class="st">"foqat"</span><span class="op">)</span>, check.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="va">dn1_table</span><span class="op">=</span><span class="va">dn_table</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">5</span><span class="op">:</span><span class="fl">148</span><span class="op">)</span><span class="op">]</span>
 <span class="co">#Set time format</span>
 <span class="va">dn1_table</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="va">dn1_table</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span>, format<span class="op">=</span><span class="st">"%m/%d/%Y %H:%M:%S"</span>, tz<span class="op">=</span><span class="st">"GMT"</span><span class="op">)</span>
@@ -105,10 +105,10 @@
 <div class="section level2">
 <h2 id="plot-the-time-series-of-particle-size-distribution">Plot the time series of particle size distribution<a class="anchor" aria-label="anchor" href="#plot-the-time-series-of-particle-size-distribution"></a>
 </h2>
-<p><code><a href="../reference/tsplotp.html">tsplotp()</a></code> allows you to plot wide form data.</p>
+<p><code><a href="../reference/geom_psd.html">geom_psd()</a></code> allows you to plot wide form data.</p>
 <p>The input is the dataframe of particle size data. The first column of input is datetime; the other columns are number concentration (N, unit: #/cm3) or log number concentration (dN/dlogdp, unit: # cm<sub>-3</sub>) for each particle size channel. Column names of the other columns are the middle particle size for each particle size channel.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/tsplotp.html">tsplotp</a></span><span class="op">(</span><span class="va">dn1_table</span>,fsz<span class="op">=</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/geom_psd.html">geom_psd</a></span><span class="op">(</span><span class="va">dn1_table</span>,fsz<span class="op">=</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p><img src="Particle_Size_Distribution_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 </div>
 <div class="section level2">
