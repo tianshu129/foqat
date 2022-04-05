@@ -34,8 +34,8 @@
 #'
 #' @export
 #' @examples
-#' loh(voc)
-
+#' voc_loh=loh(voc)
+#' summary(voc_loh)
 #' @import magrittr
 #' @importFrom stringr str_split_fixed
 

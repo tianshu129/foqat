@@ -51,11 +51,9 @@ a plot for the time series of particle size distribution. \cr
 Plot the time series of particle size distribution.
 }
 \examples{
-\dontrun{ 
 dn_table = read.delim(system.file("extdata", "smps.txt", package = "foqat"),
 check.names = FALSE)
 dn1_table=dn_table[,c(1,5:148)]
 dn1_table[,1]=as.POSIXct(dn1_table[,1], format="\%m/\%d/\%Y \%H:\%M:\%S", tz="GMT")
 geom_psd(dn1_table,fsz=10)
-}
 }
