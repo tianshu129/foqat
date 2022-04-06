@@ -124,7 +124,7 @@
 <div class="section level2">
 <h2 id="resample-time-series">Resample time series<a class="anchor" aria-label="anchor" href="#resample-time-series"></a>
 </h2>
-<p>We can resample time series by using <code><a href="../reference/trs.html">trs()</a></code>.<br>
+<p>We can resample time series by using <code><a href="../reference/trs.html">trs()</a></code>, which will give you a new time series with new resolution and complete timestamps.<br>
 You can use <code>bkip</code> to set a new time resolution.<br>
 The time series can be clipped by using <code>st</code> (start time) and <code>et</code> (end time).<br>
 The default function of resampling is <code>mean</code>. The wind data is acceptable by setting <code>wind</code> to <code>TRUE</code> and specifying <code>coliws</code> (the column index of the wind speed) and <code>coliwd</code> (the column index of the wind speed).</p>
