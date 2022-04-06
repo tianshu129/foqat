@@ -36,7 +36,7 @@ statdf(aqi)
 
 ## Resample time series  
 
-We can resample time series by using `trs()`.  
+We can resample time series by using `trs()`, which will give you a new time series with new resolution and complete timestamps.    
 You can use `bkip` to set a new time resolution.  
 The time series can be clipped by using `st` (start time) and `et` (end time).  
 The default function of resampling is `mean`.
