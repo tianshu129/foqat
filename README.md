@@ -10,7 +10,7 @@ version](http://www.r-pkg.org/badges/version/foqat)](http://www.r-pkg.org/pkg/fo
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Development
-version](https://img.shields.io/badge/devel-2.0.6-orange.svg)](https://github.com/tianshu129/foqat)
+version](https://img.shields.io/badge/devel-2.0.7-orange.svg)](https://github.com/tianshu129/foqat)
 [![](https://cranlogs.r-pkg.org/badges/grand-total/foqat)](https://cran.r-project.org/package=foqat)
 [![](http://cranlogs.r-pkg.org/badges/last-month/foqat)](https://cran.r-project.org/package=foqat)
 [![](http://cranlogs.r-pkg.org/badges/last-day/foqat)](http://cranlogs.r-pkg.org/downloads/daily/last-month/foqat)  
@@ -24,17 +24,17 @@ downloads](http://cranlogs.r-pkg.org/badges/foqat)](http://www.r-pkg.org/pkg/foq
 
 ### Overview
 
-The FOQAT is an R package designed for quick processing and analysis of atmospheric data measured from field observation and air pollution. And the functions for time series analysis could also be applied to the time series of any other fields. 
+The FOQAT is an R package designed for quick processing and analysis of atmospheric data measured from field observation and air pollution (e.g., air-quality sensor/monitor data). And the functions for time series analysis could also be applied to the time series of any other fields. 
 
 The FOQAT stands for "Field observation quick analysis toolkit".
 
 The FOQAT package is developed and maintained by Chen Tianshu from Professor Xue Likun's research group of Environmental Research Institute of Shandong University.  
 
-For getting start or detail usage, please visit: [user manual](https://tianshu129.github.io/foqat/articles/) or [说明手册](https://www.yuque.com/foqat/doc) .  
+For getting start or detail usage, please visit: [Vignette](https://tianshu129.github.io/foqat/articles/) or [说明手册](https://www.yuque.com/foqat/doc) .  
 
 If FOQAT is used to support a scientific publication, please cite the following reference:
 
->_Tianshu Chen. (2021). foqat: Field Observation Quick Analysis Toolkit [Software]. Available from https://doi.org/10.5281/zenodo.4735828_  
+>Tianshu Chen. (2021). foqat: Field Observation Quick Analysis Toolkit [Software]. Available from https://doi.org/10.5281/zenodo.4735828
 
 In addition, please send an email to [me](mailto:tianshu129@163.com) so that the paper may be added to my 'List of Publications Using FOQAT'.  
 
@@ -63,7 +63,7 @@ remotes::install_github("tianshu129/foqat")
 
 ### Functions  
 Functions in foqat are listed below:  
-<img src="https://s4.ax1x.com/2022/02/01/HF4zDg.png" align="center"/>
+<img src="https://s1.ax1x.com/2022/04/06/qvG8DU.png" align="center"/>
 
 
 ### Link

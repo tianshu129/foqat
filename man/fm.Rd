@@ -4,14 +4,12 @@
 \alias{fm}
 \title{format the theme of plot}
 \usage{
-fm(p, fsz = 13, ff = "TT Arial", lsz = 0.5, tkl = 0.2)
+fm(p, fsz = 13, lsz = 0.5, tkl = 0.2)
 }
 \arguments{
 \item{p}{a ggplot-format plot.}
 
 \item{fsz}{font size in plot.}
-
-\item{ff}{font family in plot.}
 
 \item{lsz}{line size of panel border and axis in plot.}
 
