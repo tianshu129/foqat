@@ -22,6 +22,11 @@ downloads](http://cranlogs.r-pkg.org/badges/foqat)](http://www.r-pkg.org/pkg/foq
 [![GPLv3 license](https://img.shields.io/badge/License-GPLv3-success.svg)](http://perso.crans.org/besson/LICENSE.html)
  -->
 
+### News
+2023/09/30
+If you are using a newer version of R (for example, version 3.1), please upgrade your FOQAT to the latest version (2.0.8.2).   
+如果你正在使用新版本的R（例如3.1版本），请升级你的FOQAT至最新版本（2.0.8.2）。
+
 ### Overview
 
 The FOQAT is an R package designed for quick processing and analysis of atmospheric data measured from field observation and air pollution (e.g., air-quality sensor/monitor data). And the functions for time series analysis could also be applied to the time series of any other fields. 
