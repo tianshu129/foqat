@@ -98,9 +98,11 @@ trs <- function(df, bkip, st = NULL, et = NULL, fun = 'mean', probs=0.5, na.rm =
   bkip_str = tolower(bkip_str)
   bkip_str = gsub("[s]", "", bkip_str)
   if(bkip_str == ""|bkip_str == "ec"|bkip_str == "min"|bkip_str == "hour"){
-	datat[,1] = as.POSIXct(datat[,1], tz = tzlc) #"%Y-%m-%d %H:%M:%S"
+	temp_datime_c = lapply(as.character(datat[, 1]), function(x){ifelse(nchar(x)<11, paste0(x, " 00:00:00"), x)})
+  	datat[, 1] = unlist(temp_datime_c)
+	datat[, 1] = as.POSIXct(datat[,1], tz = tzlc, format="%Y-%m-%d %H:%M:%S")
   }else{
-	datat[,1] = as.Date(datat[,1])
+	datat[, 1] = as.Date(datat[,1])
   }
 
   if(wind == TRUE){
