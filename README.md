@@ -23,7 +23,7 @@ downloads](http://cranlogs.r-pkg.org/badges/foqat)](http://www.r-pkg.org/pkg/foq
  -->
 
 ### News
-2023/09/30
+2023/09/30  
 If you are using a newer version of R (for example, version 3.1), please upgrade your FOQAT to the latest version (2.0.8.2).   
 如果你正在使用新版本的R（例如3.1版本），请升级你的FOQAT至最新版本（2.0.8.2）。
 
